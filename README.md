@@ -10,6 +10,8 @@
 
 This project demonstrates how to design and run a multi-agent collaboration project on the JiuwenSwarm platform. Using "US equity research" as the business scenario, the user inputs a target listed company (this demo uses **AAPL (Apple)** as the teaching sample), and seven agents collaborate according to the task DAG:
 
+> **Course positioning**: this demo maps to the **Risk Management** theme of the *IEDA4000H (Optimization in Financial Engineering)* course — the Risk & Sentiment Analyst (risk-sentinel) outputs a risk checklist with impact ratings and position-sizing suggestions, and the forecast explicitly gives up/down probabilities and a confidence level, demonstrating the teaching point that **risk outputs must include indicators, assumptions, limitations, and evidence**.
+
 1. **Data Researcher** (data-researcher): Generates and validates local sample datasets (financial CSV + historical price CSV)
 2. **Fundamental Analyst** (fundamental-analyst): Interprets financial reports, outputs a fundamental score and valuation judgment
 3. **Technical Analyst** (technical-analyst): Performs trend and momentum analysis on historical prices, outputs a trend rating and key price levels

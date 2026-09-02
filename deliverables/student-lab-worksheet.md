@@ -297,6 +297,41 @@ Add an 8th agent with a distinct domain, e.g. a **macro-economist** (rates/infla
 
 Take one existing agent (e.g. `technical-analyst`) and rewrite its desc to be more precise: add 2-3 concrete indicators it is responsible for, and 2 things it explicitly does NOT do. Explain in 2-3 sentences how your change would reduce conflicts or improve quality in a real run.
 
+### Challenge D — Sensitivity Analysis: What If One Assumption Changes?
+
+Forecasts are only as good as their assumptions. This challenge makes the "risk output must include indicators, assumptions, limitations, and evidence" teaching point tangible: change **one** input of the forecast's PE×EPS model and observe how the conclusion moves.
+
+**What to do**
+
+1. Open `outputs/forecast.md` and go to **§4 "Model 2: PE × EPS Scenario Weighting"** — the *Scenario Design* table (bullish / base / bearish rows with EPS, PE, and target levels) and the *Probability Weighting* formula (weighted mid-point = 300×0.25 + 270×0.50 + 205×0.25 ≈ **262 USD**).
+2. Pick **one** assumption to change, and change nothing else:
+   - **Option A — raise Base-scenario EPS growth**: FY2026E EPS from **6.90 (+5.3%)** to **≈7.07 (+8%)**; keep the Base PE band (36-40x, ~39x mid was used to get 270). Recompute the Base target = EPS × PE, then the new weighted mid-point.
+   - **Option B — lower Bearish-scenario EPS**: EPS from **6.40** to **6.20** (keep the ~32x PE used to get 205). The Bearish target falls from 205 to ≈198 (6.20 × 32). Recompute the weighted mid-point.
+   - **Option C — raise Bearish-scenario probability**: probabilities from **25/50/25** to **25/40/35** (base 50% → 40%, bearish 25% → 35%). Recompute the weighted mid-point — no formula change, only weights.
+3. Compare with the original **262** and quantify the change (in USD and in %).
+
+**Expected result hints**
+
+- **Option A**: Base target ≈ 276 (7.07 × 39), mid-point ≈ **264** (300×0.25 + 276×0.50 + 205×0.25) — **+2 USD (+0.8%)**, mild upward drift.
+- **Option B**: Bearish target ≈ 198 (6.20 × 32), mid-point ≈ **260** (300×0.25 + 270×0.50 + 198×0.25) — **−2 USD (−0.8%)**, mild downward drift.
+- **Option C**: mid-point ≈ **255** (300×0.25 + 270×0.40 + 205×0.35) — **−7 USD (−2.7%)**, the largest move: re-weighting tail risk beats a modest EPS change, because the bearish scenario is the lowest target and its weight doubled its tail influence.
+- Sanity check: probabilities must still sum to 100%; only **one** input changes per run. The spread of outcomes (264 / 260 / 255) is the sensitivity surface of the mid-point.
+- If you push any assumption far enough (e.g., EPS +20%), the conclusion can flip sign — that sensitivity itself is the finding.
+
+**Why this matters**
+
+Sensitivity is a core risk-management discipline: a single forecast number without its sensitivity surface hides the risk. Showing **which assumption moves the mid-point the most** (here: probability re-weighting of the tail > a ±3% EPS tweak) is exactly the "indicators + assumptions + limitations + evidence" evidence chain the course asks for.
+
+**Observation template (write 3-5 lines)**
+
+```text
+- Assumption changed: ___ (e.g., Option C: bearish probability 25% → 35%) in the §4 Scenario Design table.
+- New weighted mid-point ≈ ___ USD vs. original 262 → change ≈ ___% (direction: up/down).
+- Why: the ___ scenario carries ___% weight (or its target moved from ___ to ___), contributing Δ ≈ (new − old) × weight ≈ ___ USD.
+- Insight: the mid-point is most sensitive to ___ (e.g., tail-probability re-weighting), because ___.
+- Takeaway: a defensible forecast states its assumptions and shows how the conclusion changes under stress — indicators + assumptions + limitations + evidence.
+```
+
 ---
 
 ## 5. Scoring Rubric (100 pts + 10 bonus)

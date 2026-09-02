@@ -3,6 +3,7 @@
 > Using the "US Equity Research Multi-Agent Teaching Demo" as a complete case study, this handbook teaches you how to design and run a multi-agent project from scratch.
 > Version: v1.0 | Companion team: task-3e864b925b "US Equity Research Multi-Agent Teaching Demo"
 > Statement: All data and analyses referenced in this handbook are **teaching samples**, used only to demonstrate JiuwenSwarm platform capabilities, and **do NOT constitute investment advice**.
+> Course alignment: this demo corresponds to the **Risk Management** theme of the *IEDA4000H (Optimization in Financial Engineering)* course — the Risk & Sentiment Analyst (risk-sentinel) delivers a risk checklist, impact ratings, and position-sizing guidance, while the forecast output includes up/down probabilities and a confidence level, illustrating the teaching point that **risk outputs must carry indicators, assumptions, limitations, and evidence**.
 
 ---
 
