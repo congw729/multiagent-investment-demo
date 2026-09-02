@@ -1,188 +1,188 @@
-# AAPL 技术面分析报告（教学样本）
+# AAPL Technical Analysis Report (Teaching Sample)
 
-> **口径声明**：本文基于 `.team/demo-data/stock_history.csv`（AAPL 教学演示样本周线行情，2025-09-15 ~ 2026-09-14，共 53 周）撰写。该数据为**构造的教学样本数据，非实时行情，不构成投资建议**。指标计算使用脚本 `calc_technical.py` 可复现，计算假设在文末标注。
+> **Scope Statement**: This report is based on `.team/demo-data/stock_history.csv` (AAPL teaching demo sample weekly price data, 2025-09-15 ~ 2026-09-14, 53 weeks). The data are **constructed teaching sample data, not live market data, and not investment advice**. Indicator calculations are reproducible with the script `calc_technical.py`; calculation assumptions are noted at the end.
 
 ---
 
-## 一、数据概览
+## 1. Data Overview
 
-| 项目 | 数值 |
+| Item | Value |
 |---|---|
-| 样本区间 | 2025-09-15 ~ 2026-09-14（53 周，每周一采样） |
-| 首周收盘 | 228.00 美元 |
-| 最新收盘（2026-09-14） | **276.11 美元** |
-| 全周期涨跌 | **+21.10%** |
-| 全期最高 / 最低 | 282.22（2026-09-14 当周）/ 218.39（2025-11-10 当周） |
+| Sample period | 2025-09-15 ~ 2026-09-14 (53 weeks, sampled every Monday) |
+| First week close | USD 228.00 |
+| Latest close (2026-09-14) | **USD 276.11** |
+| Full-period change | **+21.10%** |
+| Full-period high / low | 282.22 (week of 2026-09-14) / 218.39 (week of 2025-11-10) |
 
-样本构成为 5 段趋势：「涨 → 涨 → 回调 → 企稳 → 再涨」，与数据生成脚本定义一致。
+The sample is constructed from 5 trend segments: "up → up → pullback → stabilize → up again", consistent with the data generation script definition.
 
 ---
 
-## 二、趋势判断
+## 2. Trend Assessment
 
-### 1. 短期趋势（近 4~8 周）：横盘整理后重新上攻，中性偏多
+### 1. Short-term trend (last 4-8 weeks): consolidating then re-attacking upward, neutral-to-bullish
 
-| 窗口 | 起始收盘 | 最新收盘 | 涨跌幅 |
+| Window | Starting Close | Latest Close | Change |
 |---|---|---|---|
-| 近 4 周 | 275.37 | 276.11 | +0.27% |
-| 近 8 周 | 256.35 | 276.11 | **+7.71%** |
-| 近 13 周 | 255.16 | 276.11 | +8.21% |
-| 近 26 周 | 254.54 | 276.11 | +8.47% |
+| Last 4 weeks | 275.37 | 276.11 | +0.27% |
+| Last 8 weeks | 256.35 | 276.11 | **+7.71%** |
+| Last 13 weeks | 255.16 | 276.11 | +8.21% |
+| Last 26 weeks | 254.54 | 276.11 | +8.47% |
 
-- 近 4 周价格基本在 271~282 区间横盘（8/17 收盘 275.37→9/14 收盘 276.11），属于**高位整理**；
-- 但近 8~13 周视角可见价格从 255 一带稳步抬升至 276 上方，短期重心不断上移，最近一周（9/7 收 280.26）一度突破 280 后小幅回落到 276 收线，**上攻意图明确**。
+- Over the last 4 weeks, price has consolidated in the 271-282 range (8/17 close 275.37 → 9/14 close 276.11), i.e., **high-level consolidation**;
+- However, on the 8-13 week view, price has steadily climbed from around 255 to above 276, with a rising short-term center of gravity. Last week (9/7 close 280.26) briefly broke above 280 before pulling back slightly to close at 276, showing **clear upward intent**.
 
-### 2. 中期趋势（近 26 周至全周期）：多头趋势完好
+### 2. Mid-term trend (last 26 weeks to full period): bullish trend intact
 
-- 全周期 +21.10%，26 周 +8.47%，中期上升通道保持完整；
-- 2026 年 2 月（约 251 美元）3 月中旬（约 254 美元）的低点持续抬高，高点亦同步抬高，符合**上升趋势**特征；
-- 5 月后价格沿 MA20 上方运行，回踩不破中期均线，趋势结构健康。
+- Full period +21.10%, 26 weeks +8.47%, mid-term uptrend channel remains intact;
+- Lows kept rising from Feb 2026 (approx. USD 251) and mid-March (approx. USD 254), with highs also rising in tandem, consistent with an **uptrend**;
+- Since May, price has been trading above MA20, with pullbacks not breaking the mid-term average — healthy trend structure.
 
-**结论：短期中性偏多（横盘蓄势）、中期看多（上升通道）。**
+**Conclusion: short-term neutral-to-bullish (consolidation building), mid-term bullish (uptrend channel).**
 
 ---
 
-## 三、均线系统（MA20 / MA60）
+## 3. Moving Average System (MA20 / MA60)
 
-### 计算说明
-- **MA20** = 最近 20 周收盘价简单平均；
-- **MA60**：因样本仅 53 周不足 60 周，以**全样本 53 周均值（MA53）近似替代 MA60**，并标注此假设。
+### Calculation Notes
+- **MA20** = simple average of the most recent 20 weekly closes;
+- **MA60**: since the sample has only 53 weeks (fewer than 60), the **full-sample 53-week average (MA53) is used as a proxy for MA60**, and this assumption is explicitly flagged.
 
-### 均线数值与排列
+### Moving Average Values and Arrangement
 
-| 均线 | 数值（美元） | 与上周对比 |
+| MA | Value (USD) | vs. Last Week |
 |---|---|---|
-| MA10（周） | 268.91 | — |
-| MA20（周） | **262.33** | 260.80 → 262.33（↑1.53） |
-| MA30（周） | 257.92 | — |
-| MA53（≈MA60） | **246.73** | 246.17 → 246.73（↑0.56） |
+| MA10 (weekly) | 268.91 | — |
+| MA20 (weekly) | **262.33** | 260.80 → 262.33 (↑1.53) |
+| MA30 (weekly) | 257.92 | — |
+| MA53 (≈MA60) | **246.73** | 246.17 → 246.73 (↑0.56) |
 
-### 排列判断
+### Arrangement Assessment
 
-- **多头排列成立**：最新收盘 276.11 > MA20 262.33 > MA53(≈MA60) 246.73；
-- MA20 与 MA53 均持续上行，两条均线斜率均为正，中期成本支撑有效；
-- 价格自 7 月以来始终运行在 MA20 上方，仅 7/6 当周（251.75）曾短暂试探后迅速收复，**MA20 构成动态支撑**。
+- **Bullish alignment confirmed**: latest close 276.11 > MA20 262.33 > MA53(≈MA60) 246.73;
+- Both MA20 and MA53 are rising with positive slopes — effective mid-term cost support;
+- Price has stayed above MA20 since July, only briefly testing it during the week of 7/6 (251.75) before quickly recovering — **MA20 acts as dynamic support**.
 
-**结论：均线系统多头排列，MA20（约 262）与 MA53-近似（约 247）为当前最重要的趋势支撑。**
+**Conclusion: bullish moving-average alignment; MA20 (approx. 262) and MA53-proxy (approx. 247) are the most important trend supports.**
 
 ---
 
-## 四、动量指标（RSI14 / MACD）
+## 4. Momentum Indicators (RSI14 / MACD)
 
-### RSI14（Wilder 平滑法，教学简化）
+### RSI14 (Wilder smoothing, simplified for teaching)
 
-| 指标 | 数值 |
+| Indicator | Value |
 |---|---|
-| RSI14 最新 | **68.66** |
-| RSI14 前一期 | 75.51 |
+| RSI14 latest | **68.66** |
+| RSI14 previous | 75.51 |
 
-- 现处**偏强区间（60–70），未超买（>70 方为超买）**；
-- 从前期 75.5 高位回落至 68.66，说明短线过热有所消化，**动能修复后仍偏强**；
-- 若价格继续上行，RSI 逼近 70 时需警惕短线回调。
+- Currently in the **strong zone (60-70), not overbought (overbought is >70)**;
+- Eased from the prior high of 75.5 to 68.66, meaning short-term overheating has been digested — **momentum remains strong after the repair**;
+- If price continues higher, watch for short-term pullback risk as RSI approaches 70.
 
-### MACD（12, 26, 9）
+### MACD (12, 26, 9)
 
-| 指标 | 数值 |
+| Indicator | Value |
 |---|---|
-| DIF | +8.123（零轴上方） |
+| DIF | +8.123 (above zero line) |
 | DEA | +6.682 |
-| MACD 柱 | +2.882（前值 3.417） |
+| MACD histogram | +2.882 (prior 3.417) |
 
-- DIF 与 DEA 均位于零轴上方，且 **DIF > DEA（多头排列/金叉存续状态）**；
-- 红柱略有收敛（3.417 → 2.882），动能边际减弱但未转绿，**中期多头动能仍占优，短线动能边际放缓**。
+- Both DIF and DEA are above the zero line, and **DIF > DEA (bullish alignment / golden cross persisting)**;
+- The red histogram has narrowed slightly (3.417 → 2.882): momentum easing marginally at the edges but not turning green — **mid-term bullish momentum still dominant, short-term momentum cooling slightly**.
 
-**结论：动量指标双多头（RSI 偏强、MACD 零轴上金叉存续），短线动能略有降温但趋势未破。**
+**Conclusion: dual-bullish momentum (RSI strong, MACD golden cross above zero line persisting); short-term momentum cooling slightly but trend not broken.**
 
 ---
 
-## 四、量价关系
+## 5. Volume-Price Relationship
 
-| 项目 | 数值 |
+| Item | Value |
 |---|---|
-| 全期周均量 | 97.3M 股 |
-| 近 10 周均量 | 99.1M（较前 10 周 98.6M，+0.5%） |
-| 上涨周均量 / 下跌周均量 | 98.4M / 94.4M |
-| 最新周量（9/14） | 134.3M（显著放量，接近全期峰值 146M） |
+| Full-period average weekly volume | 97.3M shares |
+| Last-10-week average volume | 99.1M (+0.5% vs. prior 10 weeks' 98.6M) |
+| Avg volume up-weeks / down-weeks | 98.4M / 94.4M |
+| Latest week volume (9/14) | 134.3M (significantly expanded, near full-period peak of 146M) |
 
-- **上涨周均量 > 下跌周均量**：上升行情伴随成交量配合，量价关系健康；
-- 8/3 当周（+1.9%，量 146.1M）与 9/14 当周（冲高 282 后回落收 276，量 134.3M）出现放量，其中 8 月放量突破、9 月放量滞涨需留意；
-- 量能整体平稳略增（+0.5%），**无缩量滞涨或放量下跌的明显背离**。
+- **Up-week average volume > down-week average volume**: rising price action accompanied by volume confirmation — healthy volume-price relationship;
+- Volume expanded during the weeks of 8/3 (+1.9%, 146.1M) and 9/14 (spiked to 282 then closed at 276, 134.3M); the August expansion accompanied a breakout while the September expansion came with stalled gains — worth noting;
+- Overall volume is steady with a slight increase (+0.5%), **no obvious divergence of shrinking-volume stall or high-volume sell-off**.
 
-**结论：量价配合良好，上涨有量支撑；9/14 放量但收盘回落约 1.5% 属高位分歧信号，需跟踪后续是否持续。**
+**Conclusion: volume-price cooperation is good, rallies supported by volume; the 9/14 high-volume close with ~1.5% pullback is a high-level divergence signal — track whether it continues.**
 
 ---
 
-## 五、关键支撑位 / 压力位
+## 6. Key Support / Resistance Levels
 
-### 关键价位一览（美元）
+### Key Price Levels (USD)
 
-| 类型 | 价位 | 依据 |
+| Type | Level | Basis |
 |---|---|---|
-| 压力位① | **282–283** | 全期最高 282.22（9/14 当周高点）；整数关口 280 附近 |
-| 压力位② | 280.3 | 9/7 当周高点 280.29，短期上攻第一道坎 |
-| 支撑位① | **273–274** | 近 4 周低点 271.3–274.3 密集区 + 8/17–8/31 收盘回踩区 |
-| 支撑位② | **262–266** | MA20（262.3）+ 8/10 低点 261.5 + 8/3 突破平台，双重支撑 |
-| 支撑位③ | **255–256** | MA30（257.9）+ 6 月中旬低点 252.7–255.2 中期颈线 |
+| Resistance 1 | **282-283** | Full-period high 282.22 (high of week 9/14); round-number 280 nearby |
+| Resistance 2 | 280.3 | Week of 9/7 high 280.29, first short-term hurdle |
+| Support 1 | **273-274** | Dense zone of last-4-week lows 271.3-274.3 + 8/17-8/31 close pullback zone |
+| Support 2 | **262-266** | MA20 (262.3) + 8/10 low 261.5 + 8/3 breakout platform, double support |
+| Support 3 | **255-256** | MA30 (257.9) + mid-June lows 252.7-255.2 mid-term neckline |
 
 ---
 
-## 六、趋势评级
+## 7. Trend Rating
 
-### 评级：**看多（趋势向上，短线中性偏多）**
+### Rating: **Bullish (trend up; short-term neutral-to-bullish)**
 
-| 维度 | 结论 | 依据 |
+| Dimension | Conclusion | Basis |
 |---|---|---|
-| 中期趋势 | ✅ 看多 | 全周期 +21%，上升通道，低点抬高 |
-| 均线排列 | ✅ 看多 | 多头排列（收盘>MA20>MA60），MA20/MA60 上行 |
-| 动量 | ✅ 偏多 | RSI 偏强未超买；MACD 零轴上方金叉存续 |
-| 量价 | ✅ 正面 | 上涨放量、量价配合良好 |
-| 短线 | ⚠️ 中性偏多 | 近 4 周横盘，RSI 从高位回落，MACD 红柱收敛 |
+| Mid-term trend | ✅ Bullish | Full period +21%, uptrend channel, rising lows |
+| MA alignment | ✅ Bullish | Bullish alignment (close > MA20 > MA60), MA20/MA60 rising |
+| Momentum | ✅ Bullish-leaning | RSI strong, not overbought; MACD golden cross above zero line persisting |
+| Volume-price | ✅ Positive | Rallies on volume, healthy volume-price relationship |
+| Short-term | ⚠️ Neutral-to-bullish | Last 4 weeks consolidating, RSI pulled back from highs, MACD red histogram narrowing |
 
-综合评分倾向看多，主要不确定性来自**短线高位（282 附近）的突破能力与 MACD 动能收敛**。
-
----
-
-## 七、买卖时点建议（教学语境，非投资建议）
-
-> 以下为技术分析教学语境下的策略示意，供理解分析框架使用，**不构成任何投资建议**。
-
-### 买入情景
-
-1. **回踩支撑买入（稳健）**：价格回踩 **262–266（MA20 区域）**企稳且缩量时，可作为分批建仓的参考区间；止损参考跌破 258（MA30 下方）。
-2. **突破确认买入（激进）**：若放量（周量 >110M）**有效突破 282.5** 并站稳，可视为趋势加速信号，右侧跟进。
-
-### 卖出/止盈情景
-
-1. **压力位减仓**：上攻 **282–283** 压力位出现长上影或滞涨（如 9/14 冲高回落再现）时，可考虑部分止盈。
-2. **趋势破位止损**：收盘跌破 **MA20（262）** 且 RSI 回落跌破 55，短线趋势转弱，应降低仓位；跌破 255（MA30）则中期上升通道受损，止损观望。
-
-### 风险监控清单
-
-- RSI14 是否进入超买（>70）并背离；
-- MACD 红柱是否连续收敛转绿（动能转空）；
-- 282 压力位放量突破是否成功；
-- 成交量是否出现放量下跌（高位出货信号）。
+The overall score leans bullish; key uncertainties are the **breakout capability near the short-term high (282) and MACD momentum convergence**.
 
 ---
 
-## 八、风险提示
+## 8. Buy/Sell Timing Suggestions (Teaching Context, Not Investment Advice)
 
-1. **教学样本属性**：本数据为构造样本（5 段趋势 + 随机噪声），技术形态为人为编排，分析结论仅演示方法论，**不构成投资建议，不预示真实行情**。
-2. **均线近似**：MA60 因数据长度不足（53 周）以全样本均值近似替代，中期均线参考意义有局限。
-3. **短线回调风险**：RSI 尚处偏强区且 9/14 冲高回落、MACD 红柱收敛，短线存在高位整固需求。
-4. **技术面局限**：本报告仅基于价量数据，未考虑基本面、市场情绪与宏观因素，需与《基本面分析》《风险与情绪分析》结合使用。
-5. **离散数据频率**：周线视图会平滑掉日内波动，短线支撑/压力位仅具教学参考意义。
+> The following are strategy illustrations in a technical-analysis teaching context, to help understand the analytical framework — **not investment advice**.
+
+### Buy Scenarios
+
+1. **Buy on support pullback (conservative)**: when price pulls back to **262-266 (MA20 zone)**, stabilizes, and volume shrinks, it can serve as a reference zone for staged entry; stop-loss reference below 258 (below MA30).
+2. **Buy on confirmed breakout (aggressive)**: if price **effectively breaks and holds 282.5** on volume (weekly volume >110M), it can be seen as a trend-acceleration signal — enter on confirmation.
+
+### Sell / Take-Profit Scenarios
+
+1. **Reduce at resistance**: when the advance toward **282-283** shows long upper shadows or stalled gains (e.g., a repeat of the 9/14 spike-and-reversal), consider partial profit-taking.
+2. **Stop-loss on trend break**: if close falls below **MA20 (262)** and RSI falls below 55, the short-term trend weakens — reduce positions; a break below 255 (MA30) damages the mid-term uptrend channel — stop and wait.
+
+### Risk Monitoring Checklist
+
+- Whether RSI14 enters overbought (>70) with divergence;
+- Whether the MACD red histogram keeps narrowing and turns green (momentum turning bearish);
+- Whether the 282 resistance breaks on volume;
+- Whether volume shows a high-volume decline (distribution signal at highs).
 
 ---
 
-## 附：计算方法与假设（可复现）
+## 9. Risk Warnings
 
-| 指标 | 计算方法 | 假设/近似 |
+1. **Teaching sample nature**: this data is constructed (5 trend segments + random noise), with deliberately engineered technical patterns; conclusions only demonstrate methodology, **not investment advice, and do not indicate real market behavior**.
+2. **MA approximation**: MA60 is proxied by the full-sample average due to insufficient data length (53 weeks); the mid-term MA reference has limited meaning.
+3. **Short-term pullback risk**: RSI is still in the strong zone and 9/14 spiked then fell; MACD red histogram is narrowing — short-term high-level consolidation is needed.
+4. **Technical-only limitation**: this report is based solely on price-volume data and does not consider fundamentals, market sentiment, or macro factors; combine with the *Fundamental Analysis* and *Risk & Sentiment Analysis* reports.
+5. **Discrete data frequency**: weekly view smooths intraday fluctuations; short-term support/resistance levels are for teaching reference only.
+
+---
+
+## Appendix: Calculation Methods and Assumptions (Reproducible)
+
+| Indicator | Calculation Method | Assumption / Approximation |
 |---|---|---|
-| MA20 / MA30 | 最近 N 周收盘简单平均 | — |
-| MA60 替代 | 全样本 53 周均值（MA53） | 样本不足 60 周，近似替代并显式标注 |
-| RSI14 | Wilder 平滑：首期简单平均初始化，之后 `(n-1)/n` 递推 | 教学简化，未做多周期/背离校验 |
-| MACD | EMA12 − EMA26 = DIF；DEA = EMA9(DIF)；柱 = 2×(DIF−DEA) | EMA 使用标准平滑系数，初始值以首周收盘 |
-| 支撑/压力 | 近期 swing high/low + MA 动态支撑 + 整数关口 | 人工标注，非自动 pivot 计算 |
+| MA20 / MA30 | Simple average of last N weekly closes | — |
+| MA60 proxy | Full-sample 53-week average (MA53) | Sample shorter than 60 weeks; explicit proxy and flag |
+| RSI14 | Wilder smoothing: simple-average initialization, then `(n-1)/n` recursion | Teaching simplification; no multi-period/divergence validation |
+| MACD | EMA12 − EMA26 = DIF; DEA = EMA9(DIF); histogram = 2×(DIF−DEA) | EMA uses standard smoothing coefficients; initialized with first-week close |
+| Support/Resistance | Recent swing high/low + MA dynamic support + round numbers | Manual annotation, not automated pivot calculation |
 
-*生成日期：2026-08-20 ｜ 分析师：technical-analyst ｜ 数据源：.team/demo-data/stock_history.csv（教学样本）*
+*Generated: 2026-08-20 | Analyst: technical-analyst | Data source: .team/demo-data/stock_history.csv (teaching sample)*

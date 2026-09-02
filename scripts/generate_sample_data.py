@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-JiuWenSwarm 教学 Demo —— 本地样本数据生成脚本（AAPL 苹果）
-仅用于教学演示：数据量级贴近上市公司公开财报/行情常识，但为构造样本，
-非实时行情，不构成投资建议。运行本脚本会在同目录生成：
-  1) financials.csv      —— 近 4 个财年年度财务摘要
-  2) stock_history.csv     —— 近 1 年周线 OHLCV（53 周）
+JiuWenSwarm Teaching Demo - Local sample data generation script (AAPL Apple)
+For teaching demonstration only: data magnitudes are consistent with publicly
+reported corporate financials/market data, but the data is constructed samples,
+not live market data, and not investment advice. Running this script generates
+the following files in the same directory:
+  1) financials.csv      - annual financial summary for the past 4 fiscal years
+  2) stock_history.csv   - weekly OHLCV for the past year (53 weeks)
 """
 import csv
 import os
@@ -16,14 +18,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 random.seed(20260820)
 
 # ---------------------------------------------------------------------------
-# 1) financials.csv —— 年度财务摘要（金额单位：百万美元；EPS 为美元/股）
-#    口径：
-#      - roe_pct = 净利润 / 期末股东权益
-#      - debt_ratio_pct = 总负债 / 总资产
-#      - current_ratio = 流动资产 / 流动负债
-#      - pe_ratio = 财年末股价 / 当财年摊薄EPS；pb_ratio = 财年末股价 / 财年末每股净资产
-#      - 各比率字段以百分数形式给出（如 43.31 表示 43.31%）
-#      - FY2025 为样本估算值，其余年份量级贴近苹果公开财报
+# 1) financials.csv - annual financial summary (amounts in USD millions; EPS in USD per share)
+#    Definitions:
+#      - roe_pct = net income / end-of-period shareholders' equity
+#      - debt_ratio_pct = total liabilities / total assets
+#      - current_ratio = current assets / current liabilities
+#      - pe_ratio = fiscal year-end price / diluted EPS for the fiscal year; pb_ratio = fiscal year-end price / fiscal year-end book value per share
+#      - Ratio fields are expressed as percentages (e.g., 43.31 means 43.31%)
+#      - FY2025 is a sample estimate; other years are consistent in magnitude with Apple's public financials
 # ---------------------------------------------------------------------------
 financial_rows = [
     # fiscal_year, fiscal_year_end, revenue, net_income, gross_margin, net_margin,
@@ -41,19 +43,19 @@ fin_headers = [
 ]
 fin_path = os.path.join(HERE, "financials.csv")
 with open(fin_path, "w", newline="", encoding="utf-8-sig") as f:
-    f.write("# AAPL 苹果 教学演示样本财务数据（非实时行情，不构成投资建议）\n")
-    f.write("# 金额单位: 百万美元; EPS: 美元/股; 比率: 百分数(43.31=43.31%)\n")
-    f.write("# 口径: ROE=净利/期末权益; 负债率=总负债/总资产; 流动比率=流动资产/流动负债\n")
-    f.write("# PE=财年末股价/当财年摊薄EPS; PB=财年末股价/每股净资产; FY2025 为样本估算\n")
+    f.write("# AAPL Apple - teaching demo sample financial data (not live market data; not investment advice)\n")
+    f.write("# Units: amounts in USD millions; EPS in USD per share; ratios as percentages (43.31=43.31%)\n")
+    f.write("# Definitions: ROE=net income/end-of-period equity; debt ratio=total liabilities/total assets; current ratio=current assets/current liabilities\n")
+    f.write("# PE=fiscal year-end price/diluted EPS for the fiscal year; PB=fiscal year-end price/book value per share; FY2025 is a sample estimate\n")
     w = csv.writer(f)
     w.writerow(fin_headers)
     w.writerows(financial_rows)
 print("financials.csv written:", fin_path)
 
 # ---------------------------------------------------------------------------
-# 2) stock_history.csv —— 近 1 年周线 OHLCV（样本窗口：2025-09-15 起，每周一，共 53 周）
-# 价格分 5 段样本趋势：升→升→回调→企稳→再升；段内几何插值 + 周随机噪声
-# volume 单位：股
+# 2) stock_history.csv - weekly OHLCV for the past year (sample window: every Monday from 2025-09-15, 53 weeks)
+# Price follows 5 sample trend segments: up -> up -> pullback -> stabilize -> up again;
+# geometric interpolation within each segment + weekly random noise; volume unit: shares
 # ---------------------------------------------------------------------------
 segments = [
     # (start_price, end_price, weeks, weekly_vol_million)
@@ -90,9 +92,9 @@ for (st, en, n, vol_base) in segments:
 stock_headers = ["date", "open", "high", "low", "close", "volume"]
 stock_path = os.path.join(HERE, "stock_history.csv")
 with open(stock_path, "w", newline="", encoding="utf-8-sig") as f:
-    f.write("# AAPL 苹果 教学演示样本周线行情（非实时行情，不构成投资建议）\n")
-    f.write("# 周期: 2025-09-15 起 每周一 共%d周; OHLC 美元; volume 股\n" % len(stock_rows))
-    f.write("# 构造: 5 段几何趋势+随机噪声, 仅用于技术分析教学\n")
+    f.write("# AAPL Apple - teaching demo sample weekly price history (not live market data; not investment advice)\n")
+    f.write("# Period: every Monday from 2025-09-15, %d weeks; OHLC in USD; volume in shares\n" % len(stock_rows))
+    f.write("# Construction: 5 geometric trend segments + random noise, for technical analysis teaching only\n")
     w = csv.writer(f)
     w.writerow(stock_headers)
     w.writerows(stock_rows)

@@ -1,359 +1,359 @@
-# 《JiuWen 多 Agent 开发教学手册》
+# JiuWen Multi-Agent Development Handbook
 
-> 以「美股投研多 Agent 教学 Demo」为完整案例，教你从零设计并落地一个多 Agent 项目。
-> 版本：v1.0 ｜ 配套团队：task-3e864b925b「美股投研多Agent教学Demo」
-> 声明：本手册及其引用的全部数据、分析均为**教学样本**，仅用于演示 JiuwenSwarm 平台能力，**不构成任何投资建议**。
-
----
-
-## 目录
-
-1. [这本手册教什么](#1-这本手册教什么)
-2. [第一步：项目目标拆解](#2-第一步项目目标拆解)
-3. [第二步：设计团队与 Agent 角色](#3-第二步设计团队与agent角色)
-4. [第三步：设计任务 DAG 与依赖](#4-第三步设计任务dag与依赖)
-5. [第四步：设计数据与文件交接](#5-第四步设计数据与文件交接)
-6. [第五步：设计成员协作机制](#6-第五步设计成员协作机制)
-7. [第六步：设计 Leader 验收流程](#7-第六步设计leader验收流程)
-8. [平台能力与 demo 环节映射表](#8-平台能力与demo环节映射表)
-9. [5 分钟上手：照着复刻你的第一个多 Agent 项目](#9-5分钟上手照着复刻你的第一个多agent项目)
-10. [附：本 demo 全程流程示意](#10-附本demo全程流程示意)
+> Using the "US Equity Research Multi-Agent Teaching Demo" as a complete case study, this handbook teaches you how to design and run a multi-agent project from scratch.
+> Version: v1.0 | Companion team: task-3e864b925b "US Equity Research Multi-Agent Teaching Demo"
+> Statement: All data and analyses referenced in this handbook are **teaching samples**, used only to demonstrate JiuwenSwarm platform capabilities, and **do NOT constitute investment advice**.
 
 ---
 
-## 1. 这本手册教什么
+## Table of Contents
 
-很多同学见识过多 Agent 的 demo 后，最大的困惑是：**"看起来热闹，但换成我自己的需求，怎么下手？"**
+1. [What This Handbook Teaches](#1-what-this-handbook-teaches)
+2. [Step 1: Decompose the Project Goal](#2-step-1-decompose-the-project-goal)
+3. [Step 2: Design the Team and Agent Roles](#3-step-2-design-the-team-and-agent-roles)
+4. [Step 3: Design the Task DAG and Dependencies](#4-step-3-design-the-task-dag-and-dependencies)
+5. [Step 4: Design Data and File Handoffs](#5-step-4-design-data-and-file-handoffs)
+6. [Step 5: Design the Member Collaboration Mechanism](#6-step-5-design-the-member-collaboration-mechanism)
+7. [Step 6: Design the Leader Acceptance Process](#7-step-6-design-the-leader-acceptance-process)
+8. [Platform Capability & Demo Stage Mapping Table](#8-platform-capability--demo-stage-mapping-table)
+9. [5-Minute Quick Start: Reproduce Your First Multi-Agent Project](#9-5-minute-quick-start-reproduce-your-first-multi-agent-project)
+10. [Appendix: Full Workflow Diagram of This Demo](#10-appendix-full-workflow-diagram-of-this-demo)
 
-本手册用「美股投研多 Agent 教学 Demo」这个真实跑通的完整项目做解剖样本，把多 Agent 项目的**设计六步法**讲透：
+---
 
-| 步骤 | 要回答的问题 | 对应章节 |
+## 1. What This Handbook Teaches
+
+After seeing a multi-agent demo, many learners are most puzzled by one thing: **"It looks impressive, but how do I start when I have my own requirements?"**
+
+This handbook dissects the "US Equity Research Multi-Agent Teaching Demo" — a complete project that actually ran end-to-end — to thoroughly explain the **six-step design method** for multi-agent projects:
+
+| Step | Question It Answers | Section |
 |---|---|---|
-| 目标拆解 | 用户一个模糊需求，怎么变成可执行的任务树？ | §2 |
-| 角色设计 | 每个 Agent 是谁、会什么、边界在哪？ | §3 |
-| DAG 设计 | 任务之间谁先谁后、谁能并行？ | §4 |
-| 交接设计 | 数据在 Agent 之间怎么安全流转？ | §5 |
-| 协作设计 | 成员之间怎么沟通、怎么对齐？ | §6 |
-| 验收设计 | 谁来检查产出、怎么算完成？ | §7 |
+| Goal decomposition | How does a vague user request become an executable task tree? | §2 |
+| Role design | Who is each agent, what can it do, and where are its boundaries? | §3 |
+| DAG design | What runs first/later among tasks, and what can run in parallel? | §4 |
+| Handoff design | How does data flow safely between agents? | §5 |
+| Collaboration design | How do members communicate and align? | §6 |
+| Acceptance design | Who checks the output, and what counts as done? | §7 |
 
-最后给出**平台能力 × demo 环节映射表**（§8）和 **5 分钟复刻步骤**（§9），让你照着就能做出自己的项目。
+Finally, it provides the **platform capability × demo stage mapping table** (§8) and **5-minute reproduction steps** (§9) so you can build your own project by following along.
 
-> 工程设计原则：**多 Agent 项目成败的关键，不在 Agent 数量，而在"分工边界清晰 + 任务依赖明确 + 交接物标准化"**。本 demo 每一步都贯彻这三条。
+> Engineering design principle: **the success of a multi-agent project depends not on the number of agents, but on "clear division of labor + explicit task dependencies + standardized handoffs"**. This demo applies all three at every step.
 
 ---
 
-## 2. 第一步：项目目标拆解
+## 2. Step 1: Decompose the Project Goal
 
-### 2.1 从一句话需求到目标树
+### 2.1 From a One-Line Request to a Goal Tree
 
-用户原话（原始需求）：
+The user's original words (raw requirement):
 
-> 「帮我分析一家美股上市公司，给出未来股价预测，并产出一份投研报告。想学多 Agent 怎么开发。」
+> "Help me analyze a US-listed company, give a future stock price forecast, and produce an investment research report. I want to learn how to develop multi-agent systems."
 
-这句话包含三层信息，第一层拆解（**目标拆解，不是任务拆解**）：
+This sentence contains multiple layers of information. The first-level decomposition (**goal decomposition, not task decomposition**):
 
-| 需求关键词 | 隐含目标 | 推导出的子目标 |
+| Requirement Keyword | Implicit Goal | Derived Sub-Goal |
 |---|---|---|
-| "分析一家公司" | 需要**数据**支撑 | 准备财报+股价样本数据 |
-| "股价预测" | 需要**多维度分析输入** | 基本面 / 技术面 / 风险情绪三路分析 |
-| "投研报告" | 需要**综合结论** | 预测综合 + 报告整合 |
-| "想学多 Agent" | 需要**教学产出** | 过程可复现 + 教学手册 |
+| "analyze a company" | needs **data** support | prepare financial + price sample data |
+| "stock price forecast" | needs **multi-dimensional analysis inputs** | three-track analysis: fundamental / technical / risk & sentiment |
+| "investment research report" | needs **combined conclusions** | forecast synthesis + report integration |
+| "learn multi-agent" | needs **teaching output** | reproducible process + teaching handbook |
 
-由此得到**目标树**：
+This yields the **goal tree**:
 
 ```
-项目目标：交付「美股投研分析结论 + 多Agent开发教学」
-├── 数据层目标：标准化样本数据（离线可复现）
-├── 分析层目标：三路并行分析（基本面/技术面/风险）
-├── 综合层目标：目标价区间 + 情景推演 + 评分卡
-└── 交付层目标：投研报告 + 教学手册（含免责声明）
+Project goal: deliver "US equity research conclusions + multi-agent development teaching"
+├── Data layer goal: standardized sample data (offline reproducible)
+├── Analysis layer goal: three parallel analyses (fundamental / technical / risk)
+├── Synthesis layer goal: target price range + scenario projection + scorecard
+└── Delivery layer goal: investment research report + teaching handbook (with disclaimer)
 ```
 
-### 2.2 从目标到任务（design 时写进 create_task 的输入）
+### 2.2 From Goals to Tasks (inputs written into `create_task` at design time)
 
-每个子目标最终映射为一个**任务**，任务描述里写明：做什么、产出什么、验收标准。本 demo 的任务清单如下（可在任务看板 `view_task` 中核对）：
+Each sub-goal maps to a **task**; the task description states what to do, what to produce, and the acceptance criteria. This demo's task list is as follows (verifiable on the task board via `view_task`):
 
-| 任务 ID | 子目标 | 产出物 | 依赖 |
+| Task ID | Sub-Goal | Deliverable | Dependencies |
 |---|---|---|---|
-| task-data | 数据就绪 | demo-data/ 下财报+股价 CSV | 无（第一棒） |
-| task-fundamental | 基本面分析 | analysis/ 基本面分析 | task-data |
-| task-technical | 技术面分析 | analysis/ 技术面分析 | task-data |
-| task-risk | 风险与情绪 | analysis/ 风险情绪分析 | task-data |
-| task-forecast | 综合预测 | outputs/ 目标价+情景+评分卡 | 三路分析 |
-| task-report | 最终交付 | deliverables/ 两份终稿 | task-forecast |
+| task-data | Data ready | financial + price CSV under demo-data/ | none (first stage) |
+| task-fundamental | Fundamental analysis | fundamental analysis under analysis/ | task-data |
+| task-technical | Technical analysis | technical analysis under analysis/ | task-data |
+| task-risk | Risk & sentiment | risk & sentiment analysis under analysis/ | task-data |
+| task-forecast | Combined forecast | outputs/ target price + scenarios + scorecard | three analyses |
+| task-report | Final delivery | deliverables/ two final documents | task-forecast |
 
-> 设计心法：**目标 → 任务** 的映射要"一个目标对应一个可验证的产出物"。如果某目标没有明确的产出文件，说明拆解不到位。
+> Design insight: the **goal → task** mapping should satisfy "one goal corresponds to one verifiable deliverable". If a goal has no clear output file, the decomposition is not thorough enough.
 
 ---
 
-## 3. 第二步：设计团队与 Agent 角色
+## 3. Step 2: Design the Team and Agent Roles
 
-### 3.1 团队骨架：Leader + 专职 Agent
+### 3.1 Team Skeleton: Leader + Dedicated Agents
 
-多 Agent 项目需要一个 **Leader（总控）** 负责拆任务、协调、验收；其余成员按**领域独立**原则设置。
+A multi-agent project needs a **Leader (controller)** responsible for task decomposition, coordination, and acceptance; the remaining members are set up on the **domain-independence** principle.
 
-本 demo 团队构成（`build_team` / `spawn_teammate` 创建）：
+This demo's team structure (created via `build_team` / `spawn_teammate`):
 
 ```
                 ┌─────────────────────────┐
-                │   team-leader 项目负责人  │  总控+教学
+                │  team-leader Project Lead│  controller + teaching
                 └────────────┬────────────┘
         ┌───────────┬────────┼────────┬───────────┐
         ▼           ▼        ▼        ▼           ▼
    data-researcher fundamental technical risk-sentinel  forecaster
-   数据采集员      基本面分析师   技术分析师  风险与情绪分析师  预测综合员
-        (第一棒)  (并行)      (并行)     (并行)          (汇合点)
+   Data Researcher  Fundamental  Technical  Risk & Sentiment  Forecaster
+        (first)   (parallel) (parallel) (parallel)    (convergence)
 
                     report-synthesizer
-                       报告主编（最终交付）
+                   Report Synthesizer (final delivery)
 ```
 
-### 3.2 角色描述（desc）怎么写？——本 demo 角色描述模板
+### 3.2 How to Write the Role Description (desc) — This Demo's Template
 
-每个 Agent 通过 `spawn_teammate` 创建，**描述（desc / persona）决定这个 Agent 的定位、专长与边界**。写 desc 的黄金公式：
+Each agent is created via `spawn_teammate`; the **description (desc / persona) determines the agent's positioning, expertise, and boundaries**. The golden formula for writing a desc:
 
 ```
-[你是谁] + [你的专长域] + [你负责什么输出] + [你明确不负责什么]
+[Who you are] + [your domain of expertise] + [what output you are responsible for] + [what you are explicitly NOT responsible for]
 ```
 
-以本 demo 六角色为样例：
+Using this demo's six roles as examples:
 
-| 角色 | display_name | desc 要点（谁 + 专长 + 负责 + 不负责） |
+| Role | display_name | Desc Essentials (who + expertise + responsibilities + non-responsibilities) |
 |---|---|---|
-| data-researcher | 数据采集员 | 数据工程师；专长结构化数据设计、CSV 生成校验、口径说明；负责产出标准化样本数据到 .team/demo-data/；**不负责**投资分析和预测 |
-| fundamental-analyst | 基本面分析师 | 专注财报：营收增长、利润率、ROE、负债率、现金流、估值；输出基本面评分+亮点风险+估值判断；**不负责**K线/舆情/宏观 |
-| technical-analyst | 技术分析师 | 量化技术分析：K线形态、均线、RSI/MACD、量能、支撑阻力；输出趋势评级+关键价位；**不负责**基本面/情绪 |
-| risk-sentinel | 风险与情绪分析师 | 新闻舆情、政策监管、竞争、宏观等非财务风险；输出风险评级+情绪判断+情景压力；**不负责**财务报表计算 |
-| forecaster | 预测综合员 | 综合三路分析结论，用 LLM 推理+简化估值模型，输出未来3-6月目标区间、概率评分卡、乐观/基准/悲观情景；**不负责**重新做三方专业分析 |
-| report-synthesizer（我） | 报告主编 | 整合全部上游产物，产出《投研报告》+《教学手册》；负责免责声明与教学讲解；**不负责**重新算数据/重新预测 |
+| data-researcher | Data Researcher | Data engineer; expertise in structured data design, CSV generation/validation, definition notes; responsible for producing standardized sample data to .team/demo-data/; **NOT responsible for** investment analysis and forecasts |
+| fundamental-analyst | Fundamental Analyst | Focus on financial reports: revenue growth, margins, ROE, debt ratio, cash flow, valuation; outputs fundamental score + highlights/risks + valuation judgment; **NOT responsible for** candlestick/sentiment/macro |
+| technical-analyst | Technical Analyst | Quantitative technical analysis: candlestick patterns, MAs, RSI/MACD, volume, support/resistance; outputs trend rating + key price levels; **NOT responsible for** fundamentals/sentiment |
+| risk-sentinel | Risk & Sentiment Analyst | Non-financial risks from news, policy, regulation, competition, macro; outputs risk rating + sentiment judgment + scenario stress; **NOT responsible for** financial statement calculations |
+| forecaster | Forecaster | Synthesizes the three analysis tracks; uses LLM reasoning + simplified valuation models to output 3-6 month target range, probability scorecard, bullish/base/bearish scenarios; **NOT responsible for** redoing the three specialists' analyses |
+| report-synthesizer (me) | Report Synthesizer | Integrates all upstream deliverables, produces the *Investment Research Report* + *Teaching Handbook*; responsible for disclaimers and teaching explanation; **NOT responsible for** recomputing data / re-forecasting |
 
-**边界为什么重要**：角色边界清晰，任务 DAG 才天然不冲突（§4）。desc 里写清"不负责什么"，可以防止 Agent 相互抢活、输出重复或矛盾。
+**Why boundaries matter**: with clear role boundaries, the task DAG is naturally conflict-free (§4). Writing "what I am NOT responsible for" in the desc prevents agents from grabbing each other's work or producing duplicate/contradictory outputs.
 
-### 3.3 角色设计的检查清单
+### 3.3 Role Design Checklist
 
-- [ ] 每个角色是否有一句"我负责产出 X"？
-- [ ] 每个角色是否有一句"我明确不负责 Y"？
-- [ ] 角色之间是否存在重复的负责域？（若有，根据优先级裁剪）
-- [ ] 有没有一个"综合/主编"角色负责最终合稿？（避免各说各话）
+- [ ] Does each role have a line "I am responsible for producing X"?
+- [ ] Does each role have a line "I am explicitly NOT responsible for Y"?
+- [ ] Do any roles have overlapping responsibility domains? (If so, trim by priority)
+- [ ] Is there a "synthesizer/editor" role responsible for final consolidation? (to avoid everyone saying different things)
 
 ---
 
-## 4. 第三步：设计任务 DAG 与依赖
+## 4. Step 3: Design the Task DAG and Dependencies
 
-### 4.1 用 `create_task` 表达依赖
+### 4.1 Expressing Dependencies with `create_task`
 
-JiuwenSwarm 中任务通过 `blocked_by`（前置依赖）自动组织成 DAG（有向无环图）。
+In JiuwenSwarm, tasks are automatically organized into a DAG (directed acyclic graph) via `blocked_by` (prerequisite dependencies).
 
-**本 demo 的任务 DAG**：
+**This demo's task DAG**:
 
 ```
                     ┌───────────────────────────────┐
                     ▼                               │
  task-data ──┬──► task-fundamental ──► ┐            │
-      (1)    ├──► task-technical  ──► task-forecast ─► task-report (终)
-             └──► task-risk       ──►           (汇合)
-                    ▲  (2)(3)(4) 可并行              │(6)
+      (1)    ├──► task-technical  ──► task-forecast ─► task-report (final)
+             └──► task-risk       ──►           (convergence)
+                    ▲  (2)(3)(4) can run in parallel │(6)
                     └───────────────────────────────┘
 ```
 
-依赖关系表（create_task 时的 `blocked_by` 字段）：
+Dependency table (the `blocked_by` field when calling `create_task`):
 
-| 任务 | 前置依赖 | 说明 |
+| Task | Prerequisites | Note |
 |---|---|---|
-| task-data | — | 起点，第一棒 |
-| task-fundamental / technical / risk | task-data | **三路并行**（阻塞在数据就绪） |
-| task-forecast | 三路分析 | **汇合点**（三路都完成才解锁） |
-| task-report | task-forecast | **终态**（预测完成才解锁） |
+| task-data | — | Starting point, first stage |
+| task-fundamental / technical / risk | task-data | **Three parallel tracks** (blocked until data is ready) |
+| task-forecast | three analyses | **Convergence point** (unlocks only when all three are done) |
+| task-report | task-forecast | **Terminal state** (unlocks only when the forecast is done) |
 
-### 4.2 依赖设计的三个心法
+### 4.2 Three Insights for Dependency Design
 
-1. **单向流动**：数据 → 分析 → 综合 → 交付，不要出现环（A等B、B等A）。
-2. **并行解耦**：能并行的子任务（三路分析）不要串行，标注同一个前置即可并行。
-3. **汇合点单一**：所有分析先汇入一个"综合"任务（forecast），再由它喂给终态（report），避免多对多混乱。
+1. **One-way flow**: data → analysis → synthesis → delivery; avoid cycles (A waits for B, B waits for A).
+2. **Parallel decoupling**: don't serialize sub-tasks that can run in parallel (the three analyses); mark the same prerequisite and they run in parallel.
+3. **Single convergence point**: all analyses first converge into one "synthesis" task (forecast), which then feeds the terminal state (report), avoiding many-to-many confusion.
 
-> 平台机制：被 `blocked_by` 的任务不可认领；前置完成后自动解锁可见。同学们在 `view_task` 里看到的 `[blocked by ...]` 就是 DAG 的实时呈现。
+> Platform mechanism: tasks with `blocked_by` cannot be claimed; they unlock automatically once prerequisites complete. The `[blocked by ...]` you see in `view_task` is the live rendering of the DAG.
 
 ---
 
-## 5. 第四步：设计数据与文件交接
+## 5. Step 4: Design Data and File Handoffs
 
-### 5.1 交接规范（本项目约定）
+### 5.1 Handoff Convention (this project's agreement)
 
-| 目录 | 放什么 | 谁写 | 谁读 |
+| Directory | What It Holds | Who Writes | Who Reads |
 |---|---|---|---|
-| `demo-data/` | 财报 CSV、股价 CSV | 数据采集员 | 三位分析师 |
-| `analysis/` | 三路分析 md/评分 | 三位分析师 | 预测综合师 |
-| `outputs/` | 目标价/情景/评分卡 | 预测综合师 | 报告主编 |
-| `deliverables/` | 报告 + 教学手册 | 报告主编 | 用户/全队 |
+| `demo-data/` | financial CSV, price CSV | Data Researcher | three analysts |
+| `analysis/` | three analysis md/scores | three analysts | Forecaster |
+| `outputs/` | target price / scenarios / scorecard | Forecaster | Report Synthesizer |
+| `deliverables/` | report + handbook | Report Synthesizer | user / whole team |
 
-> 交接契约铁律：目录与文件名**在 create_task 任务描述中写死**，下游只依赖固定路径；找不到文件即可定位 DAG 断点。所有路径前缀统一 `.team/`。
+> Handoff contract rule: directory and file names are **hard-coded in the `create_task` task description**; downstream depends only on fixed paths; a missing file pinpoints a DAG break. All paths share the `.team/` prefix.
 
-### 5.1b 本 demo 实际产物清单（对照真实文件复刻）
+### 5.1b This Demo's Actual Deliverable List (reproduce against the real files)
 
-本项目实际运行后，`.team/` 下生成的交接文件（学员可直接对照）：
+After this project actually ran, the handoff files generated under `.team/` (learners can compare directly):
 
-| 阶段 | 实际文件 | 生产者 | 消费者 |
+| Stage | Actual File | Producer | Consumer |
 |---|---|---|---|
-| 数据 | `demo-data/financials.csv`（FY2022-FY2025 四财年 14 字段） | data-researcher | 三路分析师 |
-| 数据 | `demo-data/stock_history.csv`（53 周周线 OHLCV） | data-researcher | 三路分析师 |
-| 分析 | `analysis/fundamental.md`（基本面 72/100） | fundamental-analyst | forecaster |
-| 分析 | `analysis/technical.md`（趋势看多，关键价位） | technical-analyst | forecaster |
-| 分析 | `analysis/risk.md`（风险中偏高，情绪中性偏乐观） | risk-sentinel | forecaster |
-| 预测 | `outputs/forecast.md`（目标价 215-310，中枢 262，三情景 300/270/205） | forecaster | report-synthesizer |
-| 交付 | `deliverables/investment-research-report.md` | report-synthesizer | 用户/全队 |
-| 交付 | `deliverables/jiuwen-multiagent-dev-manual.md` | report-synthesizer | 用户/全队 |
+| Data | `demo-data/financials.csv` (FY2022-FY2025 four fiscal years, 14 fields) | data-researcher | three analysts |
+| Data | `demo-data/stock_history.csv` (53-week weekly OHLCV) | data-researcher | three analysts |
+| Analysis | `analysis/fundamental.md` (fundamental 72/100) | fundamental-analyst | forecaster |
+| Analysis | `analysis/technical.md` (trend bullish, key price levels) | technical-analyst | forecaster |
+| Analysis | `analysis/risk.md` (risk medium-high, sentiment neutral-to-bullish) | risk-sentinel | forecaster |
+| Forecast | `outputs/forecast.md` (target 215-310, mid-point 262, three scenarios 300/270/205) | forecaster | report-synthesizer |
+| Delivery | `deliverables/investment-research-report.md` | report-synthesizer | user / whole team |
+| Delivery | `deliverables/jiuwen-multiagent-dev-manual.md` | report-synthesizer | user / whole team |
 
-### 5.2 交接文件怎么设计（关键！）
+### 5.2 How to Design Handoff Files (Key!)
 
-文件交接是多 Agent 协作的"契约"。本 demo 约定：
+File handoff is the "contract" of multi-agent collaboration. This demo's conventions:
 
-- **文件名语义化**：本 demo 实际文件名为 `financials.csv`（财报）、`stock_history.csv`（周线）、`fundamental.md`（基本面分析）……
-- **文件头带口径**：`fundamental.md` 写明数据来源、截止日、所用指标——下游不需要猜。
-- **一个任务一个产出物**：下游只依赖固定路径，找不到就说明上游没做（可据此定位 DAG 断点）。
+- **Semantic file names**: this demo's actual file names are `financials.csv` (financials), `stock_history.csv` (weekly prices), `fundamental.md` (fundamental analysis)...
+- **Definitions in the file header**: `fundamental.md` states the data source, as-of date, and indicators used — downstream doesn't need to guess.
+- **One task, one deliverable**: downstream depends only on fixed paths; a missing file means upstream didn't do its job (this pinpoints DAG breaks).
 
-> 小贴士：多 Agent 项目最容易翻车的地方就是"交接格式隐式约定"。**无论文件还是消息，都把格式写进任务描述或文件首部**。
+> Tip: the most common failure point in multi-agent projects is "implicitly agreed handoff formats". **Whether file or message, put the format into the task description or the file header**.
 
 ---
 
-## 6. 第五步：设计成员协作机制
+## 6. Step 5: Design the Member Collaboration Mechanism
 
-### 6.1 三种协作通道（`send_message`）
+### 6.1 Three Collaboration Channels (`send_message`)
 
-| 场景 | 用法 | 示例 |
+| Scenario | Usage | Example |
 |---|---|---|
-| 任务指令/开工通知 | Leader 广播 | `to="*"` →「数据任务先启动，其余任务等待数据就绪」 |
-| 成员间对齐 | 点对点 单播 | 分析师→数据员「确认下财报口径是季度还是年度」 |
-| 完成汇报 | 点对点 | 成员→Leader：`to="team-leader"` |
+| Task instructions / kickoff notice | Leader broadcast | `to="*"` → "Data task starts first; other tasks wait for data to be ready" |
+| Member alignment | point-to-point unicast | Analyst → Data Researcher "confirm whether the financial definition is quarterly or annual" |
+| Completion report | point-to-point | Member → Leader: `to="team-leader"` |
 
-### 6.2 协作协议（本项目约定）
+### 6.2 Collaboration Protocol (this project's agreement)
 
-- **开工信号**：Leader 广播任务清单，指派各自任务 ⇒ 成员 `view_task` 自查 → `claim_task(status=claimed)` 认领。
-- **完成信号**：成员把产物写入 `.team/` 对应目录 → `claim_task(status=completed)` → 汇报 Leader（附产物路径）。
-- **疑问通道**：数据口径等疑问直接 `send_message` 给相关成员；无法达成 → 升级 Leader。
-- **不轮询**：依赖完成会自动解锁并通知，成员不需要反复刷 `view_task`。
+- **Kickoff signal**: Leader broadcasts the task list and assigns tasks ⇒ members check `view_task` → claim via `claim_task(status=claimed)`.
+- **Completion signal**: member writes the deliverable to the corresponding `.team/` directory → `claim_task(status=completed)` → report to Leader (with deliverable path).
+- **Question channel**: data-definition questions go directly via `send_message` to the relevant member; if unresolvable → escalate to Leader.
+- **No polling**: dependencies unlock and notify automatically; members don't need to repeatedly refresh `view_task`.
 
-### 6.3 协作成功的关键行为
+### 6.3 Key Behaviors for Successful Collaboration
 
-- [ ] 依赖方主动同步"我已完成、产物在哪"
-- [ ] 被依赖方收到疑问及时回
-- [ ] 产物路径+摘要走消息通道，全文走 `.team/` 文件（消息传路径，不传正文）
+- [ ] Dependent parties proactively sync "I'm done, here's where the deliverable is"
+- [ ] Dependent-on parties respond to questions promptly
+- [ ] Deliverable path + summary go through the message channel; full text goes to `.team/` files (messages carry paths, not content)
 
 ---
 
-## 7. 第六步：设计 Leader 验收流程
+## 7. Step 6: Design the Leader Acceptance Process
 
-### 7.1 验收四件套（Leader 视角）
+### 7.1 The Four Acceptance Tools (Leader's perspective)
 
-| 动作 | 工具 | 何时做 |
+| Action | Tool | When |
 |---|---|---|
-| 查看任务全景 | `view_task(action=list)` | 随时，识别瓶颈/断链 |
-| 查看单个任务 | `view_task(action=get, task_id=...)` | 认领前 / 验收前 |
-| 阅读产出文件 | read `.team/` 下文件 | 验收质量时 |
-| 裁决通过与打回 | `verify_task(decision=pass/fail)` | 任务进入 in_review 后 |
+| View the full task board | `view_task(action=list)` | anytime, to identify bottlenecks/broken links |
+| View a single task | `view_task(action=get, task_id=...)` | before claiming / before acceptance |
+| Read deliverable files | read files under `.team/` | when accepting quality |
+| Rule pass/fail | `verify_task(decision=pass/fail)` | after the task enters in_review |
 
-### 7.2 本 demo 验收示例
+### 7.2 This Demo's Acceptance Examples
 
-- 数据任务：`view_task(get)` 核对 task-data → 读 CSV → 校验 5 列口径 → `pass`。
-- 分析任务：读 `analysis/` 三份分析 → 核对其引用的批数据指标与数据文件吻嘴 → `pass`。
-- 预测与报告：读 `deliverables/` 两份终稿 →「免责声明存在」「结构完整」→ `pass` → 交付。
+- Data task: `view_task(get)` to check task-data → read the CSV → verify field definitions → `pass`.
+- Analysis tasks: read the three analyses under `analysis/` → verify their cited sample metrics match the data files → `pass`.
+- Forecast and report: read the two final deliverables under `deliverables/` → "disclaimer present" and "structure complete" → `pass` → deliver.
 
-> 验收红线：**产出物缺失、口径错误、无免责声明 = 打回**。
+> Acceptance red line: **missing deliverable, wrong definitions, or no disclaimer = reject**.
 
 ---
 
-## 8. 平台能力与 demo 环节映射表
+## 8. Platform Capability & Demo Stage Mapping Table
 
-下表是**写给想学平台**的你：JiuwenSwarm 每个能力在本 demo 哪一环被用到。
+The table below is for **you who want to learn the platform**: where each JiuwenSwarm capability is used in this demo.
 
-| 平台能力 | 在本 demo 中对应环节 | 你可以在自己项目里怎么用 |
+| Platform Capability | Corresponding Stage in This Demo | How You Can Use It in Your Own Project |
 |---|---|---|
-| `build_team` | 创建「美股投研多Agent教学Demo」团队 | 用 team display_name 定项目主题，开启 worktree/共享工作区 |
-| `spawn_teammate` | 依次创建 6 个角色 Agent（每人带 desc 即"谁+专长+边界"） | 按目标树逐项创建角色，每个角色面对一个子目标 |
-| `create_task` | 建 task-data → 3 个分析 → forecast → report，用 `blocked_by` 织 DAG | 把"子目标"变成任务，用依赖表达先后与并行 |
-| `claim_task` | 成员自主认领（`status=claimed`），完成标记 `completed` | 让成员自行认领，体现协作而非派发 |
-| `view_task` | 全员随时看板：`[pending/blocked/in_progress/...]` | 用任务状态排 DAG 调度、识别瓶颈 |
-| `send_message` | 开工广播、成员对齐、完成汇报 | 广播(for-dir)/单播(点对点)，消息传路径不传正文 |
-| `.team/` 文件共享 | 交接 CSV/分析/预测/报告；写入deliverables | 规范目录与文件名，实现数据交接 |
-| `workspace_meta` lock/unlock | 多成员改同一文件前加锁（本 demo 终稿写入时用） | 防覆盖、保证共享文件一致 |
-| `verify_task` | Leader 验收 pass/fail，打回返工 | 建立质量门禁，多 Agent 闭环 |
+| `build_team` | Creates the "US Equity Research Multi-Agent Teaching Demo" team | Use the team display_name to set the project theme; enable worktree / shared workspace |
+| `spawn_teammate` | Creates the 6 role agents in sequence (each with a desc = "who + expertise + boundaries") | Create roles one by one against the goal tree; each role faces one sub-goal |
+| `create_task` | Builds task-data → 3 analyses → forecast → report, weaving the DAG with `blocked_by` | Turn "sub-goals" into tasks; use dependencies to express sequencing and parallelism |
+| `claim_task` | Members claim autonomously (`status=claimed`), mark `completed` when done | Let members claim their own work — collaboration rather than assignment |
+| `view_task` | Everyone's anytime board: `[pending/blocked/in_progress/...]` | Use task states to schedule the DAG and identify bottlenecks |
+| `send_message` | Kickoff broadcast, member alignment, completion reports | Broadcast (for direction) / unicast (point-to-point); messages carry paths, not content |
+| `.team/` file sharing | Handoff of CSV/analysis/forecast/report; writes to deliverables | Standardize directories and file names for data handoff |
+| `workspace_meta` lock/unlock | Lock before multiple members edit the same file (used when writing final deliverables in this demo) | Prevent overwrites, keep shared files consistent |
+| `verify_task` | Leader acceptance pass/fail; reject for rework | Establish a quality gate for a closed multi-agent loop |
 
-> 以上映射也是交付物的关键：学员若要验证平台能力，照着映射表逐项在 demo 里能找到现成用法。
+> This mapping is also key for the deliverables: learners who want to verify platform capabilities can find ready-made usage in the demo by following the table item by item.
 
 ---
 
-## 9. 5 分钟上手：复刻你的第一个多 Agent 项目
+## 9. 5-Minute Quick Start: Reproduce Your First Multi-Agent Project
 
-> 目标：5 分钟内搭起一个「输入公司 → 数据 → 三路分析 → 综报」的最小闭环。
+> Goal: build a minimal closed loop of "input company → data → three analyses → combined report" within 5 minutes.
 
-**Step 1（约 30 秒）：想清楚你要什么**
-- 写出原始需求一句话 → 用 2.1 的目标拆解方法拆成 3~5 个子目标。
+**Step 1 (~30 seconds): clarify what you want**
+- Write your raw requirement in one line → decompose it into 3-5 sub-goals using the method in 2.1.
 
-**Step 2（约 1 分钟）：建团队 + 建角色**
+**Step 2 (~1 minute): build the team + roles**
 ```text
-build_team(display_name="我的多Agent项目")
-spawn_teammate(name="data-1", desc="数据工程师：负责样本数据；不负责分析")
-spawn_teammate(name="analyst-1", desc="分析师：负责分析；不负责数据")
-spawn_teammate(name="synth-1", desc="综合员：负责汇总出报告")
+build_team(display_name="My Multi-Agent Project")
+spawn_teammate(name="data-1", desc="Data engineer: responsible for sample data; NOT responsible for analysis")
+spawn_teammate(name="analyst-1", desc="Analyst: responsible for analysis; NOT responsible for data")
+spawn_teammate(name="synth-1", desc="Synthesizer: responsible for aggregating into a report")
 ```
-> desc 模板：**谁 + 专长 + 负责输出 + 不负责什么**。
+> desc template: **who + expertise + output responsibility + what you are NOT responsible for**.
 
-**Step 3（约 1 分钟）：建 DAG**
+**Step 3 (~1 minute): build the DAG**
 ```text
-create_task(task-data,    blocked_by=无)
+create_task(task-data,    blocked_by=none)
 create_task(task-analyst, blocked_by=task-data)
 create_task(task-report,   blocked_by=task-analyst)
 ```
-> 三行代码即表达"先数据 → 再分析 → 后报告"。
+> Three lines express "data first → then analysis → then report".
 
-**Step 4（约 1 分钟）：定交接目录**
+**Step 4 (~1 minute): define the handoff directories**
 ```text
-.team/input/     ← 上游写
-.team/output/    ← 下游读
+.team/input/     ← upstream writes
+.team/output/    ← downstream reads
 ```
-> 每个任务描述中写明"产出写到哪个目录、文件名是什么"。
+> In each task description, state "which directory the output goes to and what the file name is".
 
-**Step 5（约 1.5 分钟）：通知开工 + 尾声验收**
+**Step 5 (~1.5 minutes): kick off + final acceptance**
 ```text
-send_message(to="*", content="数据任务先启动，其他等待解锁")
-# 等成员完成后：
-view_task() → 检查 blocks 状态 → verify_task(pass)
+send_message(to="*", content="Data task starts first; others wait for unlock")
+# after members finish:
+view_task() → check blocks status → verify_task(pass)
 ```
 
-**完成！** 你已拥有一个最小可运行、可复课的多 Agent 项目。之后只需按本手册 §3-§7 逐步加丰富的角色与 DAG。
+**Done!** You now have a minimal runnable, reproducible multi-agent project. Afterwards, enrich the roles and DAG step by step following §3-§7 of this handbook.
 
 ---
 
-## 10. 附：本 demo 全程流程示意
+## 10. Appendix: Full Workflow Diagram of This Demo
 
 ```text
- 用户提交需求(单一公司)
+ User submits requirement (single company)
         │
         ▼
- ┌─ build_team：美股投研多Agent教学Demo ─┐
- │ spawn_teammate ×6（数据/三分析师/预测/主编）│
- │ create_task ×6（data→三分析→forecast→report）│
- └────────────────────────────────────────┘
-        │ 开工广播 send_message(to="*")
+ ┌─ build_team: US Equity Research Multi-Agent Teaching Demo ─┐
+ │ spawn_teammate ×6 (data / three analysts / forecaster / synthesizer) │
+ │ create_task ×6 (data→three analyses→forecast→report)        │
+ └──────────────────────────────────────────────────────────────┘
+        │ kickoff broadcast send_message(to="*")
         ▼
- data-researcher 认领 task-data → 写 demo-data/*.csv → completed
-        │（DAG:下游解锁）
+ data-researcher claims task-data → writes demo-data/*.csv → completed
+        │ (DAG: downstream unlocks)
         ▼
- ┌────────────────────────────────────────┐
- │ fundamental-analyst  → 基本面分析     │
- │ technical-analyst   → 技术面分析       │  ← 三路并行
- │ risk-sentinel       → 风险情绪分析     │
- └────────────────────────────────────────┘
-        │ 三路都完成后 forecast 解锁
+ ┌────────────────────────────────────────────────────────────┐
+ │ fundamental-analyst  → fundamental analysis               │
+ │ technical-analyst    → technical analysis                 │  ← three parallel tracks
+ │ risk-sentinel        → risk & sentiment analysis          │
+ └────────────────────────────────────────────────────────────┘
+        │ forecast unlocks after all three complete
         ▼
- forecaster → 目标价区间 / 三情景 / 分数卡 → outputs/
+ forecaster → target price range / three scenarios / scorecard → outputs/
         │
         ▼
- report-synthesizer（我）→ deliverables/投研报告 + 教学手册
+ report-synthesizer (me) → deliverables/ investment report + teaching handbook
         │
         ▼
- Leader 验收 (verify_task) → 交付用户（含免责声明）
+ Leader acceptance (verify_task) → deliver to user (with disclaimer)
 ```
 
 ---
 
-*本手册为教学 demo 产物，案例数据与结论均为教学样本，不构成投资建议。*
+*This handbook is a teaching demo deliverable; all case data and conclusions are teaching samples and do not constitute investment advice.*

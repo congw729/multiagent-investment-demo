@@ -1,122 +1,122 @@
-# AAPL 苹果 · 风险与市场情绪分析报告
+# AAPL Apple - Risk & Market Sentiment Analysis Report
 
-> 分析人：风险与情绪分析师（risk-sentinel）
-> 日期：2026-08-20
-> 数据来源：正式教学样本数据（`demo-data/financials.csv`、`demo-data/stock_history.csv`，均经实测落盘）+ 公开常识
+> Analyst: Risk & Sentiment Analyst (risk-sentinel)
+> Date: 2026-08-20
+> Data Source: official teaching sample data (`demo-data/financials.csv`, `demo-data/stock_history.csv`, both verified on disk) + public common knowledge
 >
-> ⚠️ **免责声明：本报告基于教学样本数据与公开常识生成，仅供教学演示使用，不构成任何投资建议。**
+> ⚠️ **Disclaimer: This report is generated based on teaching sample data and public common knowledge, for teaching demonstration only, and does NOT constitute investment advice.**
 
 ---
 
-## 一、正式样本数据要点（分析输入）
+## 1. Key Sample Data Points (Analysis Input)
 
-### 财务摘要（FY2022–FY2025）
+### Financial Summary (FY2022-FY2025)
 
-| 维度 | FY2022 | FY2023 | FY2024 | FY2025 | 教学观察 |
+| Dimension | FY2022 | FY2023 | FY2024 | FY2025 | Teaching Observation |
 |---|---|---|---|---|---|
-| 营收（百万美元） | 394,328 | 383,285 | 391,035 | 410,450 | FY2023 回落→FY2025 创新高 |
-| 净利润（百万美元） | 99,803 | 96,995 | 97,819 | 100,180 | 修复并创新高 |
-| 毛利率 % | 43.31 | 44.13 | 46.21 | 46.66 | 连续四年改善 |
-| 净利率 % | 25.31 | 25.31 | 24.62 | 24.44 | 高位略降 |
-| ROE % | 196.9 | 156.1 | 162.6 | 151.8 | 高位但趋势向下 |
-| 负债率 % | 85.6 | 82.4 | 82.0 | 81.7 | 缓慢去杠杆 |
-| 流动比率 | 0.88 | 0.99 | 1.05 | 1.06 | 持续修复 |
-| 经营现金流（百万） | 122,151 | 110,543 | 118,254 | 115,019 | 高且稳定 |
-| EPS（美元） | 6.11 | 6.44 | 6.31 | 6.55 | 样本期新高 |
-| 财年末 PE | 23.2 | 26.6 | 36.9 | 40.0 | 估值大幅抬升 |
-| 财年末 PB | 42.1 | 42.4 | 60.8 | 58.0 | 高位 |
+| Revenue (USD mn) | 394,328 | 383,285 | 391,035 | 410,450 | FY2023 dip → FY2025 new high |
+| Net income (USD mn) | 99,803 | 96,995 | 97,819 | 100,180 | Recovered and hit new high |
+| Gross margin % | 43.31 | 44.13 | 46.21 | 46.66 | Improved four consecutive years |
+| Net margin % | 25.31 | 25.31 | 24.62 | 24.44 | Slightly down from high levels |
+| ROE % | 196.9 | 156.1 | 162.6 | 151.8 | High but trending down |
+| Debt ratio % | 85.6 | 82.4 | 82.0 | 81.7 | Slow deleveraging |
+| Current ratio | 0.88 | 0.99 | 1.05 | 1.06 | Continuous repair |
+| Operating cash flow (USD mn) | 122,151 | 110,543 | 118,254 | 115,019 | High and stable |
+| EPS (USD) | 6.11 | 6.44 | 6.31 | 6.55 | New sample-period high |
+| FY-end PE | 23.2 | 26.6 | 36.9 | 40.0 | Significant valuation expansion |
+| FY-end PB | 42.1 | 42.4 | 60.8 | 58.0 | High level |
 
-### 股价周线（53 周，2025-09-15 ~ 2026-09-14）
+### Weekly Price Data (53 weeks, 2025-09-15 ~ 2026-09-14)
 
-- 区间：开盘 228.76 → 期末 276.11，**区间涨幅约 +21.1%**；期间最高 280.29、最低 218.39
-- 构造走势：**升（→243 区间）→ 升（→254）→ 回调（→244）→ 企稳回升 → 再升（8-9 月创样本新高 280）**
-- 量能：上行段普遍放量（如 2026-08-03 周放量至 1.46 亿股），回调段缩量，量价配合基本健康；期末两周（09-07、09-14）量能放大（0.94 亿、1.34 亿股）且价格在 276-280 高位震荡，呈高位活跃特征
-
----
-
-## 二、风险因素清单（非财务维度，共 5 项）
-
-### 1. 监管与政策风险 —— 影响程度：**高**
-
-- **理由**：苹果是全球化平台型公司，长期处于监管焦点：
-  - App Store 佣金制度、「侧载」与互操作性要求面临欧盟 DMA、美国及多国反垄断诉讼压力
-  - 若裁决不利，可能被迫开放生态、压缩服务业务高毛利来源——样本中毛利率逐年抬升至 46.66%，服务类业务贡献是关键支撑
-  - AI 功能（云侧/端侧）还面临各国数据合规与 AI 治理新规的增量不确定
-- **教学提示**：头部平台型科技公司的监管敞口属于最高权重非财务风险类别
-
-### 2. 供应链集中与地缘政治风险 —— 影响程度：**高**
-
-- **理由**：
-  - 生产高度依赖中国代工体系（富士康等），先进芯片依赖台积电制程，供应链地理集中度高
-  - 中美科技博弈、关税升级、芯片出口管制若加剧，将推高成本、拉长交付周期、扰动收入节奏
-  - 样本负债率 81~86%（高），但经营现金流 >1100 亿美元/年 缓冲能力极强，可对冲部分成本性冲击，但无法对冲断供性风险
-- **教学提示**：供应链集中度是全球化消费电子公司最典型的非财务风险敞口
-
-### 3. 竞争格局恶化风险 —— 影响程度：**中**
-
-- **风险**：高端智能手机份额面临华为、三星等争夺；AI 生态（Apple Intelligence）相对 OpenAI / Google / Microsoft 起步偏晚，若产品体验与叙事不及预期，将影响换机周期与估值溢价
-- **数据佐证**：净利率自 FY2022 的 25.31% 缓降至 FY2025 的 24.44%，提示竞争性投入（研发 / 营销）对利润弹性的挤出
-- **影响**：中长周期维度看，产品创新节奏决定增长天窗
-
-### 4. 宏观与估值风险 —— 影响程度：**中**
-
-- **风险**：
-  - 消费电子属可选消费，宏观走弱 / 通胀反复时出货量承压——样本 FY2023、FY2024 营收连续两年徘徊即是写照
-  - **财年末 PE 从 23.2 抬升至 40.0（两年近翻倍）、PB 高至 58-61**，估值已隐含较乐观的 AI 增长预期；若叙事兑现不及预期，存在「戴维斯双杀」估值回归风险
-- 高估值单票对利率与风险偏好的边际变化极为敏感
-
-### 5. 需求集中与增长依赖风险 —— 影响程度：**低-中**（取 **中低**）
-
-- **风险**：收入结构仍以 iPhone 为绝对主体的产品依赖，若换机周期弱于预期或产品创新平淡，增长动能减弱
-- **缓解**：服务业务 + 可穿戴 + AI 产品梯队已构成多元化缓冲，集中度风险正在缓释（FY2025 净利润已创新高即是佐证）
+- Range: opened at 228.76 → ended at 276.11, **period gain approx. +21.1%**; intra-period high 280.29, low 218.39
+- Constructed trajectory: **up (→243 zone) → up (→254) → pullback (→244) → stabilization and recovery → up again (Aug-Sep new sample high 280)**
+- Volume: up-legs generally showed expansion (e.g., week of 2026-08-03 expanded to 146M shares), pullback legs shrank — volume-price cooperation basically healthy; final two weeks (09-07, 09-14) saw higher volume (94M, 134M shares) with price oscillating at highs of 276-280, showing high-level active characteristics
 
 ---
 
-## 三、市场情绪判断
+## 2. Risk Factor List (Non-Financial Dimensions, 5 Items)
 
-**判断：中性偏乐观（谨慎乐观）**
+### 1. Regulatory & Policy Risk - Impact: **High**
 
-| 维度 | 观察（基于正式样本） | 解读 |
+- **Rationale**: Apple is a global platform company under long-term regulatory scrutiny:
+  - App Store commission structure, "sideloading" and interoperability requirements face EU DMA, US and multi-country antitrust litigation pressure
+  - An adverse ruling could force opening up the ecosystem and compress the high-margin services revenue — in the sample, gross margin rose year by year to 46.66%, with services contribution a key support
+  - AI features (cloud/on-device) also face incremental uncertainty from data compliance and AI governance rules across countries
+- **Teaching note**: regulatory exposure of leading platform tech companies is the highest-weight non-financial risk category
+
+### 2. Supply Chain Concentration & Geopolitical Risk - Impact: **High**
+
+- **Rationale**:
+  - Production is highly dependent on China-based contract manufacturing (Foxconn etc.); advanced chips depend on TSMC processes — high geographic supply chain concentration
+  - If US-China tech tensions, tariff escalation, or chip export controls intensify, costs rise, delivery cycles lengthen, and revenue cadence is disrupted
+  - Sample debt ratio 81-86% (high), but operating cash flow >USD 110B/year provides extremely strong buffer — can hedge partial cost shocks but cannot hedge supply-cut-off risk
+- **Teaching note**: supply chain concentration is the most typical non-financial risk exposure for global consumer electronics companies
+
+### 3. Intensifying Competition Risk - Impact: **Medium**
+
+- **Risk**: high-end smartphone share is contested by Huawei, Samsung etc.; the AI ecosystem (Apple Intelligence) started relatively late vs. OpenAI / Google / Microsoft — if product experience and narrative disappoint, upgrade cycles and valuation premium are affected
+- **Data evidence**: net margin eased from 25.31% (FY2022) to 24.44% (FY2025), suggesting competitive investment (R&D / marketing) squeezing profit elasticity
+- **Impact**: over the medium-to-long term, product innovation cadence determines the growth window
+
+### 4. Macro & Valuation Risk - Impact: **Medium**
+
+- **Risk**:
+  - Consumer electronics is discretionary; shipments come under pressure when macro weakens / inflation recurs — the sample's flat revenue in FY2023 and FY2024 is an illustration
+  - **FY-end PE rose from 23.2 to 40.0 (nearly doubled in two years), PB as high as 58-61** — valuation already prices in a fairly optimistic AI growth expectation; if the narrative delivery disappoints, there is "Davis double-kill" de-rating risk
+  - High-valuation single stocks are extremely sensitive to marginal changes in rates and risk appetite
+
+### 5. Demand Concentration & Growth Dependency Risk - Impact: **Low-Medium** (taken as **medium-low**)
+
+- **Risk**: revenue remains heavily iPhone-dependent in product terms; if upgrade cycles disappoint or product innovation is tepid, growth momentum weakens
+- **Mitigation**: services + wearables + AI product pipeline already form a diversified buffer; concentration risk is easing (FY2025 net income hitting a new high is evidence)
+
+---
+
+## 3. Market Sentiment Assessment
+
+**Judgment: neutral-to-bullish (cautiously optimistic)**
+
+| Dimension | Observation (based on official sample) | Interpretation |
 |---|---|---|
-| 价格动量 | 升→升→回调→企稳→再升，8-9 月创 280 新样本高点 | 多头占优，趋势完好 |
-| 量能结构 | 上涨放量、回调缩量；期末高位放量震荡 | 量价配合健康，但高位交投活跃需警惕分歧 |
-| 基本面动能 | 营收 / 净利 / EPS 逐级创新高，毛利四连升 | 有基本面支撑 |
-| 估值信号 | PE 40.0 / PB 58.0 处高位 | 情绪偏乐观，透支部分预期 |
-| 外部叙事 | AI 叙事驱动板块乐观；通胀/利率与地缘仍是阴影 | 乐观中存在结构性隐忧 |
+| Price momentum | Up → up → pullback → stabilize → up again; Aug-Sep new sample high of 280 | Bulls dominant, trend intact |
+| Volume structure | Expansion on up-legs, contraction on pullbacks; high-level high-volume oscillation at period end | Volume-price cooperation healthy, but active high-level trading warrants divergence caution |
+| Fundamental momentum | Revenue / net income / EPS hitting successive new highs, gross margin up four straight years | Supported by fundamentals |
+| Valuation signal | PE 40.0 / PB 58.0 at high levels | Sentiment leans bullish, some expectations priced in |
+| External narrative | AI narrative drives sector optimism; inflation/rates and geopolitics remain shadows | Structural concerns within optimism |
 
-**结论**：市场情绪处于**乐观偏谨慎**区间——动量与基本面偏乐观，但估值高企使价格对负面催化高度敏感，需防范「高位放量滞涨 → 快速修整」。
-
----
-
-## 四、综合风险评级
-
-**综合风险评级：中（偏中高）**
-
-- **理由**：公司质地优（盈利修复、毛利新高、现金流充裕、流动比率修复至 1.06），经营层风险可控；但**监管高敞口 + 供应链集中 + 估值两年翻倍 + 竞争加剧**四项非财务风险叠加，收益与风险的不对称性上行——上行依赖 AI 叙事，下行受监管与估值双重牵制。
+**Conclusion**: market sentiment is in the **optimistic-but-cautious** zone — momentum and fundamentals lean bullish, but elevated valuation makes price highly sensitive to negative catalysts; watch for "high-level high-volume stall → rapid correction."
 
 ---
 
-## 五、教学层面操作及仓位提示（仅教学讨论）
+## 4. Overall Risk Rating
 
-> ⚠️ 以下仅作教学演示框架讨论，不构成任何投资建议。
+**Overall risk rating: Medium (leaning medium-high)**
 
-1. **操作思路（教学案例）**：若采用「核心 + 卫星」配置框架，AAPL 样本处上升趋势且基本面扎实，可作**优质核心持仓**候选；但估值处高位区，**不建议追涨**，适合**回调分批 / 定投**布局。
-2. **仓位纪律**：单一标的仓位建议 ≤ 组合总仓 **10%-15%**；高估值单票设仓位上限本身就是最直接的风控纪律。
-3. **止损 / 降仓信号**：周线有效跌破关键技术支撑（参考技术面分析给出的支撑价位带）、或监管 / 宏观出现实质利空时，应降回低配，避免均摊加仓。
-4. **情景提示**：乐观情景（AI 兑现 + 监管平稳、监管有利）可考虑上修；悲观情景（监管不利裁决 + 供应链断供风险）需主动降仓控制回撤。
+- **Rationale**: company quality is good (earnings recovery, record gross margin, ample cash flow, current ratio repaired to 1.06), operational risk controllable; however, **high regulatory exposure + supply chain concentration + valuation doubling in two years + intensifying competition** combine, making the upside/downside asymmetry unfavorable — upside depends on the AI narrative, downside is restrained by both regulation and valuation.
 
 ---
 
-## 六、不确定性与假设说明
+## 5. Teaching-Level Positioning & Position-Sizing Notes (Teaching Discussion Only)
 
-- **数据性质**：本报告全部依托教学用生成样本（财务与行情均为构造数据、非实时），结论仅用于教学演示。
-- **假设**：
-  - 未来 3-6 个月无系统性重大黑天鹅（金融体系、供应链断供级事件）；
-  - 监管事件为渐进式而非突发性颠覆（若突发不利裁决，综合风险评级应上调至「高」）；
-  - AI 竞争格局与市场叙事基本保持现状；
-  - 宏观利率环境不发生极端转向（如再度大幅加息）。
-- **局限**：非财务维度的监管裁决、地缘事件无法完全从样本数据覆盖，采用公开常识推断，存在时效性局限；市场情绪判定基于样本行情技术特征 + AI 叙事常识，主观性较强。
+> ⚠️ The following is only a teaching demonstration framework discussion and does NOT constitute any investment advice.
+
+1. **Approach (teaching case)**: under a "core + satellite" allocation framework, AAPL sample is in an uptrend with solid fundamentals — a candidate for **high-quality core holding**; but with valuation in a high zone, **chasing is not recommended**; suitable for **pullback staged / DCA** positioning.
+2. **Position discipline**: single-name position suggested ≤ **10%-15%** of total portfolio; setting a position cap on a high-valuation single stock is itself the most direct risk-control discipline.
+3. **Stop-loss / de-rating signals**: weekly close effectively breaking key technical support (see support zone from the technical analysis) or substantive regulatory/macro negatives — reduce to underweight, avoid averaging down.
+4. **Scenario note**: in the bullish scenario (AI delivery + benign regulation) consider upgrading; in the bearish scenario (adverse regulatory ruling + supply chain disruption) proactively reduce positions to control drawdown.
 
 ---
 
-*本报告由 risk-sentinel 基于教学样本数据与公开常识整理，供 JiuWenSwarm 多 Agent 教学演示使用，不构成任何投资建议。*
+## 6. Uncertainties & Assumption Notes
+
+- **Data nature**: this report relies entirely on teaching-generated samples (both financials and market data are constructed, non-real-time); conclusions are for teaching demonstration only.
+- **Assumptions**:
+  - No systemic black swan (financial-system or supply-chain-disruption level) in the next 3-6 months;
+  - Regulatory events are gradual rather than sudden/disruptive (if a sudden adverse ruling occurs, overall risk rating should be upgraded to "High");
+  - AI competitive landscape and market narrative largely stay as-is;
+  - No extreme macro rate turn (e.g., renewed aggressive hikes).
+- **Limitations**: regulatory rulings and geopolitical events in non-financial dimensions cannot be fully covered by sample data and are inferred from public common knowledge, with timeliness limitations; the sentiment judgment is based on sample price-volume technical features + AI-narrative common knowledge, which is subjective.
+
+---
+
+*This report was compiled by risk-sentinel based on teaching sample data and public common knowledge for the JiuWenSwarm multi-agent teaching demonstration; it does NOT constitute any investment advice.*

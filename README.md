@@ -1,153 +1,153 @@
-# 美股投研多 Agent 教学 Demo
+# US Equity Research Multi-Agent Teaching Demo
 
-> 基于 **JiuwenSwarm 多 Agent 平台**搭建的完整教学项目：六名 Agent 分工协作，完成一家上市公司的财报基本面分析、技术面分析、风险情绪分析，最终综合给出未来股价预测区间，并产出《投研报告》与《JiuWen 多 Agent 开发教学手册》。
+> A complete teaching project built on the **JiuwenSwarm Multi-Agent Platform**: six agents collaborate to perform fundamental analysis, technical analysis, and risk/sentiment analysis for a listed company, then synthesize a future price forecast range, producing the *Investment Research Report* and the *JiuWen Multi-Agent Development Handbook*.
 
-> ⚠️ **免责声明**：本项目全部数据为**本地生成的教学样本数据**（非实时、非真实行情），所有分析结论与预测区间均为多 Agent 教学流程的算法输出，**仅供教学演示、不构成任何投资建议**。据此操作，风险自负。
+> ⚠️ **Disclaimer**: All data in this project are **locally generated teaching sample data** (not real-time, not real market data). All analysis conclusions and forecast ranges are algorithmic outputs of the multi-agent teaching workflow, **for teaching demonstration only and NOT investment advice**. Any trading based on this project is at your own risk.
 
 ---
 
-## 一、项目简介
+## 1. Project Overview
 
-本项目演示了如何在 JiuwenSwarm 平台上设计并落地一个多 Agent 协作项目。以「美股投研」为业务场景，用户输入一家指定上市公司（本 demo 以 **AAPL 苹果**为教学样本标的），六名 Agent 按任务 DAG 分工协作：
+This project demonstrates how to design and run a multi-agent collaboration project on the JiuwenSwarm platform. Using "US equity research" as the business scenario, the user inputs a target listed company (this demo uses **AAPL (Apple)** as the teaching sample), and six agents collaborate according to the task DAG:
 
-1. **数据采集员**（data-researcher）：生成并校验本地样本数据集（财报 CSV + 历史股价 CSV）
-2. **基本面分析师**（fundamental-analyst）：解读财务报告，输出基本面评分与估值判断
-3. **技术分析师**（technical-analyst）：基于历史价格做趋势与动量分析，输出趋势评级与关键价位
-4. **风险与情绪分析师**（risk-sentinel）：从舆情、政策、行业竞争等非财务维度评估风险
-5. **预测综合员**（forecaster）：综合三路分析，输出目标价区间、概率评分卡与多情景推演
-6. **报告主编**（report-synthesizer）：整合全部交付物，产出《投研报告》与《教学手册》
+1. **Data Researcher** (data-researcher): Generates and validates local sample datasets (financial CSV + historical price CSV)
+2. **Fundamental Analyst** (fundamental-analyst): Interprets financial reports, outputs a fundamental score and valuation judgment
+3. **Technical Analyst** (technical-analyst): Performs trend and momentum analysis on historical prices, outputs a trend rating and key price levels
+4. **Risk & Sentiment Analyst** (risk-sentinel): Assesses risk from non-financial dimensions such as news sentiment, policy, and industry competition
+5. **Forecaster** (forecaster): Synthesizes the three analysis tracks, outputs the target price range, probability scorecard, and multi-scenario projection
+6. **Report Synthesizer** (report-synthesizer): Integrates all deliverables and produces the *Investment Research Report* and the *Teaching Handbook*
 
-> 项目目标不是真实投资建议，而是**演示平台能力**：`build_team`、`spawn_teammate`、任务 DAG、成员自主认领、`send_message` 协作、`.team/` 文件交接、Leader 验收交付。全流程离线可复现、样本数据生成。
+> The project goal is not real investment advice, but to **demonstrate platform capabilities**: `build_team`, `spawn_teammate`, task DAG, autonomous task claiming, `send_message` collaboration, `.team/` file handoffs, and Leader acceptance/delivery. The entire workflow is offline-reproducible with sample data.
 
-### 本 demo 核心结论（教学样本输出）
+### Core Conclusion of This Demo (Teaching Sample Output)
 
-| 维度 | 结论 |
+| Dimension | Conclusion |
 |---|---|
-| 基本面 | 72/100 良好（质地优、估值贵） |
-| 技术面 | 看多（中期上升通道，短线中性偏多） |
-| 风险与情绪 | 中偏高（监管+供应链+估值高位） |
-| 综合预测 | 目标区间 **215–310 美元**，核心区间 245–290，中枢约 **262 美元**（较现价约 -5%） |
-| 三情景 | 乐观 ~300 / 基准 ~270 / 悲观 ~205 |
+| Fundamental | 72/100 good (solid quality, expensive valuation) |
+| Technical | Bullish (mid-term uptrend channel, short-term neutral-to-bullish) |
+| Risk & Sentiment | Medium-to-high (regulation + supply chain + high valuation) |
+| Combined Forecast | Target range **USD 215-310**, core range 245-290, weighted mid-point approx. **USD 262** (approx. -5% vs. current price) |
+| Three Scenarios | Bullish ~300 / Base ~270 / Bearish ~205 |
 
 ---
 
-## 二、多 Agent 架构说明
+## 2. Multi-Agent Architecture
 
-### 2.1 团队成员分工
+### 2.1 Team Members and Responsibilities
 
-| 成员 | 角色 | 核心职责 |
+| Member | Role | Core Responsibility |
 |---|---|---|
-| team-leader | 项目负责人（教学总控） | 组建团队、拆解任务 DAG、协调协作、验收交付、教学讲解 |
-| data-researcher | 数据采集员 | 准备与清洗本地样本数据集（财报/股价 CSV） |
-| fundamental-analyst | 基本面分析师 | 财务报告解读、基本面评分、估值判断 |
-| technical-analyst | 技术分析师 | K 线形态、趋势、动量指标、支撑/阻力位 |
-| risk-sentinel | 风险与情绪分析师 | 舆情、政策、行业竞争等非财务风险与情绪评估 |
-| forecaster | 预测综合员 | 综合三路结论，输出目标价区间、评分卡、情景推演 |
-| report-synthesizer | 报告主编 | 整合《投研报告》与《教学手册》 |
+| team-leader | Project Lead (Teaching Controller) | Builds the team, decomposes the task DAG, coordinates collaboration, accepts deliverables, delivers teaching |
+| data-researcher | Data Researcher | Prepares and cleans local sample datasets (financial/price CSV) |
+| fundamental-analyst | Fundamental Analyst | Interprets financial reports, fundamental scoring, valuation judgment |
+| technical-analyst | Technical Analyst | Candlestick patterns, trend, momentum indicators, support/resistance levels |
+| risk-sentinel | Risk & Sentiment Analyst | Non-financial risk and sentiment assessment: news, policy, industry competition |
+| forecaster | Forecaster | Synthesizes three tracks, outputs target price range, scorecard, scenario projection |
+| report-synthesizer | Report Synthesizer | Integrates the *Investment Research Report* and the *Teaching Handbook* |
 
-### 2.2 任务 DAG 与依赖
+### 2.2 Task DAG and Dependencies
 
 ```
-task-data（数据就绪，第一棒）
-   ├── task-fundamental（基本面分析，依赖数据）
-   ├── task-technical（技术面分析，依赖数据）
-   └── task-risk（风险与情绪分析，依赖数据）
-            │  （三路分析可并行）
+task-data (data ready, first stage)
+   ├── task-fundamental (fundamental analysis, depends on data)
+   ├── task-technical (technical analysis, depends on data)
+   └── task-risk (risk & sentiment analysis, depends on data)
+            │  (the three analysis tracks run in parallel)
             ▼
-      task-forecast（综合预测，依赖三路分析完成）
+      task-forecast (combined forecast, depends on all three analyses)
             ▼
-      task-report（整合报告+教学手册，最终交付）
+      task-report (integrated report + handbook, final delivery)
 ```
 
-### 2.3 平台能力映射
+### 2.3 Platform Capability Mapping
 
-| 平台能力 | 本 demo 应用环节 |
+| Platform Capability | Where It Is Used in This Demo |
 |---|---|
-| `build_team` / `spawn_teammate` | 组建六名 Agent 团队 |
-| `create_task` 任务 DAG | 数据 → 三路并行分析 → 综合 → 报告 |
-| 成员自主认领 | 各分析师认领各自分析任务 |
-| `send_message` 协作 | 数据就绪广播、结论汇总、阻塞升级 |
-| `.team/` 文件交接 | CSV 数据、分析 md、预测 md、报告在成员间流转 |
-| Leader 验收交付 | 数据解锁确认、最终交付验收 |
+| `build_team` / `spawn_teammate` | Forms the six-agent team |
+| `create_task` task DAG | Data → three parallel analyses → synthesis → report |
+| Autonomous task claiming | Each analyst claims their own analysis task |
+| `send_message` collaboration | Data-ready broadcast, conclusion aggregation, blocker escalation |
+| `.team/` file handoff | CSV data, analysis markdown, forecast markdown, reports flow between members |
+| Leader acceptance/delivery | Data unlock confirmation, final deliverable acceptance |
 
 ---
 
-## 三、快速开始
+## 3. Quick Start
 
-### 3.1 环境要求
+### 3.1 Environment Requirements
 
-- Python 3.8+（用于运行样本数据生成脚本）
-- Git（用于版本管理）
-- JiuwenSwarm 平台（用于复现多 Agent 协作流程）
+- Python 3.8+ (to run the sample data generation script)
+- Git (for version management)
+- JiuwenSwarm platform (to reproduce the multi-agent collaboration workflow)
 
-### 3.2 复现数据生成
+### 3.2 Reproduce Data Generation
 
 ```bash
-# 生成教学样本数据（财报 + 历史股价 CSV）
+# Generate teaching sample data (financial + historical price CSV)
 python scripts/generate_sample_data.py
 ```
 
-生成结果输出到 `data/` 目录：
-- `data/financials.csv`：AAPL 近 4 财年（FY2022–FY2025）财务摘要
-- `data/stock_history.csv`：近 1 年周线 OHLCV（53 周）
+Output is written to the `data/` directory:
+- `data/financials.csv`: AAPL financial summary for the last 4 fiscal years (FY2022-FY2025)
+- `data/stock_history.csv`: weekly OHLCV for the past year (53 weeks)
 
-### 3.3 查看分析产物
+### 3.3 View Analysis Deliverables
 
 ```bash
-# 三路分析
-cat analysis/fundamental.md   # 基本面分析
-cat analysis/technical.md     # 技术面分析
-cat analysis/risk.md          # 风险与情绪分析
+# Three analysis tracks
+cat analysis/fundamental.md   # Fundamental analysis
+cat analysis/technical.md     # Technical analysis
+cat analysis/risk.md          # Risk & sentiment analysis
 
-# 综合预测
-cat outputs/forecast.md       # 目标价区间与情景推演
+# Combined forecast
+cat outputs/forecast.md       # Target price range and scenario projection
 
-# 最终交付物
-cat deliverables/investment-research-report.md   # 投研报告
-cat deliverables/jiuwen-multiagent-dev-manual.md # 教学手册
+# Final deliverables
+cat deliverables/investment-research-report.md   # Investment research report
+cat deliverables/jiuwen-multiagent-dev-manual.md # JiuWen multi-agent development handbook
 ```
 
-### 3.4 在 JiuwenSwarm 上复刻本项目
+### 3.4 Reproduce This Project on JiuwenSwarm
 
-完整的分步复刻教程见《JiuWen 多 Agent 开发教学手册》（`deliverables/jiuwen-multiagent-dev-manual.md`），涵盖：目标拆解 → 角色设计 → DAG 设计 → 交接设计 → 协作设计 → 验收设计，以及「5 分钟上手」快速复刻清单。
+See the *JiuWen Multi-Agent Development Handbook* (`deliverables/jiuwen-multiagent-dev-manual.md`) for the complete step-by-step reproduction tutorial, covering: goal decomposition → role design → DAG design → handoff design → collaboration design → acceptance design, plus a "5-minute quick start" checklist.
 
 ---
 
-## 四、目录说明
+## 4. Directory Structure
 
 ```
 repo/
-├── README.md                        # 项目简介、架构说明、快速开始、免责声明
-├── LICENSE                          # MIT 开源协议
-├── .gitignore                       # 排除临时文件、.DS_Store 等
-├── data/                            # 样本数据
-│   ├── financials.csv               # 财报摘要（FY2022–FY2025，14 字段）
-│   └── stock_history.csv            # 周线 OHLCV（53 周）
-├── analysis/                        # 三路分析
-│   ├── fundamental.md               # 基本面分析
-│   ├── technical.md                 # 技术面分析
-│   └── risk.md                      # 风险与情绪分析
-├── outputs/                         # 预测
-│   └── forecast.md                  # 综合预测（目标价区间+情景推演）
-├── deliverables/                    # 报告与手册
-│   ├── investment-research-report.md    # 投研报告
-│   └── jiuwen-multiagent-dev-manual.md  # JiuWen 多 Agent 开发教学手册
-└── scripts/                         # 生成脚本
-    └── generate_sample_data.py      # 样本数据生成脚本
+├── README.md                        # Project overview, architecture, quick start, disclaimer
+├── LICENSE                          # MIT open-source license
+├── .gitignore                       # Excludes temporary files, .DS_Store, etc.
+├── data/                            # Sample data
+│   ├── financials.csv               # Financial summary (FY2022-FY2025, 14 fields)
+│   └── stock_history.csv            # Weekly OHLCV (53 weeks)
+├── analysis/                        # Three analysis tracks
+│   ├── fundamental.md               # Fundamental analysis
+│   ├── technical.md                 # Technical analysis
+│   └── risk.md                      # Risk & sentiment analysis
+├── outputs/                         # Forecast
+│   └── forecast.md                  # Combined forecast (target price range + scenario projection)
+├── deliverables/                    # Reports and handbook
+│   ├── investment-research-report.md    # Investment research report
+│   └── jiuwen-multiagent-dev-manual.md  # JiuWen multi-agent development handbook
+└── scripts/                         # Generation scripts
+    └── generate_sample_data.py      # Sample data generation script
 ```
 
 ---
 
-## 五、免责声明
+## 5. Disclaimer
 
-本项目及其全部内容（数据、分析、预测、报告、手册）均为**教学演示用途**：
+This project and all of its content (data, analysis, forecasts, reports, handbook) are **for teaching demonstration purposes only**:
 
-- 所有财务与行情数据为**本地生成的构造样本**，非实时、非真实；
-- 所有分析结论、评分、目标价区间与情景推演均为**多 Agent 教学流程的算法输出**，不反映任何真实投资判断；
-- 本项目**不构成任何投资建议**，请勿据此进行真实交易决策。据此操作，风险自负。
+- All financial and market data are **locally generated constructed samples**, not real-time or real;
+- All analysis conclusions, scores, target price ranges, and scenario projections are **algorithmic outputs of the multi-agent teaching workflow** and do not reflect any real investment judgment;
+- This project **does NOT constitute investment advice**; do not make real trading decisions based on it. Any trading based on this project is at your own risk.
 
 ---
 
-## 六、License
+## 6. License
 
-本项目采用 [MIT License](LICENSE)，可自由使用、修改与分发（教学用途）。
+This project is licensed under the [MIT License](LICENSE) and may be freely used, modified, and distributed (for teaching purposes).

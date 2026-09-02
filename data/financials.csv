@@ -1,7 +1,7 @@
-﻿# AAPL 苹果 教学演示样本财务数据（非实时行情，不构成投资建议）
-# 金额单位: 百万美元; EPS: 美元/股; 比率: 百分数(43.31=43.31%)
-# 口径: ROE=净利/期末权益; 负债率=总负债/总资产; 流动比率=流动资产/流动负债
-# PE=财年末股价/当财年摊薄EPS; PB=财年末股价/每股净资产; FY2025 为样本估算
+# AAPL Apple - teaching demo sample financial data (not live market data; not investment advice)
+# Units: amounts in USD millions; EPS in USD per share; ratios as percentages (43.31 = 43.31%)
+# Definitions: ROE = net income / end-of-period equity; debt ratio = total liabilities / total assets; current ratio = current assets / current liabilities
+# PE = fiscal year-end price / diluted EPS for the fiscal year; PB = fiscal year-end price / book value per share; FY2025 is a sample estimate
 fiscal_year,fiscal_year_end,revenue_million_usd,net_income_million_usd,gross_margin_pct,net_margin_pct,roe_pct,debt_ratio_pct,current_ratio,operating_cash_flow_million_usd,eps_usd,fiscal_year_end_price_usd,pe_ratio,pb_ratio
 FY2022,2022-09-24,394328,99803,43.31,25.31,196.9,85.6,0.88,122151,6.11,142.0,23.2,42.1
 FY2023,2023-09-30,383285,96995,44.13,25.31,156.1,82.4,0.99,110543,6.44,171.0,26.6,42.4

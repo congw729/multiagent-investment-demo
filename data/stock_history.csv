@@ -1,6 +1,6 @@
-﻿# AAPL 苹果 教学演示样本周线行情（非实时行情，不构成投资建议）
-# 周期: 2025-09-15 起 每周一 共53周; OHLC 美元; volume 股
-# 构造: 5 段几何趋势+随机噪声, 仅用于技术分析教学
+# AAPL Apple - teaching demo sample weekly price history (not live market data; not investment advice)
+# Period: every Monday starting 2025-09-15, 53 weeks; OHLC in USD; volume in shares
+# Construction: 5 geometric trend segments + random noise, for technical analysis teaching only
 date,open,high,low,close,volume
 2025-09-15,228.755,230.844,227.999,228.0,119724971
 2025-09-22,228.408,230.877,227.591,229.117,95753747

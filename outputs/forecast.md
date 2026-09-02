@@ -1,170 +1,170 @@
-# AAPL 苹果 · 综合预测报告（目标价区间与情景推演）
+# AAPL Apple - Combined Forecast Report (Target Price Range & Scenario Projection)
 
-**分析人**：预测综合员（forecaster）
-**日期**：2026-08-20
-**输入**：`.team/analysis/fundamental.md`（基本面分析师）、`.team/analysis/technical.md`（技术分析师）、`.team/analysis/risk.md`（风险与情绪分析师）+ `.team/demo-data/financials.csv`、`stock_history.csv`（教学样本数据）
-**样本基准日**：2026-09-14，最新收盘 **276.11 美元**
+**Analyst**: Forecaster (forecaster)
+**Date**: 2026-08-20
+**Inputs**: `.team/analysis/fundamental.md` (Fundamental Analyst), `.team/analysis/technical.md` (Technical Analyst), `.team/analysis/risk.md` (Risk & Sentiment Analyst) + `.team/demo-data/financials.csv`, `stock_history.csv` (teaching sample data)
+**Sample Base Date**: 2026-09-14, latest close **USD 276.11**
 
-> ⚠️ **重要声明**：本报告基于**教学演示用构造样本数据**（财务与行情均为本地生成、非实时、非真实），所有量化假设仅用于展示预测方法论，**不构成任何投资建议**。请勿据此进行真实交易决策。
+> ⚠️ **Important Notice**: This report is based on **teaching demonstration constructed sample data** (financials and market data are locally generated, non-real-time, non-real). All quantitative assumptions are for demonstrating the forecasting methodology only and **do NOT constitute investment advice**. Do not make real trading decisions based on it.
 
 ---
 
-## 一、输入摘要：三路分析师结论提炼（不重复原始分析）
+## 1. Input Summary: Extracted Conclusions from the Three Analysts (without repeating the original analyses)
 
-| 维度 | 分析师 | 核心结论 | 关键数字 |
+| Dimension | Analyst | Core Conclusion | Key Figures |
 |---|---|---|---|
-| 基本面 | fundamental-analyst | 质地优（72/100 良好）、**估值贵**、安全边际不足 | 合理中枢约 242（35x）；悲观 207 / 乐观 276；当前较中枢溢价 13-15% |
-| 技术面 | technical-analyst | **看多**（中期上升通道），短线中性偏多、282 承压 | 支撑 262-266（MA20）/ 255-256（MA30）；压力 282-283；RSI 68.66，MACD 多头 |
-| 风险情绪 | risk-sentinel | 综合风险**中偏高**；情绪**中性偏乐观**；不建议追高 | 监管、供应链两项高风险；高位放量滞涨需警惕 |
+| Fundamental | fundamental-analyst | Solid quality (72/100 good), **expensive valuation**, insufficient margin of safety | Fair mid-point approx. 242 (35x); bearish 207 / bullish 276; current price at 13-15% premium to mid-point |
+| Technical | technical-analyst | **Bullish** (mid-term uptrend channel), short-term neutral-to-bullish, 282 caps gains | Support 262-266 (MA20) / 255-256 (MA30); resistance 282-283; RSI 68.66, MACD bullish |
+| Risk & Sentiment | risk-sentinel | Overall risk **medium-high**; sentiment **neutral-to-bullish**; chasing not advised | Regulation and supply chain are two high risks; watch high-level high-volume stall |
 
-**三路共识画像**：公司质地优秀（盈利、毛利、现金流扎实），中期趋势与情绪偏多；但**估值处于历史高位（PE ~42x / PB ~58x），整体边际不健康，任何负面催化都可能触发估值回归**。
-
----
-
-## 二、预测方法论（全部计算透明可复现）
-
-采用 **LLM 推理综合 + 两个可讲透明的简化定量模型**：
-
-1. **模型一：PEG 估值检验** —— 检验当前报价隐含的盈利增长是否与基本面支撑一致（"值不值得这个价"）。
-2. **模型二：PE×EPS 三情景加权**——对乐观/基准/悲观三种情景各赋予 EPS 与 PE 假设，算出目标位，再按概率加权得到中枢。
-
-> 方法论边界：PEG 与 PE 情景法均为教学级简化模型，忽略折现、分红、增发、汇率等细节，仅用于演示"假设 → 公式 → 输出"的透明推演过程。
+**Three-track consensus profile**: solid company quality (earnings, gross margin, cash flow all solid), mid-term trend and sentiment leaning bullish; however, **valuation is at historical highs (PE ~42x / PB ~58x), the overall risk-reward is unhealthy, and any negative catalyst could trigger valuation reversion**.
 
 ---
 
-## 三、模型一：PEG 估值检验（当前价格是否透支）
+## 2. Forecasting Methodology (All Calculations Transparent and Reproducible)
 
-### 输入
-- 最新收盘价：**276.11 美元**
-- FY2025 EPS（样本实际）：**6.55 美元** → 滚动 PE = 276.11 / 6.55 ≈ **42.2x**
-- FY2026E EPS（基本面分析师外推，中枢假设）：**6.90 美元**（按营收 +4~5% 推算，属于分析师的透明假设）→ 前瞻 PE ≈ **40.0x**
-- 基本面可见增速：营收 CAGR（FY22→FY25）仅 **+1.34%**；FY2026E EPS 同比约 **+5.3%**
+**LLM-reasoned synthesis + two explainable simplified quantitative models**:
 
-### 公式与输出
+1. **Model 1: PEG valuation test** — tests whether the earnings growth implied by the current quote is consistent with fundamental support ("is it worth the price").
+2. **Model 2: PE × EPS three-scenario weighting** — assigns EPS and PE assumptions to bullish/base/bearish scenarios, computes target levels, then probability-weights them to get the mid-point.
 
-| 目标 PEG | 隐含要求增速 = 前瞻PE / PEG | 与基本面可支撑增速(5.3%)对比 |
+> Methodology boundary: PEG and PE scenario methods are teaching-level simplified models that ignore discounting, dividends, dilution, FX, etc., and are only used to demonstrate a transparent "assumption → formula → output" derivation.
+
+---
+
+## 3. Model 1: PEG Valuation Test (Is the Current Price Overextended?)
+
+### Inputs
+- Latest close: **USD 276.11**
+- FY2025 EPS (actual in sample): **USD 6.55** → trailing PE = 276.11 / 6.55 ≈ **42.2x**
+- FY2026E EPS (fundamental analyst extrapolation, mid-point assumption): **USD 6.90** (derived from +4~5% revenue growth; the analyst's transparent assumption) → forward PE ≈ **40.0x**
+- Observable fundamental growth: revenue CAGR (FY22→FY25) only **+1.34%**; FY2026E EPS growth approx. **+5.3%**
+
+### Formula and Output
+
+| Target PEG | Implied Required Growth = Forward PE / PEG | vs. Fundamental Growth Support (5.3%) |
 |---|---|---|
-| 1.0（合理） | 40.0 / 1.0 = **40.0%** | 高出 7 倍以上，极端不匹配 |
-| 1.5（成长股合理中位数） | 40.0 / 1.5 = **26.7%** | 相差 5 倍以上 |
-| 2.0（高估值容忍上限） | 40.0 / 2.0 = **20.0%** | 仍相差近 4 倍 |
+| 1.0 (fair) | 40.0 / 1.0 = **40.0%** | More than 7x higher, extreme mismatch |
+| 1.5 (reasonable median for growth stocks) | 40.0 / 1.5 = **26.7%** | More than 5x higher |
+| 2.0 (high-valuation tolerance cap) | 40.0 / 2.0 = **20.0%** | Still nearly 4x higher |
 
-### 输出
-- 本节检验**当前 40x 前瞻 PE 隐含了"年增长 20%~40%"的极端乐观预期，而基本面可见增速仅 5% 上下**——PEG 口径下估值处于**明确高估区**（PEG_实际 = 40/5.3 ≈ **7.5**，常规 >2 即视为偏贵）。
-- **教学结论**：股价的大幅上涨主要由**估值倍率扩张**驱动（基本面分析师同样指出 FY2023→FY2025 股价 +53% 而 EPS 仅 +1.7%），因此**股价对"增长预期下修"与"风险偏好回落"极为敏感**。这与基本面"无安全边际"、技术面"高位放量滞涨"、风险面"戴维斯双杀风险"的判断相互印证。
+### Output
+- This test shows the **current 40x forward PE implies an extremely optimistic expectation of "20%-40% annual growth," while observable fundamental growth is only around 5%** — under the PEG framework, the valuation is in the **clearly expensive zone** (actual PEG = 40/5.3 ≈ **7.5**; conventionally >2 is already considered expensive).
+- **Teaching conclusion**: the sharp rise in the stock price is driven mainly by **valuation multiple expansion** (the fundamental analyst likewise notes FY2023→FY2025 price +53% vs. EPS only +1.7%). The stock price is therefore **highly sensitive to downward growth revisions and cooling risk appetite**. This corroborates the fundamental view ("no margin of safety"), the technical view ("high-level high-volume stall"), and the risk view ("Davis double-kill risk").
 
 ---
 
-## 四、模型二：PE × EPS 情景加权（目标价区间推导）
+## 4. Model 2: PE × EPS Scenario Weighting (Target Price Range Derivation)
 
-### 情景设计（三档，概率合计 100%）
+### Scenario Design (three tiers, probabilities sum to 100%)
 
-| 情景 | 概率 | 关键触发条件 | EPS 假设 | PE 假设 | 目标价=EPS×PE | 目标位（区间/中枢） |
+| Scenario | Probability | Key Trigger Conditions | EPS Assumption | PE Assumption | Target = EPS × PE | Target Level (Range / Mid-point) |
 |---|---|---|---|---|---|---|
-| **乐观** | 25% | 放量站稳 282.5（技术）；AI/服务业务超预期（基本面）；监管方向有利（风险） | 7.00（+6.9%） | 42~45x | 7.00×43 ≈ 301 | **290–310**（中枢 ≈300） |
-| **基准** | 50% | 282 下方震荡消化估值；盈利按 +4~5% 兑现；无重大黑天鹅 | 6.90（+5.3%） | 36~40x | 268~276 | **255–285**（中枢 ≈270） |
-| **悲观** | 25% | 跌破 262/255 中期支撑；监管不利裁决或供应链断供；财报增速 <2% | 6.40（-2.3%） | 30~33x | 192~211 | **195–225**（中枢 ≈205） |
+| **Bullish** | 25% | Volume-holding above 282.5 (technical); AI/services beat expectations (fundamental); favorable regulation (risk) | 7.00 (+6.9%) | 42-45x | 7.00×43 ≈ 301 | **290-310** (mid-point ≈300) |
+| **Base** | 50% | Consolidate below 282 to digest valuation; earnings delivered at +4~5%; no major black swan | 6.90 (+5.3%) | 36-40x | 268-276 | **255-285** (mid-point ≈270) |
+| **Bearish** | 25% | Break below 262/255 mid-term support; adverse regulatory ruling or supply chain disruption; earnings growth <2% | 6.40 (-2.3%) | 30-33x | 192-211 | **195-225** (mid-point ≈205) |
 
-### 概率加权（中枢计算）
+### Probability Weighting (Mid-point Calculation)
 
 ```
-加权中枢 = 300×0.25 + 270×0.50 + 205×0.25
-         = 75 + 135 + 51.25
-         = 261.25 ≈ 262 美元
+Weighted mid-point = 300×0.25 + 270×0.50 + 205×0.25
+                  = 75 + 135 + 51.25
+                  = 261.25 ≈ 262 USD
 ```
 
-与当前价 276.11 比较：**加权中枢 262 ≈ 现价 -5%**，方向偏谨慎（小幅估修）。
+Compared with the current price of 276.11: **weighted mid-point 262 ≈ -5% vs. current price**, a cautious (slightly de-rating) direction.
 
-### 目标区间汇总（未来 3–6 个月，即 2026-11 ~ 2027-03）
+### Target Range Summary (Next 3-6 Months, i.e., 2026-11 ~ 2027-03)
 
-| 口径 | 数值 | 说明 |
+| Measure | Value | Note |
 |---|---|---|
-| **宽区间（≈90%概率覆盖）** | **215 – 305 美元** | 悲观下沿 ~ 乐观上沿 |
-| **核心区间（约 65% 概率落点）** | **245 – 290 美元** | 中枢附近 1 个标准差带 |
-| **中枢值（概率加权）** | **262 美元** | 较现价约 **-5.1%** |
-| 上行空间（中枢） | +16%（至 305） | — |
-| 下行风险（中枢） | -22%（至 215） | — |
+| **Wide range (≈90% probability coverage)** | **USD 215-305** | Bearish floor ~ bullish ceiling |
+| **Core range (≈65% probability landing)** | **USD 245-290** | ~1 standard-deviation band around mid-point |
+| **Mid-point (probability weighted)** | **USD 262** | approx. **-5.1%** vs. current price |
+| Upside (from mid-point) | +16% (to 305) | — |
+| Downside (from mid-point) | -22% (to 215) | — |
 
-> 盈亏比约 **1 : 1.4**（上行 16% vs 下行 22%），**收益风险比不对称、偏下行**——与基本面"安全边际不足"、风险"防范高位放量滞涨"一致。
+> Risk/reward approx. **1 : 1.4** (upside 16% vs. downside 22%) — **asymmetric and downside-leaning**, consistent with fundamental "insufficient margin of safety" and risk "guard against high-level high-volume stall."
 
 ---
 
-## 五、涨跌概率与置信度
+## 5. Up/Down Probability and Confidence
 
-| 方向 | 概率 | 依据 |
+| Direction | Probability | Basis |
 |---|---|---|
-| 上涨（收盘 > 276.11） | **约 40%** | 乐观情景 25% + 基准情景中高过半的概率 |
-| 下跌（收盘 < 276.11） | **约 60%** | 基准中枢 270 < 现价 + 悲观情景 |
+| Up (close > 276.11) | **approx. 40%** | Bullish scenario 25% + a large part of base-scenario above mid |
+| Down (close < 276.11) | **approx. 60%** | Base mid-point 270 < current price + bearish scenario |
 
-- **置信度：中（65%）**。理由：① 三路结论内部存在方向性分歧（基本面偏空 vs 技术面偏多），冲突转化为高不确定；② 样本为构造数据、长度仅 53 周，参数外推能力有限；③ 监管/宏观黑天鹅无法从样本定价。
-
----
-
-## 六、三情景推演（未来 3–6 个月路径）
-
-### 乐观情景（概率 25%，目标 290–310，中枢 ≈300，+9%~+12%）
-- **触发条件**：周线**放量（周量 >110M 股）有效突破 282.5 并站稳**；AI 服务业务/新品类叙事强化（基本面 EPS 上调至 7.0+）；监管方向有利；美联储转鸽。
-- **路径**：先回踩 273-276 确认 → 放量突破 282-283 压力 → 打开 290-310 空间 → 高点 305-315。
-- **交叉验证**：技术面"突破买入情景"、风险面"AI 兑现可上修"、基本面"乐观 40x=276 以上即视为透支"——前两者支持，基本面温和不支持。
-
-### 基准情景（概率 50%，目标 255–285，中枢 ≈270，约 -0~+3%）
-- **触发条件**：盈利按 +4~5% 兑现；无重大监管事件（渐进式）；AI 竞争现状延续；利率稳定。
-- **路径**：股价在 262（MA20）~ 282（压力）之间宽幅整理，每次回踩 MA20 获支撑，冲高 280 上方受阻回落，以时间换空间消化估值。
-- **交叉验证**：技术面支撑/压力位全部落在该区间；基本面 240-276 敏感带下沿与区间底部相近；风险面"中性偏乐观、回调分批"。
-
-### 悲观情景（概率 25%，目标 195–235，中枢 ≈205，约 -25%）
-- **触发条件**：周线**跌破 MA20 262** 后加速，进一步**跌破 255-258（MA30/中期颈线）**；监管出现不利裁决（欧盟 DMA/反垄断重锤）；供应链断供或关税升级；财报 EPS 增速低于 3%。
-- **路径**：跌破 262 → 262 由支撑转压力 → 回踩 245→240 → 如基本面同步恶化（EPS 下修至 6.4，-2.3%）触及 200-215 区域 → **MA53(≈247) 失守卫视为中期趋势破坏，技术面止损逻辑与风险面"降仓信号"共振。**
-- **交叉验证**：基本面悲观档（PE 30x ≈ 207 中枢）；风险面"突发不利裁决应上调风险至'高'"；技术面"跌破 255 中期上升通道受损"。
+- **Confidence: Medium (65%)**. Reasons: ① internal directional disagreement among the three tracks (fundamental bearish-leaning vs. technical bullish), with the conflict translating into high uncertainty; ② the sample is constructed data of only 53 weeks, limiting parameter extrapolation; ③ regulatory/macro black swans cannot be priced from the sample.
 
 ---
 
-## 七、关键假设列表
+## 6. Three-Scenario Projection (Paths over the Next 3-6 Months)
 
-1. **盈利假设**：FY2026E EPS 中枢 **6.90 美元**（+5.3% yoy），乐观 7.00 / 悲观 6.40——基于基本面分析师对营收 +4-5% 的外推，属**分析师主观假设**，非样本给定。
-2. **估值假设**：情景 PE 介于 30–43x，对应历史 4 年估值带（23–40x）的上沿至次高区；悲观档回归历史中位数下沿，乐观假设估值扩张延续。
-3. **宏观假设**：未来 6 个月无系统性黑天鹅（金融体系/供应链断供级别），无极端利率转向（与 risk-sentinel 一致）。
-4. **监管假设**：监管事件为渐进式，无突发颠覆性不利裁决。
-5. **技术面假设**：MA20（262）与 MA30（255-258）支撑在基准情景有效；282-283 压力为短期上沿门禁。
-6. **情绪假设**：AI 竞争格局与市场叙事基本维持现状（风险分析员口径）。
-7. **无重大分红/回购/拆股等资本结构事件**对每股指标的冲击。
+### Bullish Scenario (probability 25%, target 290-310, mid-point ≈300, +9%~+12%)
+- **Triggers**: weekly **volume-holding effective breakout above 282.5 (weekly volume >110M shares)**; strengthened AI/services/new-category narrative (fundamental EPS raised to 7.0+); favorable regulation; Fed turning dovish.
+- **Path**: pullback to 273-276 to confirm → volume breakout of 282-283 resistance → open 290-310 space → highs 305-315.
+- **Cross-validation**: technical "breakout buy scenario" and risk "AI delivery can upgrade" support; fundamental "bullish 40x=276 or above is overextended" gives mild, not full, support.
+
+### Base Scenario (probability 50%, target 255-285, mid-point ≈270, approx. -0~+3%)
+- **Triggers**: earnings delivered at +4~5%; no major regulatory event (gradual); AI competitive landscape unchanged; stable rates.
+- **Path**: price ranges widely between 262 (MA20) and 282 (resistance), each MA20 pullback holds support, rallies above 280 stall and fade — digesting valuation with time.
+- **Cross-validation**: technical support/resistance all fall in this range; the fundamental 240-276 sensitive band's lower edge is near the range floor; risk "neutral-to-bullish, staged buy on pullbacks."
+
+### Bearish Scenario (probability 25%, target 195-235, mid-point ≈205, approx. -25%)
+- **Triggers**: weekly close **breaks MA20 262** then accelerates, further **breaks 255-258 (MA30 / mid-term neckline)**; adverse regulatory ruling (EU DMA / antitrust hammer); supply chain disruption or tariff escalation; EPS growth below 3%.
+- **Path**: break 262 → 262 flips from support to resistance → retrace 245→240 → if fundamentals deteriorate in tandem (EPS revised down to 6.4, -2.3%) reach the 200-215 zone → **loss of MA53 (≈247) is treated as mid-term trend damage; the technical stop-loss logic and the risk-side "reduce position" signal resonate.**
+- **Cross-validation**: fundamental bearish tier (PE 30x ≈ 207 mid-point); risk "sudden adverse ruling should upgrade risk to 'High'"; technical "break of 255 damages the mid-term uptrend channel."
 
 ---
 
-## 八、与三路结论的交叉验证（一致点与分歧点）
+## 7. Key Assumptions
 
-### ✅ 一致点（预测信号的"公因子"，置信加强）
-1. **"质地优、估值贵"**：基本面 72 分"良好但无安全边际"、技术面"高位放量滞涨"、风险面"PE 两年翻倍、情绪乐观透支"——三路均指向**基本面强 + 价格透支**的组合。
-2. **中期趋势偏多**：技术面上升通道/多头排列 + 风险面情绪中性偏乐观 + 基本面 FY2025 增长修复——三者都承认**中长期底部抬升**。
-3. **短线警戒区间**：技术面 282-283 压力、风险面"高位放量滞涨需防守"、基本面"当前 276 恰处乐观档"——**现价附近短线张力大**，我的预测把 276 放在基准中枢之上，正是对这一张力的反映。
+1. **Earnings assumption**: FY2026E EPS mid-point **USD 6.90** (+5.3% yoy), bullish 7.00 / bearish 6.40 — based on the fundamental analyst's extrapolation of +4-5% revenue growth, which is an **analyst subjective assumption**, not given in the sample.
+2. **Valuation assumption**: scenario PE between 30-43x, corresponding to the upper edge to second-highest zone of the 4-year historical valuation band (23-40x); the bearish tier reverts to the lower edge of the historical median, while the bullish scenario assumes valuation expansion continues.
+3. **Macro assumption**: no systemic black swan (financial-system / supply-chain disruption level) in the next 6 months; no extreme rate turn (consistent with risk-sentinel).
+4. **Regulatory assumption**: regulatory events are gradual, with no sudden disruptive adverse rulings.
+5. **Technical assumption**: MA20 (262) and MA30 (255-258) support holds in the base scenario; 282-283 resistance is the short-term upside gate.
+6. **Sentiment assumption**: AI competitive landscape and market narrative largely stay as-is (per the risk analyst).
+7. **No major capital-structure events** (dividends/buybacks/splits) impacting per-share metrics.
 
-### ⚠️ 分歧点（预测不确定性的来源）
-| 分歧 | 基本面 | 技术面 | 风险面 | 我的综合处理 |
+---
+
+## 8. Cross-Validation with the Three Tracks (Agreements and Disagreements)
+
+### ✅ Agreements (the "common factor" of the forecast signal; confidence enhanced)
+1. **"Solid quality, expensive valuation"**: fundamental 72 "good but no margin of safety", technical "high-level high-volume stall", risk "PE doubled in two years, sentiment optimism priced in" — all three point to a **strong fundamentals + overextended price** combination.
+2. **Mid-term trend bullish**: technical uptrend channel/bullish alignment + risk neutral-to-bullish sentiment + fundamental FY2025 growth recovery — all acknowledge **a rising medium-to-long-term base**.
+3. **Short-term caution zone**: technical 282-283 resistance, risk "defend against high-level high-volume stall", fundamental "current 276 sits exactly in the bullish tier" — **high short-term tension around the current price**; placing 276 above the base mid-point in my forecast reflects exactly this tension.
+
+### ⚠️ Disagreements (source of forecast uncertainty)
+| Disagreement | Fundamental | Technical | Risk | My Integrated Treatment |
 |---|---|---|---|---|
-| 目标估值中枢 | 40x 偏高，回归 35x → ~242 | 无目标价，看关键位（272以上偏强） | 无目标价，「回调分批」 | 取基本面锚 242 + 技术支撑 262 的交集，中枢 262（略偏基本面） |
-| 回调深度 | 悲观档 ~207（30x） | 最深支撑推进 255-258（MA30） | 参考技术支撑 | 悲观档按基本面 205，但用技术 255-258 作为第一道、MA53 215-247 作为第二道缓震 |
-| 上行空间 | 乐观档 276（40x，基本持平现价） | 突破 282 后看 290+ | AI 兑现可上修 | 乐观档 **290-310**（技术突破放大 + 基本面 EPS 上调） |
+| Target valuation mid-point | 40x too high, revert to 35x → ~242 | No target price; key levels (272+ bullish) | No target price; "staged buy on pullbacks" | Intersection of fundamental anchor 242 + technical support 262; mid-point 262 (slightly fundamental-leaning) |
+| Pullback depth | Bearish tier ~207 (30x) | Deepest support 255-258 (MA30) | Reference technical support | Bearish tier per fundamental 205, with technical 255-258 as first cushion and MA53 215-247 as second cushion |
+| Upside space | Bullish tier 276 (40x, roughly flat vs. current) | After 282 breakout, see 290+ | AI delivery can upgrade | Bullish tier **290-310** (technical breakout amplification + fundamental EPS upgrade) |
 
-### 我的裁决逻辑（LLM 综合）
-- **方向上**：中长期**谨慎偏多**（趋势与基本面未破坏），但**短期 3-6 个月偏谨慎**（估值高 + 利刃压力），故中枢比现价低约 5%；
-- **区间上**：用基本面估算锚定估值中枢（~242-270），用技术面支撑/压力修正关键价位（255-258 / 282-283），用风险面情景概率修正加权中枢；
-- **结论一句话**："好公司，贵的价格"——未来一个季度大概率**高位震荡消化**，若突破 282 则打开向 300 的空间，若失守 262 则向 240-215 回归。
-
----
-
-## 九、教学提示：本报告如何解读
-
-- 本报告是**演示「多 Agent 投研流水线综合环节」**的样板：上游三路报告 → 统一定价模型 → 情景→ 概率 → 结论；任何预测数字均可在（透明公式）与（输入假设）中复现。
-- **预测不是指规范化**：PEG、情景加权只是思想实验的工具，真实投资还需要纳入更多信息（实时行情、公司指引、估值模型深度测算、宏观模型等），本 demo 全部省略。
-- 给学员的要点：**「交叉验证」是本流程最可迁移的环节**——三路结论一致处增强信审，分歧处(映射为概率尾部风险)，比单一预测本身更值钱。
+### My Ruling Logic (LLM Synthesis)
+- **Direction**: medium-to-long term **cautiously bullish** (trend and fundamentals not damaged), but **short-term 3-6 months cautious** (high valuation + resistance tension), hence the mid-point is about 5% below the current price;
+- **Range**: anchor the valuation mid-point with the fundamental estimate (~242-270), refine key levels with technical support/resistance (255-258 / 282-283), and adjust the weighted mid-point with risk-scenario probabilities;
+- **Conclusion in one line**: "good company, expensive price" — the next quarter is most likely **high-level consolidation to digest valuation**; a breakout of 282 opens space toward 300, while losing 262 points to a 240-215 reversion.
 
 ---
 
-## 十、最终结论（教学摘要）
+## 9. Teaching Notes: How to Read This Report
 
-> ** AAPL 未来 3–6 个月目标价区间 215–310 美元，核心区间 245–290 美元，概率加权中枢约 262 美元（较现价 276.11 约 -5%）。**
-> **上涨概率约 40%，下跌概率约 60%，置信度中（65%）。**
-> **三情景：乐观 ~300（突破 282+AI 兑现），基准 ~270（高位震荡消化），悲观 ~205（跌破支撑+监管/黑天鹅）。**
+- This report is a template for **demonstrating the "synthesis stage of a multi-agent research pipeline"**: upstream three-track reports → unified pricing model → scenarios → probabilities → conclusion; every forecast number is reproducible from the (transparent formulas) and (input assumptions).
+- **Forecasting is not prescription**: PEG and scenario weighting are tools for thought experiments; real investing requires more information (live market data, company guidance, deeper valuation modeling, macro models, etc.), all omitted in this demo.
+- Key takeaway for learners: **"cross-validation" is the most transferable part of this pipeline** — agreements among the three tracks strengthen conviction, while disagreements map to probability tail risks — more valuable than the single forecast itself.
 
 ---
 
-*以上全部内容基于教学演示用构造样本数据与分析师假设，仅供 JiuWenSwarm 多 Agent 开发教学演示，不构成任何投资建议。*
+## 10. Final Conclusion (Teaching Summary)
+
+> **AAPL's target price range for the next 3-6 months is USD 215-310, core range 245-290, with a probability-weighted mid-point of approx. USD 262 (approx. -5% vs. the current price of 276.11).**
+> **Up probability approx. 40%, down probability approx. 60%, confidence medium (65%).**
+> **Three scenarios: bullish ~300 (breakout of 282 + AI delivery), base ~270 (high-level consolidation to digest), bearish ~205 (support break + regulatory/black swan).**
+
+---
+
+*All of the above is based on teaching demonstration constructed sample data and analyst assumptions, for JiuWenSwarm multi-agent development teaching demonstration only; it does NOT constitute any investment advice.*
