@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>US Equity Research Multi-Agent Teaching Demo | JiuwenSwarm</title>
-<meta name="description" content="How a 6-agent JiuwenSwarm team produced an AAPL equity research report: team composition, task DAG, collaboration timeline, platform capabilities, and the actual forecast outputs.">
+<meta name="description" content="How a 7-agent JiuwenSwarm team produced an AAPL equity research report: team composition, task DAG with an independent QA gate, collaboration timeline, platform capabilities, and the actual forecast outputs.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,11 +18,11 @@
       <span class="badge">JiuwenSwarm Multi-Agent Demo</span>
     </div>
     <h1>US Equity Research<br>Multi-Agent Teaching Demo</h1>
-    <p class="sub">Six specialized agents, one pipeline: <b>data &rarr; three parallel analyses &rarr; combined forecast &rarr; final report</b>. Built and run entirely on the JiuwenSwarm platform.</p>
+    <p class="sub">Seven specialized agents, one pipeline: <b>data &rarr; three parallel analyses &rarr; independent QA gate &rarr; combined forecast &rarr; final report</b>. Built and run entirely on the JiuwenSwarm platform.</p>
     <p class="headline">&ldquo;Good company, expensive price&rdquo; &mdash; Target USD 215&ndash;310 &middot; Mid-point &asymp; USD 262 (&minus;5% vs. current 276.11)</p>
     <div class="kpis">
-      <div class="kpi"><div class="n">1+6</div><div class="l">Leader + agents</div></div>
-      <div class="kpi"><div class="n">6</div><div class="l">Tasks in DAG</div></div>
+      <div class="kpi"><div class="n">1+7</div><div class="l">Leader + agents</div></div>
+      <div class="kpi"><div class="n">7</div><div class="l">Tasks in DAG</div></div>
       <div class="kpi"><div class="n">3</div><div class="l">Parallel tracks</div></div>
       <div class="kpi"><div class="n">65%</div><div class="l">Confidence</div></div>
     </div>
@@ -60,7 +60,7 @@
     <div id="team" class="sec-block">
       <div class="sec-head">
         <div class="k">1.1 Team composition</div>
-        <h2>Leader + 6 agents, each with a clear boundary</h2>
+        <h2>Leader + 7 agents, each with a clear boundary</h2>
         <p>Every agent carries a role description following the golden formula: <em>who you are + your expertise + what you own + what you are NOT responsible for</em>. Clear boundaries keep the DAG conflict-free.</p>
       </div>
       <div class="team-grid">
@@ -99,6 +99,11 @@
           <p>Integrates every upstream deliverable into one final package: research report, teaching handbook, and student lab worksheet.</p>
           <div class="out"><b>Produces:</b> deliverables/*.md (3 documents)</div>
         </article>
+        <article class="member">
+          <div class="top"><div class="ava" style="background:#ff6b6b">Q</div><div><div class="role">Independent QA / Tester</div><div class="mid">qa-tester · Quality gate</div></div></div>
+          <p>Independent verification agent. Reads every analysis and forecast, cross-checks every number against the source CSVs, and rules PASS/FAIL with evidence. NOT responsible for writing analyses.</p>
+          <div class="out"><b>Produces:</b> PASS/FAIL verdict + evidence checklist per deliverable</div>
+        </article>
       </div>
     </div>
 
@@ -121,6 +126,11 @@
             <div class="dag-node stage1"><div class="t">task-technical</div><div class="d">Bullish trend</div></div>
             <div class="dag-node stage1"><div class="t">task-risk</div><div class="d">Medium–high</div></div>
           </div>
+          <div class="dag-arrow"><span>gate</span><span class="chev">→</span></div>
+          <div class="dag-node qa">
+            <div class="t">task-qa</div>
+            <div class="d">Independent QA gate<br>PASS → forecast · FAIL → rework</div>
+          </div>
           <div class="dag-arrow"><span>converge</span><span class="chev">→</span></div>
           <div class="dag-node stage2">
             <div class="t">task-forecast</div>
@@ -135,6 +145,7 @@
         <div class="dag-legend">
           <span><i style="background:#a78bfa"></i>Stage 1 · Data</span>
           <span><i style="background:#4da3ff"></i>Stage 2 · 3 parallel tracks</span>
+          <span><i style="background:#ff6b6b"></i>QA gate · PASS / FAIL</span>
           <span><i style="background:#3ddc84"></i>Stage 3 · Synthesis</span>
           <span><i style="background:#f2c14e"></i>Stage 4 · Delivery</span>
         </div>
@@ -147,12 +158,13 @@
             <tr><td>task-fundamental</td><td>task-data</td><td>fundamental-analyst</td><td>analysis/fundamental.md</td></tr>
             <tr><td>task-technical</td><td>task-data</td><td>technical-analyst</td><td>analysis/technical.md</td></tr>
             <tr><td>task-risk</td><td>task-data</td><td>risk-sentinel</td><td>analysis/risk.md</td></tr>
-            <tr><td>task-forecast</td><td>3 analyses</td><td>forecaster</td><td>outputs/forecast.md</td></tr>
+            <tr><td>task-qa</td><td>3 analyses</td><td>qa-tester</td><td>PASS / FAIL verdict</td></tr>
+            <tr><td>task-forecast</td><td>task-qa (PASS)</td><td>forecaster</td><td>outputs/forecast.md</td></tr>
             <tr><td>task-report</td><td>task-forecast</td><td>report-synthesizer</td><td>deliverables/*.md</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="dag-note"><b>Key insight:</b> three design rules — one-way flow (no cycles), parallel decoupling (three analysts share one prerequisite), single convergence point (all analyses feed exactly one forecast task).</p>
+      <p class="dag-note"><b>Key insight:</b> four design rules — one-way flow (no cycles), parallel decoupling (three analysts share one prerequisite), single convergence point (all analyses feed exactly one forecast task), and an independent quality gate (QA verifies every analysis against the source data before synthesis; FAIL sends the work back for rework).</p>
     </div>
 
     <!-- 1.3 Timeline -->
@@ -171,15 +183,15 @@
         </div>
         <div class="tl-item">
           <div class="ph">Phase 1 · Setup</div>
-          <span class="tag tag-cmd">spawn_teammate ×6</span>
-          <h3>Spawn the six role agents</h3>
-          <p>Data researcher, three analysts, forecaster, report synthesizer — each with a boundary-rich description.</p>
+          <span class="tag tag-cmd">spawn_teammate ×7</span>
+          <h3>Spawn the seven role agents</h3>
+          <p>Data researcher, three analysts, independent QA, forecaster, report synthesizer — each with a boundary-rich description.</p>
         </div>
         <div class="tl-item">
           <div class="ph">Phase 1 · Setup</div>
-          <span class="tag tag-cmd">create_task ×6</span>
+          <span class="tag tag-cmd">create_task ×7</span>
           <h3>Wire the task DAG</h3>
-          <p>Six tasks with explicit <code>blocked_by</code> dependencies — the DAG self-schedules as upstream completes.</p>
+          <p>Seven tasks with explicit <code>blocked_by</code> dependencies — the DAG self-schedules as upstream completes.</p>
         </div>
         <div class="tl-item">
           <div class="ph">Phase 2 · Kickoff</div>
@@ -207,19 +219,26 @@
           <p>fundamental.md (72/100), technical.md (Bullish), risk.md (Medium–high) — all converge into the shared <code>.team/analysis/</code>.</p>
         </div>
         <div class="tl-item">
-          <div class="ph">Phase 5 · Synthesis</div>
+          <div class="ph">Phase 5 · Independent QA</div>
+          <span class="tag tag-cmd">verify_task · reviewer gate</span>
+          <h3>QA tester cross-checks every analysis</h3>
+          <p>The independent QA agent (qa-tester) verifies each analysis against the source CSVs and acceptance criteria, ruling <b>PASS</b> (with evidence) or <b>FAIL</b> (back for rework) before any number reaches the forecaster.</p>
+          <div class="tl-lesson"><b>Two-level gate:</b> the QA reviewer and the Leader both rule PASS/FAIL — independent verification first, Leader acceptance last.</div>
+        </div>
+        <div class="tl-item">
+          <div class="ph">Phase 6 · Synthesis</div>
           <span class="tag tag-cmd">task-forecast</span>
           <h3>Forecaster builds the combined forecast</h3>
           <p>PEG valuation test + PE×EPS three-scenario weighting → target 215–310, mid ≈262, up/down 40/60, confidence 65%.</p>
         </div>
         <div class="tl-item">
-          <div class="ph">Phase 6 · Integration</div>
+          <div class="ph">Phase 7 · Integration</div>
           <span class="tag tag-cmd">task-report</span>
           <h3>Report synthesizer assembles the final package</h3>
           <p>Investment research report + multi-agent development handbook + student lab worksheet, all with a teaching disclaimer.</p>
         </div>
         <div class="tl-item">
-          <div class="ph">Phase 7 · Acceptance</div>
+          <div class="ph">Phase 8 · Acceptance</div>
           <span class="tag tag-cmd">verify_task · deliver</span>
           <h3>Leader verifies and delivers to the user</h3>
           <p>Every file is inspected against the task requirements; pass/fail rulings close the loop, then the package is handed over.</p>
@@ -239,14 +258,14 @@
           <thead><tr><th>Platform capability</th><th>Where it is used in this demo</th><th>Why it matters</th></tr></thead>
           <tbody>
             <tr><td>build_team</td><td>Creates the demo team with a shared workspace</td><td>Sets the project theme and collaboration space</td></tr>
-            <tr><td>spawn_teammate</td><td>Spawns the 6 role agents (desc = who + expertise + boundaries)</td><td>Boundary-rich descriptions prevent role conflicts</td></tr>
-            <tr><td>create_task</td><td>Builds the 6-task DAG with blocked_by dependencies</td><td>Expresses sequencing and parallelism explicitly</td></tr>
+            <tr><td>spawn_teammate</td><td>Spawns the 7 role agents (incl. independent QA) (desc = who + expertise + boundaries)</td><td>Boundary-rich descriptions prevent role conflicts</td></tr>
+            <tr><td>create_task</td><td>Builds the 7-task DAG with blocked_by dependencies</td><td>Expresses sequencing and parallelism explicitly</td></tr>
             <tr><td>claim_task</td><td>Members autonomously claim and complete tasks</td><td>Collaboration instead of manual assignment</td></tr>
             <tr><td>send_message</td><td>Kickoff broadcast, completion reports, alignment</td><td>Messages carry paths & summaries, not file contents</td></tr>
             <tr><td>.team/ file handoff</td><td>CSV → analyses → forecast → reports flow through shared files</td><td>Standardized directories = contracts between stages</td></tr>
             <tr><td>view_task</td><td>Live board: pending / blocked / in_progress / completed</td><td>Self-scheduling DAG; no polling needed</td></tr>
             <tr><td>workspace_meta lock</td><td>Locks shared files before multiple members write</td><td>Prevents overwrites in the shared workspace</td></tr>
-            <tr><td>verify_task</td><td>Leader’s pass/fail acceptance of each deliverable</td><td>Quality gate — catches false completion</td></tr>
+            <tr><td>verify_task / reviewer</td><td>Independent QA (qa-tester) reviews each analysis; Leader accepts each deliverable</td><td>Two-level quality gate — reviewer independent of the implementer catches false completion</td></tr>
           </tbody>
         </table>
       </div>
@@ -432,7 +451,7 @@
         <div class="del">
           <div class="t">Student Lab Worksheet</div>
           <div class="p">deliverables/student-lab-worksheet.md</div>
-          <div class="d">A 45-minute hands-on lab to reproduce this 6-agent pipeline, with record table, challenges and rubric.</div>
+          <div class="d">A 45-minute hands-on lab to reproduce this 7-agent pipeline (6 analysts + independent QA), with record table, challenges and rubric.</div>
           <a class="btn" href="../deliverables/student-lab-worksheet.md" target="_blank" rel="noopener">Open worksheet →</a>
         </div>
         <div class="del">
@@ -463,7 +482,7 @@
 <footer>
   <div class="wrap">
     <div class="disc"><b>Disclaimer:</b> This page is a teaching demonstration built on the JiuwenSwarm platform. All data, analyses, scores, target prices and scenarios are locally generated sample outputs — teaching demonstration only, <b>NOT investment advice</b>. Do not make real trading decisions based on this content.</div>
-    <div class="meta">Built by a 6-agent JiuwenSwarm team · task-3e864b925b · US Equity Research Multi-Agent Teaching Demo · open repository with MIT license</div>
+    <div class="meta">Built by a 7-agent JiuwenSwarm team · task-3e864b925b · US Equity Research Multi-Agent Teaching Demo · open repository with MIT license</div>
   </div>
 </footer>
 

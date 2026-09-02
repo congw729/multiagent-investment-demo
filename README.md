@@ -1,6 +1,6 @@
 # US Equity Research Multi-Agent Teaching Demo
 
-> A complete teaching project built on the **JiuwenSwarm Multi-Agent Platform**: six agents collaborate to perform fundamental analysis, technical analysis, and risk/sentiment analysis for a listed company, then synthesize a future price forecast range, producing the *Investment Research Report* and the *JiuWen Multi-Agent Development Handbook*.
+> A complete teaching project built on the **JiuwenSwarm Multi-Agent Platform**: seven agents collaborate — six workers perform fundamental analysis, technical analysis, and risk/sentiment analysis for a listed company, an independent QA tester verifies the analyses against source data, then the team synthesizes a future price forecast range, producing the *Investment Research Report* and the *JiuWen Multi-Agent Development Handbook*.
 
 > ⚠️ **Disclaimer**: All data in this project are **locally generated teaching sample data** (not real-time, not real market data). All analysis conclusions and forecast ranges are algorithmic outputs of the multi-agent teaching workflow, **for teaching demonstration only and NOT investment advice**. Any trading based on this project is at your own risk.
 
@@ -8,7 +8,7 @@
 
 ## 1. Project Overview
 
-This project demonstrates how to design and run a multi-agent collaboration project on the JiuwenSwarm platform. Using "US equity research" as the business scenario, the user inputs a target listed company (this demo uses **AAPL (Apple)** as the teaching sample), and six agents collaborate according to the task DAG:
+This project demonstrates how to design and run a multi-agent collaboration project on the JiuwenSwarm platform. Using "US equity research" as the business scenario, the user inputs a target listed company (this demo uses **AAPL (Apple)** as the teaching sample), and seven agents collaborate according to the task DAG:
 
 1. **Data Researcher** (data-researcher): Generates and validates local sample datasets (financial CSV + historical price CSV)
 2. **Fundamental Analyst** (fundamental-analyst): Interprets financial reports, outputs a fundamental score and valuation judgment
@@ -16,6 +16,7 @@ This project demonstrates how to design and run a multi-agent collaboration proj
 4. **Risk & Sentiment Analyst** (risk-sentinel): Assesses risk from non-financial dimensions such as news sentiment, policy, and industry competition
 5. **Forecaster** (forecaster): Synthesizes the three analysis tracks, outputs the target price range, probability scorecard, and multi-scenario projection
 6. **Report Synthesizer** (report-synthesizer): Integrates all deliverables and produces the *Investment Research Report* and the *Teaching Handbook*
+7. **Independent QA Tester** (qa-tester): Independently verifies each analysis against the source data and the task acceptance criteria — a first quality gate before the forecast; the Leader remains the final arbiter
 
 > The project goal is not real investment advice, but to **demonstrate platform capabilities**: `build_team`, `spawn_teammate`, task DAG, autonomous task claiming, `send_message` collaboration, `.team/` file handoffs, and Leader acceptance/delivery. The entire workflow is offline-reproducible with sample data.
 
@@ -44,6 +45,7 @@ This project demonstrates how to design and run a multi-agent collaboration proj
 | risk-sentinel | Risk & Sentiment Analyst | Non-financial risk and sentiment assessment: news, policy, industry competition |
 | forecaster | Forecaster | Synthesizes three tracks, outputs target price range, scorecard, scenario projection |
 | report-synthesizer | Report Synthesizer | Integrates the *Investment Research Report* and the *Teaching Handbook* |
+| qa-tester | Independent QA Tester | Verifies analyses against source data and acceptance criteria (first gate); rules pass/fail on analysis tasks |
 
 ### 2.2 Task DAG and Dependencies
 
@@ -54,7 +56,10 @@ task-data (data ready, first stage)
    └── task-risk (risk & sentiment analysis, depends on data)
             │  (the three analysis tracks run in parallel)
             ▼
-      task-forecast (combined forecast, depends on all three analyses)
+      task-qa (independent QA gate: verify analyses against source data)
+            │  (pass → forecast unlocks; fail → back to analysts)
+            ▼
+      task-forecast (combined forecast, depends on analyses passing QA)
             ▼
       task-report (integrated report + handbook, final delivery)
 ```
@@ -63,11 +68,12 @@ task-data (data ready, first stage)
 
 | Platform Capability | Where It Is Used in This Demo |
 |---|---|
-| `build_team` / `spawn_teammate` | Forms the six-agent team |
-| `create_task` task DAG | Data → three parallel analyses → synthesis → report |
-| Autonomous task claiming | Each analyst claims their own analysis task |
-| `send_message` collaboration | Data-ready broadcast, conclusion aggregation, blocker escalation |
+| `build_team` / `spawn_teammate` | Forms the seven-agent team (6 workers + 1 independent QA tester) |
+| `create_task` task DAG | Data → three parallel analyses → QA gate → synthesis → report |
+| Autonomous task claiming | Each analyst claims their own analysis task; qa-tester claims task-qa |
+| `send_message` collaboration | Data-ready broadcast, conclusion aggregation, QA feedback, blocker escalation |
 | `.team/` file handoff | CSV data, analysis markdown, forecast markdown, reports flow between members |
+| `verify_task` / reviewer | qa-tester rules pass/fail on analyses (independent first gate); Leader makes final acceptance |
 | Leader acceptance/delivery | Data unlock confirmation, final deliverable acceptance |
 
 ---

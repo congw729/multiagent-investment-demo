@@ -1,4 +1,4 @@
-# Student Lab Worksheet — Reproducing the 6-Agent US Equity Research Pipeline
+# Student Lab Worksheet — Reproducing the 7-Agent US Equity Research Pipeline
 
 > Companion to the repository: **US Equity Research Multi-Agent Teaching Demo** (`repo/`)
 > Time needed: **45 minutes** | Level: Beginner-friendly | Mode: Individual or pair work
@@ -11,7 +11,7 @@
 
 ### 1.1 Goal
 
-By the end of this lab, you will have **reproduced the complete 6-agent investment research pipeline** on the JiuwenSwarm platform, exactly like the demo in this repository:
+By the end of this lab, you will have **reproduced the complete 7-agent investment research pipeline** (6 worker agents + 1 independent QA tester) on the JiuwenSwarm platform, exactly like the demo in this repository:
 
 ```
 data → three parallel analyses (fundamental / technical / risk) → combined forecast → final report + handbook
@@ -42,12 +42,12 @@ You will learn, hands-on:
 
 ## 2. Step-by-Step Instructions
 
-### Step 1 — Build the Team: `build_team` + 6 Agents (≈ 5 min)
+### Step 1 — Build the Team: `build_team` + 7 Agents (≈ 5 min)
 
 **What to do**
 
 1. Call `build_team` to create your own team. Give it a clear display name, e.g. `My US Equity Research Lab`.
-2. Spawn **6 agents** (plus yourself as Leader) using `spawn_teammate`. Copy the role descriptions (`desc`) from handbook §3.2 — the golden formula is:
+2. Spawn **7 agents** (6 workers + 1 independent QA tester, plus yourself as Leader) using `spawn_teammate`. Copy the role descriptions (`desc`) from handbook §3.2 — the golden formula is:
 
 ```
 [Who you are] + [your domain of expertise] + [what output you are responsible for] + [what you are explicitly NOT responsible for]
@@ -61,10 +61,11 @@ You will learn, hands-on:
 | risk-sentinel | Risk & Sentiment Analyst | news, policy, regulation, competition, macro; output risk rating + sentiment; NOT responsible for financial calculations |
 | forecaster | Forecaster | synthesize three tracks; output target range + probability scorecard + bullish/base/bearish scenarios; NOT responsible for redoing the analyses |
 | report-synthesizer | Report Synthesizer | integrate all deliverables into report + handbook; responsible for disclaimer; NOT responsible for recomputing data |
+| qa-tester | Independent QA Tester | independent quality gate: verify each analysis against source data & acceptance criteria (numbers match, disclaimer present, structure complete, no fabrication); output pass/fail + evidence list; NOT responsible for writing analyses or generating data |
 
 **Expected result**
 
-- You can see 7 members in your team (Leader + 6 agents), each with a distinct desc stating both responsibility and non-responsibility.
+- You can see 8 members in your team (Leader + 7 agents), each with a distinct desc stating both responsibility and non-responsibility.
 
 **Common issues**
 
@@ -76,11 +77,11 @@ You will learn, hands-on:
 
 ---
 
-### Step 2 — Create the Task DAG: 6 Tasks + Dependencies (≈ 5 min)
+### Step 2 — Create the Task DAG: 7 Tasks + Dependencies (≈ 5 min)
 
 **What to do**
 
-Using `create_task`, create the following 6 tasks. Set the `blocked_by` field exactly as in handbook §4.1:
+Using `create_task`, create the following 7 tasks. Set the `blocked_by` field exactly as in handbook §4.1:
 
 | Task ID | Description | `blocked_by` |
 |---|---|---|
@@ -88,20 +89,21 @@ Using `create_task`, create the following 6 tasks. Set the `blocked_by` field ex
 | task-fundamental | Fundamental analysis: financial report & quality score | task-data |
 | task-technical | Technical analysis: trend / momentum / key levels | task-data |
 | task-risk | Risk & sentiment analysis: non-financial dimensions | task-data |
-| task-forecast | Combined forecast: target range + scenarios + scorecard | task-fundamental, task-technical, task-risk |
+| task-qa | Independent QA gate: verify the three analyses against source data | task-fundamental, task-technical, task-risk |
+| task-forecast | Combined forecast: target range + scenarios + scorecard | task-qa |
 | task-report | Final delivery: report + handbook | task-forecast |
 
 **Expected result**
 
-- The task board (`view_task`) shows `task-data` as the only `pending` task; the other five show `blocked by ...`, forming a one-way DAG: data → three parallel analyses → forecast → report.
+- The task board (`view_task`) shows `task-data` as the only `pending` task; the other six show `blocked by ...`, forming a one-way DAG: data → three parallel analyses → QA gate → forecast → report.
 
 **Common issues**
 
 | Issue | Fix |
 |---|---|
-| `task-forecast` won't unlock | Check that ALL three analyses are `completed`; a single missing one keeps it blocked |
+| `task-forecast` won't unlock | Check that ALL three analyses AND `task-qa` are `completed`; a single missing one keeps it blocked |
 | Tasks claimable too early | You forgot `blocked_by` on the downstream tasks — add the prerequisite |
-| I see a loop (A waits B, B waits A) | DAG must be acyclic: data → analysis → synthesis → delivery; never point upstream back |
+| I see a loop (A waits B, B waits A) | DAG must be acyclic: data → analysis → QA → synthesis → delivery; never point upstream back |
 
 ---
 
@@ -162,7 +164,41 @@ python3 scripts/generate_sample_data.py
 |---|---|
 | Analyst says "data not found" | Data must be in `.team/demo-data/` (shared workspace), not a private folder; re-check Step 3 |
 | Two analysts write to the same file | Each task must write its own file name; enforce "one task, one deliverable" |
-| Analysis conclusions look inconsistent | That's normal and useful — the forecast step will cross-validate them (see handbook §8) |
+| Analysis conclusions look inconsistent | That's normal and useful — the QA step and the forecast step will cross-validate them (see handbook §8) |
+
+---
+
+### Step 4.5 — Independent QA Verification: the Quality Gate (≈ 5 min)
+
+**What to do**
+
+Before letting the forecast start, add an **independent QA gate** — this is a core teaching point ("independent Tester quality gate"):
+
+1. Ask the `qa-tester` agent to claim `task-qa`. Its prerequisites are the three analyses.
+2. The QA tester **independently verifies** each analysis deliverable against the source data and the task acceptance criteria:
+   - Numbers match the source files (`demo-data/financials.csv`, `demo-data/stock_history.csv`) — no fabrication, no mismatch
+   - Disclaimer present in each analysis
+   - Structure complete (data source, as-of date, indicator definitions in the header)
+3. It rules `verify_task(decision=pass/fail)` with an evidence list:
+   - `pass` → the forecast task unlocks
+   - `fail` → the analyses go back to the analysts for rework, then QA re-checks
+
+**Why this matters**
+
+The QA tester is **independent of the three analysts** — it cannot "agree with itself" the way an implementer can. This is the **first independent gate**; the Leader remains the **final arbiter** (Step 6). One layer without the other is weaker: analyst self-checks are biased, and a Leader without an independent check may accept errors too easily.
+
+**Expected result**
+
+- `task-qa` marked `completed` with a pass verdict + evidence list
+- `task-forecast` unlocked **only after** the QA pass
+
+**Common issues**
+
+| Issue | Fix |
+|---|---|
+| QA and the analysts are the same person/agent | The QA role must be a **separate, independent** agent — see Step 1 |
+| QA passes without reading the files | Pass/fail must be based on **reading the files and comparing numbers**, not on trust |
+| Forecast starts before QA | Check the DAG: `task-forecast` must have `blocked_by = task-qa` |
 
 ---
 
@@ -193,24 +229,26 @@ python3 scripts/generate_sample_data.py
 
 ---
 
-### Step 6 — Leader Acceptance (≈ 5 min)
+### Step 6 — Leader Acceptance: Final Arbitration (≈ 5 min)
 
 **What to do**
 
-As Leader, verify the whole pipeline:
+The QA tester ran the first gate on the analyses (Step 4.5). Now the **Leader acts as the final arbiter** for the whole pipeline:
 
-1. `view_task(action=list)` — confirm all 6 tasks are `completed`
+1. `view_task(action=list)` — confirm all 7 tasks are `completed`
 2. Read each deliverable under `.team/` and check quality:
    - CSV files exist and parse correctly
-   - Three analyses are present with definitions in the header
+   - Three analyses are present with definitions in the header, and the **QA evidence list** confirms numbers match the source
    - Forecast contains target range + scenarios + probabilities
    - Report contains executive summary, scorecard, target range, risk warnings, **disclaimer**
-3. For each task, rule `verify_task(decision=pass/fail)`. If any deliverable is missing, has wrong definitions, or lacks a disclaimer → `fail` and send feedback for rework.
+3. For each task, rule `verify_task(decision=pass/fail)`. If any deliverable is missing, has wrong definitions, lacks a disclaimer, or failed QA → `fail` and send feedback for rework.
+
+> **QA Tester vs. Leader**: the QA tester is the **independent first gate** (checks analyses against source data); the Leader is the **final arbiter** (reviews the QA verdict plus the whole pipeline and makes the final accept/reject decision for delivery). Both use `verify_task` — the QA tester on the analysis tasks, the Leader on the final acceptance.
 
 **Expected result**
 
-- All tasks `completed` after passing acceptance
-- A complete, reproducible pipeline record: data → analyses → forecast → report → accepted
+- All tasks `completed` after passing both gates (QA + Leader)
+- A complete, reproducible pipeline record: data → analyses → QA gate → forecast → report → Leader-accepted
 
 **Common issues**
 
@@ -234,6 +272,7 @@ Record each stage as you complete it. Leave "Time used" for the end of each step
 | 4 | task-fundamental | analysis/fundamental.md | quality score: ______/100 | ______ |
 | 4 | task-technical | analysis/technical.md | trend rating: ______ | ______ |
 | 4 | task-risk | analysis/risk.md | risk rating: ______ | ______ |
+| 4.5 | task-qa | — (QA evidence list) | verdict: pass ☐ / fail ☐ | ______ |
 | 5 | task-forecast | outputs/forecast.md | target range: ______ / mid-point: ______ | ______ |
 | 5 | task-report | deliverables/investment-research-report.md | report complete? ☐ yes ☐ no | ______ |
 | 6 | acceptance | — | verdicts: pass ______ / fail ______ | ______ |
@@ -252,7 +291,7 @@ Replace the AAPL sample with another company. You must (1) regenerate or edit th
 
 ### Challenge B — Add a new agent
 
-Add a 7th agent with a distinct domain, e.g. a **macro-economist** (rates/inflation/currency) or a **compliance auditor** (policy checks). Write its desc with the golden formula, insert a matching task into the DAG (decide: does it run in parallel with the three analyses, or feed the forecast?), and describe how its output flows through `.team/`.
+Add an 8th agent with a distinct domain, e.g. a **macro-economist** (rates/inflation/currency) or a **compliance auditor** (policy checks). Write its desc with the golden formula, insert a matching task into the DAG (decide: does it run in parallel with the three analyses, or feed the forecast?), and describe how its output flows through `.team/`.
 
 ### Challenge C — Improve a desc
 
@@ -264,10 +303,10 @@ Take one existing agent (e.g. `technical-analyst`) and rewrite its desc to be mo
 
 | Criterion | Weight | Meets expectation (full marks) |
 |---|---|---|
-| DAG correctness | 20% | 6 tasks created; `blocked_by` matches handbook §4.1; downstream blocked until prerequisites done |
-| Role description quality | 20% | Each of 6 agents has a desc with: who + expertise + responsible output + explicit non-responsibility |
+| DAG correctness | 20% | 7 tasks created (data → 3 analyses → QA gate → forecast → report); `blocked_by` matches handbook §4.1; downstream blocked until prerequisites done |
+| Role description quality | 20% | Each of 7 agents has a desc with: who + expertise + responsible output + explicit non-responsibility |
 | Deliverable completeness | 30% | demo-data CSVs (2), analyses (3), forecast (1), report (1) all exist, named correctly, with definitions in headers |
-| Lab record | 20% | Record table filled for all steps; output paths and key conclusions match the actual files |
+| QA gate & lab record | 20% | QA pass/fail with evidence recorded; record table filled for all steps; output paths and key conclusions match the actual files |
 | Disclaimer & structure | 10% | Report/handbook contain the teaching disclaimer; markdown tables render correctly |
 | Advanced challenge (bonus) | +10% | At least one challenge completed with correct reasoning |
 
@@ -279,7 +318,7 @@ Take one existing agent (e.g. `technical-analyst`) and rewrite its desc to be mo
 
 | What you need | Reference file (in this repo) | What it gives you |
 |---|---|---|
-| Role desc templates (Step 1) | `deliverables/jiuwen-multiagent-dev-manual.md` §3.2 | Golden formula + all 6 role descs |
+| Role desc templates (Step 1) | `deliverables/jiuwen-multiagent-dev-manual.md` §3.2 | Golden formula + all 7 role descs |
 | DAG design (Step 2) | `deliverables/jiuwen-multiagent-dev-manual.md` §4 | Dependency table + design insights |
 | Sample data generator (Step 3) | `scripts/generate_sample_data.py` | Run it to produce both CSVs |
 | Sample data (Step 3) | `data/financials.csv`, `data/stock_history.csv` | Expected structure & values (AAPL) |

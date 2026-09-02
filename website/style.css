@@ -74,6 +74,10 @@ h3{font-size:21px;font-weight:700}
 .dag-node.stage1{border-color:var(--blue);background:rgba(77,163,255,.10)}
 .dag-node.stage2{border-color:var(--green);background:rgba(61,220,132,.10)}
 .dag-node.stage3{border-color:var(--gold);background:rgba(242,193,78,.10)}
+.dag-node.qa{border-color:var(--red);background:rgba(255,107,107,.14)}
+.dag-node.qa .t{color:var(--red)}
+.dag-node.qa .d{color:#ffd9d9}
+.dag-qa-note{margin-top:10px;font-size:13px;color:#ffb3b3;text-align:center;font-weight:700}
 .dag-parallel{display:flex;flex-direction:column;gap:10px;flex:1}
 .dag-parallel .dag-node{min-width:180px}
 .dag-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-size:12px;gap:4px;flex-shrink:0}
@@ -192,4 +196,3 @@ footer .meta{font-size:13.5px;color:var(--muted)}
 }
 /* ---------- Print ---------- */
 @media print{nav{display:none}body{background:#fff;color:#111}.hero,.note-banner{background:#fff}}
-/*__MORE__*/

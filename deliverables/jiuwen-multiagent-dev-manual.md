@@ -14,7 +14,7 @@
 4. [Step 3: Design the Task DAG and Dependencies](#4-step-3-design-the-task-dag-and-dependencies)
 5. [Step 4: Design Data and File Handoffs](#5-step-4-design-data-and-file-handoffs)
 6. [Step 5: Design the Member Collaboration Mechanism](#6-step-5-design-the-member-collaboration-mechanism)
-7. [Step 6: Design the Leader Acceptance Process](#7-step-6-design-the-leader-acceptance-process)
+7. [Step 6: Design the Acceptance Process (QA Gate + Leader Arbitration)](#7-step-6-design-the-acceptance-process-qa-gate--leader-arbitration)
 8. [Platform Capability & Demo Stage Mapping Table](#8-platform-capability--demo-stage-mapping-table)
 9. [5-Minute Quick Start: Reproduce Your First Multi-Agent Project](#9-5-minute-quick-start-reproduce-your-first-multi-agent-project)
 10. [Appendix: Full Workflow Diagram of This Demo](#10-appendix-full-workflow-diagram-of-this-demo)
@@ -79,7 +79,8 @@ Each sub-goal maps to a **task**; the task description states what to do, what t
 | task-fundamental | Fundamental analysis | fundamental analysis under analysis/ | task-data |
 | task-technical | Technical analysis | technical analysis under analysis/ | task-data |
 | task-risk | Risk & sentiment | risk & sentiment analysis under analysis/ | task-data |
-| task-forecast | Combined forecast | outputs/ target price + scenarios + scorecard | three analyses |
+| task-qa | QA verification (independent gate) | pass/fail + evidence list for the three analyses | task-fundamental, task-technical, task-risk |
+| task-forecast | Combined forecast | outputs/ target price + scenarios + scorecard | task-qa |
 | task-report | Final delivery | deliverables/ two final documents | task-forecast |
 
 > Design insight: the **goal → task** mapping should satisfy "one goal corresponds to one verifiable deliverable". If a goal has no clear output file, the decomposition is not thorough enough.
@@ -100,12 +101,16 @@ This demo's team structure (created via `build_team` / `spawn_teammate`):
                 └────────────┬────────────┘
         ┌───────────┬────────┼────────┬───────────┐
         ▼           ▼        ▼        ▼           ▼
-   data-researcher fundamental technical risk-sentinel  forecaster
-   Data Researcher  Fundamental  Technical  Risk & Sentiment  Forecaster
-        (first)   (parallel) (parallel) (parallel)    (convergence)
-
-                    report-synthesizer
-                   Report Synthesizer (final delivery)
+   data-researcher fundamental technical risk-sentinel
+   Data Researcher  Fundamental  Technical  Risk & Sentiment
+        (first)   (parallel) (parallel) (parallel)
+                    │           │        │
+                    └──► qa-tester (independent QA gate) ◄──┘
+                             │  verify analyses vs. source data
+                             ▼
+                      forecaster (convergence)
+                             ▼
+                  report-synthesizer (final delivery)
 ```
 
 ### 3.2 How to Write the Role Description (desc) — This Demo's Template
@@ -116,7 +121,7 @@ Each agent is created via `spawn_teammate`; the **description (desc / persona) d
 [Who you are] + [your domain of expertise] + [what output you are responsible for] + [what you are explicitly NOT responsible for]
 ```
 
-Using this demo's six roles as examples:
+Using this demo's seven roles as examples:
 
 | Role | display_name | Desc Essentials (who + expertise + responsibilities + non-responsibilities) |
 |---|---|---|
@@ -126,6 +131,9 @@ Using this demo's six roles as examples:
 | risk-sentinel | Risk & Sentiment Analyst | Non-financial risks from news, policy, regulation, competition, macro; outputs risk rating + sentiment judgment + scenario stress; **NOT responsible for** financial statement calculations |
 | forecaster | Forecaster | Synthesizes the three analysis tracks; uses LLM reasoning + simplified valuation models to output 3-6 month target range, probability scorecard, bullish/base/bearish scenarios; **NOT responsible for** redoing the three specialists' analyses |
 | report-synthesizer (me) | Report Synthesizer | Integrates all upstream deliverables, produces the *Investment Research Report* + *Teaching Handbook*; responsible for disclaimers and teaching explanation; **NOT responsible for** recomputing data / re-forecasting |
+| qa-tester | Independent QA Tester | Independent quality gate: verifies each analysis deliverable against the source data (`.team/demo-data/`) and the task acceptance criteria — numbers match the source, disclaimer present, structure complete, no fabrication; outputs pass/fail with an evidence list; **NOT responsible for** writing analyses, generating data, or integrating reports |
+
+**Why the QA role matters**: a tester who is **independent of the implementers** can catch fabrication, mismatched numbers, or missing disclaimers impartially. It is the **first independent gate** before the forecast; the Leader remains the **final arbiter** for overall delivery (see §7).
 
 **Why boundaries matter**: with clear role boundaries, the task DAG is naturally conflict-free (§4). Writing "what I am NOT responsible for" in the desc prevents agents from grabbing each other's work or producing duplicate/contradictory outputs.
 
@@ -135,6 +143,7 @@ Using this demo's six roles as examples:
 - [ ] Does each role have a line "I am explicitly NOT responsible for Y"?
 - [ ] Do any roles have overlapping responsibility domains? (If so, trim by priority)
 - [ ] Is there a "synthesizer/editor" role responsible for final consolidation? (to avoid everyone saying different things)
+- [ ] Is there an **independent QA/tester role** (separate from the implementers) to verify deliverables against source data?
 
 ---
 
@@ -147,13 +156,18 @@ In JiuwenSwarm, tasks are automatically organized into a DAG (directed acyclic g
 **This demo's task DAG**:
 
 ```
-                    ┌───────────────────────────────┐
-                    ▼                               │
- task-data ──┬──► task-fundamental ──► ┐            │
-      (1)    ├──► task-technical  ──► task-forecast ─► task-report (final)
-             └──► task-risk       ──►           (convergence)
-                    ▲  (2)(3)(4) can run in parallel │(6)
-                    └───────────────────────────────┘
+task-data (1, first stage)
+   ├── task-fundamental (2, parallel)
+   ├── task-technical   (3, parallel)
+   └── task-risk        (4, parallel)
+            │  ← the three analysis tracks run in parallel after data is ready
+            ▼
+      task-qa (5, independent QA gate)
+            │  ← pass → forecast unlocks; fail → back to the analysts
+            ▼
+      task-forecast (6, convergence point)
+            ▼
+      task-report (7, terminal delivery)
 ```
 
 Dependency table (the `blocked_by` field when calling `create_task`):
@@ -162,7 +176,8 @@ Dependency table (the `blocked_by` field when calling `create_task`):
 |---|---|---|
 | task-data | — | Starting point, first stage |
 | task-fundamental / technical / risk | task-data | **Three parallel tracks** (blocked until data is ready) |
-| task-forecast | three analyses | **Convergence point** (unlocks only when all three are done) |
+| task-qa | three analyses | **Independent QA gate** (verifies the three analyses against source data before the forecast) |
+| task-forecast | task-qa | **Convergence point** (unlocks only after the analyses pass QA) |
 | task-report | task-forecast | **Terminal state** (unlocks only when the forecast is done) |
 
 ### 4.2 Three Insights for Dependency Design
@@ -182,7 +197,7 @@ Dependency table (the `blocked_by` field when calling `create_task`):
 | Directory | What It Holds | Who Writes | Who Reads |
 |---|---|---|---|
 | `demo-data/` | financial CSV, price CSV | Data Researcher | three analysts |
-| `analysis/` | three analysis md/scores | three analysts | Forecaster |
+| `analysis/` | three analysis md/scores | three analysts | QA Tester (verify) → Forecaster (synthesize) |
 | `outputs/` | target price / scenarios / scorecard | Forecaster | Report Synthesizer |
 | `deliverables/` | report + handbook | Report Synthesizer | user / whole team |
 
@@ -240,24 +255,36 @@ File handoff is the "contract" of multi-agent collaboration. This demo's convent
 
 ---
 
-## 7. Step 6: Design the Leader Acceptance Process
+## 7. Step 6: Design the Acceptance Process (QA Gate + Leader Arbitration)
 
-### 7.1 The Four Acceptance Tools (Leader's perspective)
+### 7.0 Two-Layer Acceptance: Independent QA Tester + Leader
 
-| Action | Tool | When |
-|---|---|---|
-| View the full task board | `view_task(action=list)` | anytime, to identify bottlenecks/broken links |
-| View a single task | `view_task(action=get, task_id=...)` | before claiming / before acceptance |
-| Read deliverable files | read files under `.team/` | when accepting quality |
-| Rule pass/fail | `verify_task(decision=pass/fail)` | after the task enters in_review |
+This demo uses a **two-layer quality model**:
+
+| Layer | Who | Role | Independence |
+|---|---|---|---|
+| **First gate** | qa-tester (Independent QA Tester) | Verifies each analysis deliverable against the **source data** (`.team/demo-data/`) and the **task acceptance criteria**: numbers match the source, disclaimer present, structure complete, no fabrication. Outputs pass/fail + evidence list. | **Independent of the implementers** — catches errors impartially |
+| **Final arbiter** | team-leader | Reviews the QA verdict plus the overall pipeline, resolves disputes, and makes the **final accept/reject decision** for delivery | Owns the overall project |
+
+> **Why two layers?** The QA tester is independent of the three analysts, so it can objectively check whether a number in `fundamental.md` really comes from `financials.csv` (no fabrication, no mismatch). The Leader is the final authority who decides whether the whole pipeline is ready to deliver to the user. One layer without the other is weaker: implementer self-checks are biased, and a Leader without an independent check may accept errors too easily.
+
+### 7.1 The Acceptance Tools (Tester + Leader perspective)
+
+| Action | Tool | Who | When |
+|---|---|---|---|
+| View the full task board | `view_task(action=list)` | Tester / Leader | anytime, to identify bottlenecks/broken links |
+| View a single task | `view_task(action=get, task_id=...)` | Tester / Leader | before claiming / before acceptance |
+| Read deliverable files | read files under `.team/` | Tester / Leader | when verifying quality |
+| Rule pass/fail (gate) | `verify_task(decision=pass/fail)` | **qa-tester** | after a task enters in_review |
+| Final arbitration | `verify_task(decision=pass/fail)` | **Leader** | final review of the whole pipeline |
 
 ### 7.2 This Demo's Acceptance Examples
 
 - Data task: `view_task(get)` to check task-data → read the CSV → verify field definitions → `pass`.
-- Analysis tasks: read the three analyses under `analysis/` → verify their cited sample metrics match the data files → `pass`.
-- Forecast and report: read the two final deliverables under `deliverables/` → "disclaimer present" and "structure complete" → `pass` → deliver.
+- Analysis tasks (QA gate): the **qa-tester** reads the three analyses under `analysis/` and **cross-checks every cited number against `demo-data/financials.csv` / `stock_history.csv`** → numbers match, disclaimer present, structure complete → `pass`. Any mismatch, missing disclaimer, or fabricated figure → `fail` with an evidence list.
+- Forecast and report: read the two final deliverables under `deliverables/` → "disclaimer present" and "structure complete" → Leader rules `pass` → deliver.
 
-> Acceptance red line: **missing deliverable, wrong definitions, or no disclaimer = reject**.
+> Acceptance red line: **missing deliverable, wrong definitions, no disclaimer, or fabricated/mismatched numbers = reject**.
 
 ---
 
@@ -268,14 +295,14 @@ The table below is for **you who want to learn the platform**: where each Jiuwen
 | Platform Capability | Corresponding Stage in This Demo | How You Can Use It in Your Own Project |
 |---|---|---|
 | `build_team` | Creates the "US Equity Research Multi-Agent Teaching Demo" team | Use the team display_name to set the project theme; enable worktree / shared workspace |
-| `spawn_teammate` | Creates the 6 role agents in sequence (each with a desc = "who + expertise + boundaries") | Create roles one by one against the goal tree; each role faces one sub-goal |
-| `create_task` | Builds task-data → 3 analyses → forecast → report, weaving the DAG with `blocked_by` | Turn "sub-goals" into tasks; use dependencies to express sequencing and parallelism |
+| `spawn_teammate` | Creates the 7 role agents in sequence (each with a desc = "who + expertise + boundaries") | Create roles one by one against the goal tree; each role faces one sub-goal |
+| `create_task` | Builds task-data → 3 analyses → QA gate → forecast → report, weaving the DAG with `blocked_by` | Turn "sub-goals" into tasks; use dependencies to express sequencing and parallelism |
 | `claim_task` | Members claim autonomously (`status=claimed`), mark `completed` when done | Let members claim their own work — collaboration rather than assignment |
 | `view_task` | Everyone's anytime board: `[pending/blocked/in_progress/...]` | Use task states to schedule the DAG and identify bottlenecks |
 | `send_message` | Kickoff broadcast, member alignment, completion reports | Broadcast (for direction) / unicast (point-to-point); messages carry paths, not content |
 | `.team/` file sharing | Handoff of CSV/analysis/forecast/report; writes to deliverables | Standardize directories and file names for data handoff |
 | `workspace_meta` lock/unlock | Lock before multiple members edit the same file (used when writing final deliverables in this demo) | Prevent overwrites, keep shared files consistent |
-| `verify_task` | Leader acceptance pass/fail; reject for rework | Establish a quality gate for a closed multi-agent loop |
+| `verify_task` / reviewer | qa-tester rules pass/fail on analyses (independent first gate); Leader makes final arbitration | Assign a reviewer (e.g. the QA tester) to tasks via the reviewer field; first verdict wins — pass completes, fail sends back for rework |
 
 > This mapping is also key for the deliverables: learners who want to verify platform capabilities can find ready-made usage in the demo by following the table item by item.
 
@@ -330,8 +357,8 @@ view_task() → check blocks status → verify_task(pass)
         │
         ▼
  ┌─ build_team: US Equity Research Multi-Agent Teaching Demo ─┐
- │ spawn_teammate ×6 (data / three analysts / forecaster / synthesizer) │
- │ create_task ×6 (data→three analyses→forecast→report)        │
+ │ spawn_teammate ×7 (data / three analysts / QA tester / forecaster / synthesizer) │
+ │ create_task ×7 (data→three analyses→QA gate→forecast→report)      │
  └──────────────────────────────────────────────────────────────┘
         │ kickoff broadcast send_message(to="*")
         ▼
@@ -343,7 +370,10 @@ view_task() → check blocks status → verify_task(pass)
  │ technical-analyst    → technical analysis                 │  ← three parallel tracks
  │ risk-sentinel        → risk & sentiment analysis          │
  └────────────────────────────────────────────────────────────┘
-        │ forecast unlocks after all three complete
+        │
+        ▼
+ qa-tester → independent QA gate (numbers match source data? disclaimer? structure? no fabrication?)
+        │ pass → forecast unlocks; fail → back to analysts for rework
         ▼
  forecaster → target price range / three scenarios / scorecard → outputs/
         │
@@ -351,7 +381,7 @@ view_task() → check blocks status → verify_task(pass)
  report-synthesizer (me) → deliverables/ investment report + teaching handbook
         │
         ▼
- Leader acceptance (verify_task) → deliver to user (with disclaimer)
+ Leader acceptance (verify_task, final arbitration) → deliver to user (with disclaimer)
 ```
 
 ---
