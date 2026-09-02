@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US Equity Research Multi-Agent Teaching Demo | JiuwenSwarm</title>
+<meta name="description" content="How a 6-agent JiuwenSwarm team produced an AAPL equity research report: team composition, task DAG, collaboration timeline, platform capabilities, and the actual forecast outputs.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap">
+    <div class="badges">
+      <span class="badge ticker">AAPL &middot; Apple</span>
+      <span class="badge">Teaching sample data</span>
+      <span class="badge">JiuwenSwarm Multi-Agent Demo</span>
+    </div>
+    <h1>US Equity Research<br>Multi-Agent Teaching Demo</h1>
+    <p class="sub">Six specialized agents, one pipeline: <b>data &rarr; three parallel analyses &rarr; combined forecast &rarr; final report</b>. Built and run entirely on the JiuwenSwarm platform.</p>
+    <p class="headline">&ldquo;Good company, expensive price&rdquo; &mdash; Target USD 215&ndash;310 &middot; Mid-point &asymp; USD 262 (&minus;5% vs. current 276.11)</p>
+    <div class="kpis">
+      <div class="kpi"><div class="n">1+6</div><div class="l">Leader + agents</div></div>
+      <div class="kpi"><div class="n">6</div><div class="l">Tasks in DAG</div></div>
+      <div class="kpi"><div class="n">3</div><div class="l">Parallel tracks</div></div>
+      <div class="kpi"><div class="n">65%</div><div class="l">Confidence</div></div>
+    </div>
+    <div class="note-banner">&#9888;&#65039; Teaching demonstration only &mdash; all data are locally generated samples, not investment advice.</div>
+  </div>
+</header>
+
+<!-- ================= NAV ================= -->
+<nav>
+  <div class="wrap">
+    <span class="brand">JiuwenSwarm &middot; Equity Demo</span>
+    <a href="#team">Team</a>
+    <a href="#dag">Task DAG</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#mapping">Capability Map</a>
+    <a href="#scorecard">Scorecard</a>
+    <a href="#scenarios">Scenarios</a>
+    <a href="#summaries">Analysis</a>
+    <a href="#deliverables">Deliverables</a>
+  </div>
+</nav>
+
+<main>
+<!-- ================= PART 1 ================= -->
+<section id="part1">
+  <div class="wrap">
+    <span class="part-tag">Part 1 &middot; How the project was produced</span>
+    <div class="sec-head">
+      <div class="k">From one-line request to a delivered report</div>
+      <h2>The production process, made visible</h2>
+      <p>The user asked JiuwenSwarm to &ldquo;analyze a US-listed company, forecast its price, and produce an investment research report &mdash; while learning how to develop multi-agent systems.&rdquo; Below is how the platform turned that into a running pipeline.</p>
+    </div>
+
+    <!-- 1.1 Team -->
+    <div id="team" class="sec-block">
+      <div class="sec-head">
+        <div class="k">1.1 Team composition</div>
+        <h2>Leader + 6 agents, each with a clear boundary</h2>
+        <p>Every agent carries a role description following the golden formula: <em>who you are + your expertise + what you own + what you are NOT responsible for</em>. Clear boundaries keep the DAG conflict-free.</p>
+      </div>
+      <div class="team-grid">
+        <article class="member">
+          <div class="top"><div class="ava" style="background:#f2c14e">L</div><div><div class="role">Project Lead</div><div class="mid">team-leader · Teaching controller</div></div></div>
+          <p>Builds the team, decomposes the task DAG, coordinates members, accepts deliverables — and narrates every step as a lesson.</p>
+          <div class="out"><b>Produces:</b> verified deliverables + live teaching narration</div>
+        </article>
+        <article class="member">
+          <div class="top"><div class="ava" style="background:#a78bfa">D</div><div><div class="role">Data Researcher</div><div class="mid">data-researcher · First stage</div></div></div>
+          <p>Data engineer. Prepares and validates local sample datasets (financials + weekly prices). NOT responsible for analysis or forecasts.</p>
+          <div class="out"><b>Produces:</b> demo-data/financials.csv · stock_history.csv</div>
+        </article>
+        <article class="member">
+          <div class="top"><div class="ava" style="background:#4da3ff">F</div><div><div class="role">Fundamental Analyst</div><div class="mid">fundamental-analyst · Parallel track</div></div></div>
+          <p>Reads financial statements: revenue growth, margins, ROE, cash flow, valuation. Outputs a quality score (0–100) and valuation judgment.</p>
+          <div class="out"><b>Produces:</b> analysis/fundamental.md · 72/100 Good</div>
+        </article>
+        <article class="member">
+          <div class="top"><div class="ava" style="background:#22d3ee">T</div><div><div class="role">Technical Analyst</div><div class="mid">technical-analyst · Parallel track</div></div></div>
+          <p>Quantitative chart analysis: trends (moving averages), momentum (RSI/MACD), volume, support & resistance. Outputs trend rating and key levels.</p>
+          <div class="out"><b>Produces:</b> analysis/technical.md · Bullish</div>
+        </article>
+        <article class="member">
+          <div class="top"><div class="ava" style="background:#f87171">R</div><div><div class="role">Risk & Sentiment Analyst</div><div class="mid">risk-sentinel · Parallel track</div></div></div>
+          <p>Assesses non-financial risk: news, policy, regulation, competition, market sentiment. Outputs risk rating and sentiment judgment.</p>
+          <div class="out"><b>Produces:</b> analysis/risk.md · Medium–high</div>
+        </article>
+        <article class="member">
+          <div class="top"><div class="ava" style="background:#3ddc84">P</div><div><div class="role">Forecaster</div><div class="mid">forecaster · Convergence</div></div></div>
+          <p>Synthesizes the three tracks with LLM reasoning + simplified valuation models (PEG, PE×EPS). Outputs target range, scorecard, three scenarios.</p>
+          <div class="out"><b>Produces:</b> outputs/forecast.md · 215–310 / ≈262</div>
+        </article>
+        <article class="member">
+          <div class="top"><div class="ava" style="background:#f472b6">I</div><div><div class="role">Report Synthesizer</div><div class="mid">report-synthesizer · Final delivery</div></div></div>
+          <p>Integrates every upstream deliverable into one final package: research report, teaching handbook, and student lab worksheet.</p>
+          <div class="out"><b>Produces:</b> deliverables/*.md (3 documents)</div>
+        </article>
+      </div>
+    </div>
+
+    <!-- 1.2 DAG -->
+    <div id="dag" class="sec-block">
+      <div class="sec-head">
+        <div class="k">1.2 Task DAG</div>
+        <h2>One-way flow with a parallel fan-out</h2>
+        <p>Dependencies are declared with <code>blocked_by</code> when tasks are created. Downstream tasks unlock automatically — no manual scheduling.</p>
+      </div>
+      <div class="dag">
+        <div class="dag-row">
+          <div class="dag-node stage0">
+            <div class="t">task-data</div>
+            <div class="d">Sample data ready<br>financials + prices</div>
+          </div>
+          <div class="dag-arrow"><span>unlocks</span><span class="chev">→</span></div>
+          <div class="dag-parallel">
+            <div class="dag-node stage1"><div class="t">task-fundamental</div><div class="d">72/100 score</div></div>
+            <div class="dag-node stage1"><div class="t">task-technical</div><div class="d">Bullish trend</div></div>
+            <div class="dag-node stage1"><div class="t">task-risk</div><div class="d">Medium–high</div></div>
+          </div>
+          <div class="dag-arrow"><span>converge</span><span class="chev">→</span></div>
+          <div class="dag-node stage2">
+            <div class="t">task-forecast</div>
+            <div class="d">215–310 target<br>mid ≈262 · 40/60 · 65%</div>
+          </div>
+          <div class="dag-arrow"><span>final</span><span class="chev">→</span></div>
+          <div class="dag-node stage3">
+            <div class="t">task-report</div>
+            <div class="d">Report + handbook<br>+ worksheet</div>
+          </div>
+        </div>
+        <div class="dag-legend">
+          <span><i style="background:#a78bfa"></i>Stage 1 · Data</span>
+          <span><i style="background:#4da3ff"></i>Stage 2 · 3 parallel tracks</span>
+          <span><i style="background:#3ddc84"></i>Stage 3 · Synthesis</span>
+          <span><i style="background:#f2c14e"></i>Stage 4 · Delivery</span>
+        </div>
+      </div>
+      <div class="tbl-wrap" style="margin-top:26px">
+        <table>
+          <thead><tr><th>Task</th><th>blocked_by</th><th>Producer</th><th>Output file</th></tr></thead>
+          <tbody>
+            <tr><td>task-data</td><td>—</td><td>data-researcher</td><td>demo-data/*.csv</td></tr>
+            <tr><td>task-fundamental</td><td>task-data</td><td>fundamental-analyst</td><td>analysis/fundamental.md</td></tr>
+            <tr><td>task-technical</td><td>task-data</td><td>technical-analyst</td><td>analysis/technical.md</td></tr>
+            <tr><td>task-risk</td><td>task-data</td><td>risk-sentinel</td><td>analysis/risk.md</td></tr>
+            <tr><td>task-forecast</td><td>3 analyses</td><td>forecaster</td><td>outputs/forecast.md</td></tr>
+            <tr><td>task-report</td><td>task-forecast</td><td>report-synthesizer</td><td>deliverables/*.md</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="dag-note"><b>Key insight:</b> three design rules — one-way flow (no cycles), parallel decoupling (three analysts share one prerequisite), single convergence point (all analyses feed exactly one forecast task).</p>
+    </div>
+
+    <!-- 1.3 Timeline -->
+    <div id="timeline" class="sec-block">
+      <div class="sec-head">
+        <div class="k">1.3 Collaboration timeline</div>
+        <h2>From build_team to delivery, step by step</h2>
+        <p>What actually happened during the run — including one instructive incident that became a core teaching point.</p>
+      </div>
+      <div class="tl">
+        <div class="tl-item">
+          <div class="ph">Phase 1 · Setup</div>
+          <span class="tag tag-cmd">build_team</span>
+          <h3>Create the team</h3>
+          <p>Team <b>“US Equity Research Multi-Agent Teaching Demo”</b> (id task-3e864b925b) is created with a shared workspace <code>.team/</code>.</p>
+        </div>
+        <div class="tl-item">
+          <div class="ph">Phase 1 · Setup</div>
+          <span class="tag tag-cmd">spawn_teammate ×6</span>
+          <h3>Spawn the six role agents</h3>
+          <p>Data researcher, three analysts, forecaster, report synthesizer — each with a boundary-rich description.</p>
+        </div>
+        <div class="tl-item">
+          <div class="ph">Phase 1 · Setup</div>
+          <span class="tag tag-cmd">create_task ×6</span>
+          <h3>Wire the task DAG</h3>
+          <p>Six tasks with explicit <code>blocked_by</code> dependencies — the DAG self-schedules as upstream completes.</p>
+        </div>
+        <div class="tl-item">
+          <div class="ph">Phase 2 · Kickoff</div>
+          <span class="tag tag-cmd">send_message(to="*")</span>
+          <h3>Kickoff broadcast</h3>
+          <p>Leader broadcasts: <b>“Data task starts first; other tasks wait for data to be ready.”</b> Members self-claim their tasks.</p>
+        </div>
+        <div class="tl-item">
+          <div class="ph">Phase 3 · Data</div>
+          <span class="tag tag-cmd">claim_task · .team/ handoff</span>
+          <h3>Data researcher produces the sample datasets</h3>
+          <p>financials.csv (FY2022–FY2025, 14 fields) and stock_history.csv (53 weekly OHLCV bars) are written to <code>.team/demo-data/</code>.</p>
+        </div>
+        <div class="tl-item incident">
+          <div class="ph">Phase 3 · Real incident</div>
+          <span class="tag tag-warn">Verification gate</span>
+          <h3>False completion caught by actual inspection</h3>
+          <p>The data researcher first reported “task-data complete.” The Leader did not trust the report — he actually opened the shared folder and found <b>no CSV files</b>. Downstream was paused, the data was regenerated, re-checked, and only then accepted.</p>
+          <div class="tl-lesson"><b>Teaching point:</b> acceptance must be based on reading the deliverable, not on the reporter’s word. “Verify, don’t just trust the report.” This is why <code>verify_task</code> exists as a quality gate.</div>
+        </div>
+        <div class="tl-item">
+          <div class="ph">Phase 4 · Parallel analysis</div>
+          <span class="tag tag-cmd">3 tracks in parallel</span>
+          <h3>Three analysts read the CSVs, write their reports</h3>
+          <p>fundamental.md (72/100), technical.md (Bullish), risk.md (Medium–high) — all converge into the shared <code>.team/analysis/</code>.</p>
+        </div>
+        <div class="tl-item">
+          <div class="ph">Phase 5 · Synthesis</div>
+          <span class="tag tag-cmd">task-forecast</span>
+          <h3>Forecaster builds the combined forecast</h3>
+          <p>PEG valuation test + PE×EPS three-scenario weighting → target 215–310, mid ≈262, up/down 40/60, confidence 65%.</p>
+        </div>
+        <div class="tl-item">
+          <div class="ph">Phase 6 · Integration</div>
+          <span class="tag tag-cmd">task-report</span>
+          <h3>Report synthesizer assembles the final package</h3>
+          <p>Investment research report + multi-agent development handbook + student lab worksheet, all with a teaching disclaimer.</p>
+        </div>
+        <div class="tl-item">
+          <div class="ph">Phase 7 · Acceptance</div>
+          <span class="tag tag-cmd">verify_task · deliver</span>
+          <h3>Leader verifies and delivers to the user</h3>
+          <p>Every file is inspected against the task requirements; pass/fail rulings close the loop, then the package is handed over.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.4 Mapping -->
+    <div id="mapping" class="sec-block">
+      <div class="sec-head">
+        <div class="k">1.4 Platform capability × demo stage</div>
+        <h2>Which JiuwenSwarm capability runs which part of the demo</h2>
+        <p>Every platform feature used in this project maps to a concrete stage — reusable as a recipe for your own multi-agent projects.</p>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Platform capability</th><th>Where it is used in this demo</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td>build_team</td><td>Creates the demo team with a shared workspace</td><td>Sets the project theme and collaboration space</td></tr>
+            <tr><td>spawn_teammate</td><td>Spawns the 6 role agents (desc = who + expertise + boundaries)</td><td>Boundary-rich descriptions prevent role conflicts</td></tr>
+            <tr><td>create_task</td><td>Builds the 6-task DAG with blocked_by dependencies</td><td>Expresses sequencing and parallelism explicitly</td></tr>
+            <tr><td>claim_task</td><td>Members autonomously claim and complete tasks</td><td>Collaboration instead of manual assignment</td></tr>
+            <tr><td>send_message</td><td>Kickoff broadcast, completion reports, alignment</td><td>Messages carry paths & summaries, not file contents</td></tr>
+            <tr><td>.team/ file handoff</td><td>CSV → analyses → forecast → reports flow through shared files</td><td>Standardized directories = contracts between stages</td></tr>
+            <tr><td>view_task</td><td>Live board: pending / blocked / in_progress / completed</td><td>Self-scheduling DAG; no polling needed</td></tr>
+            <tr><td>workspace_meta lock</td><td>Locks shared files before multiple members write</td><td>Prevents overwrites in the shared workspace</td></tr>
+            <tr><td>verify_task</td><td>Leader’s pass/fail acceptance of each deliverable</td><td>Quality gate — catches false completion</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PART 2 ================= -->
+<section id="part2">
+  <div class="wrap">
+    <span class="part-tag">Part 2 · What the pipeline produced</span>
+    <div class="sec-head">
+      <div class="k">Actual deliverables, straight from the analysis files</div>
+      <h2>The output: scorecard, target range, scenarios</h2>
+      <p>All numbers below are taken verbatim from the repository files under <code>analysis/</code>, <code>outputs/</code> and <code>deliverables/</code> — nothing invented.</p>
+    </div>
+
+    <!-- 2.1 Scorecard -->
+    <div id="scorecard" class="sec-block">
+      <div class="sec-head">
+        <div class="k">2.1 Combined scorecard</div>
+        <h2>Three tracks, one cautious verdict</h2>
+      </div>
+      <div class="cards4">
+        <div class="scard gold">
+          <div class="dim">Fundamental</div>
+          <div class="big">72<span style="font-size:22px">/100</span></div>
+          <div class="rating">Good · solid quality</div>
+          <p>FY2025 revenue $410,450M (+4.97%), gross margin 46.66%, net cash ratio 1.15 — but implied PE 42× at historical high, no margin of safety.</p>
+        </div>
+        <div class="scard green">
+          <div class="dim">Technical</div>
+          <div class="big">Bullish</div>
+          <div class="rating">Short-term neutral-to-bullish</div>
+          <p>Close 276.11 in bullish alignment (MA20 262.3, MA53 246.7); RSI 68.7 strong, MACD golden cross; resistance 282–283.</p>
+        </div>
+        <div class="scard red">
+          <div class="dim">Risk & Sentiment</div>
+          <div class="big">Med–high</div>
+          <div class="rating">Sentiment neutral-to-bullish</div>
+          <p>High regulatory & supply-chain risk; PE nearly doubled in two years — guard against high-level high-volume stall.</p>
+        </div>
+        <div class="scard blue">
+          <div class="dim">Combined</div>
+          <div class="big">Cautious</div>
+          <div class="rating">Mid ≈262 · −5% vs. price</div>
+          <p>Weighted mid-point USD 262 vs. current 276.11; up/down 40/60; confidence 65% — “good company, expensive price.”</p>
+        </div>
+      </div>
+
+      <div class="range-card">
+        <div class="range-head">
+          <div class="item">Wide range: <b>USD 215–310</b> <span style="color:#8b97b8">(≈90% coverage)</span></div>
+          <div class="item">Core range: <b>USD 245–290</b> <span style="color:#8b97b8">(≈65% landing)</span></div>
+          <div class="item">Weighted mid-point: <b>USD 262</b> <span style="color:#8b97b8">(−5.1% vs. current)</span></div>
+        </div>
+        <div class="rangebar">
+          <div class="zone bear" style="left:0%;width:25%"></div>
+          <div class="zone base" style="left:50%;width:25%"></div>
+          <div class="zone bull" style="left:79.2%;width:16.6%"></div>
+          <div class="range-marks">
+            <span class="mk-line" style="left:55.8%"></span>
+            <span class="mk-mid" style="left:55.8%;top:24px">mid 262</span>
+            <span class="mk-line now" style="left:67.6%"></span>
+            <span class="mk-now" style="left:67.6%;top:44px">now 276.11</span>
+          </div>
+        </div>
+        <div class="range-labels">
+          <span>195</span><span>215</span><span>245</span><span>262</span><span>276</span><span>290</span><span>310</span>
+        </div>
+        <p style="font-size:14.5px;color:#8b97b8;margin-top:12px">Zone colors: red = bearish 195–225 · blue = base 255–285 · green = bullish 290–310. Risk/reward ≈ 1:1.4 (upside +16% vs. downside −22%).</p>
+      </div>
+    </div>
+
+    <!-- 2.2 Scenarios -->
+    <div id="scenarios" class="sec-block">
+      <div class="sec-head">
+        <div class="k">2.2 Three-scenario projection</div>
+        <h2>Next 3–6 months: three paths</h2>
+        <p>Probability-weighted via PE×EPS assumptions; every number reproducible from the forecast file.</p>
+      </div>
+      <div class="scen-grid">
+        <div class="scen bull">
+          <div class="s-head"><span class="s-name">Bullish</span><span class="prob">Probability 25%</span></div>
+          <div class="target">≈USD 300</div>
+          <div class="t-note">Range 290–310 · +9% to +12%</div>
+          <h4>Triggers</h4>
+          <ul>
+            <li>Volume-holding breakout above 282.5 (weekly volume >110M shares)</li>
+            <li>AI / services / new categories beat expectations (EPS 7.0+)</li>
+            <li>Favorable regulation; Fed turns dovish</li>
+          </ul>
+        </div>
+        <div class="scen base">
+          <div class="s-head"><span class="s-name">Base</span><span class="prob">Probability 50%</span></div>
+          <div class="target">≈USD 270</div>
+          <div class="t-note">Range 255–285 · −0% to +3%</div>
+          <h4>Triggers</h4>
+          <ul>
+            <li>High-level consolidation below 282 to digest valuation</li>
+            <li>Earnings delivered at +4–5%; no major black swan</li>
+            <li>Wide trading between MA20 (262) and resistance (282)</li>
+          </ul>
+        </div>
+        <div class="scen bear">
+          <div class="s-head"><span class="s-name">Bearish</span><span class="prob">Probability 25%</span></div>
+          <div class="target">≈USD 205</div>
+          <div class="t-note">Range 195–225 · −25%</div>
+          <h4>Triggers</h4>
+          <ul>
+            <li>Weekly close breaks MA20 (262), then MA30 (255–258)</li>
+            <li>Adverse regulatory ruling (EU DMA / antitrust) or supply-chain disruption</li>
+            <li>EPS growth <3% (revised down to 6.4)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.3 Summaries -->
+    <div id="summaries" class="sec-block">
+      <div class="sec-head">
+        <div class="k">2.3 Three-track conclusions</div>
+        <h2>What each analyst actually wrote</h2>
+        <p>Summarized verbatim from <code>analysis/fundamental.md</code>, <code>analysis/technical.md</code> and <code>analysis/risk.md</code>.</p>
+      </div>
+      <div class="sum-grid">
+        <div class="sum">
+          <div class="s-head"><span class="s-name">Fundamental</span><span class="s-score fund">72/100 Good</span></div>
+          <div class="s-src">fundamental-analyst · financials.csv (FY2022–FY2025)</div>
+          <ul>
+            <li>FY2025 revenue USD 410,450M, a 4-year high, +4.97% YoY — but 3-yr CAGR only +1.34%</li>
+            <li>Gross margin rose 4 straight years to 46.66%; net margin stable 24.4–25.3%; ROE 151.8–196.9%</li>
+            <li>Debt ratio 85.6%→81.7% but still >80%; current ratio 0.88→1.06, thin buffer</li>
+            <li>OCF >USD 100B for 4 years; net cash ratio 1.14–1.22 — the strongest dimension</li>
+            <li>Implied PE ≈42× / PB 58× at historical high; fair mid ≈USD 240 (35×), price ≈13–15% premium → no margin of safety</li>
+          </ul>
+        </div>
+        <div class="sum">
+          <div class="s-head"><span class="s-name">Technical</span><span class="s-score tech">Bullish</span></div>
+          <div class="s-src">technical-analyst · stock_history.csv (53 weeks)</div>
+          <ul>
+            <li>Full period +21.10% (228.00 → 276.11); mid-term uptrend channel intact</li>
+            <li>Bullish MA alignment: close 276.11 > MA20 262.33 > MA53(≈MA60) 246.73, all rising</li>
+            <li>RSI14 68.66 strong, not overbought (eased from 75.5); MACD golden cross above zero, DIF +8.12 > DEA +6.68</li>
+            <li>Resistance 282–283; supports 273–274 / 262–266 (MA20) / 255–256 (MA30 + neckline)</li>
+            <li>Healthy volume-price; 9/14 spike-and-reversal on 134.3M shares = high-level divergence watch</li>
+          </ul>
+        </div>
+        <div class="sum">
+          <div class="s-head"><span class="s-name">Risk & Sentiment</span><span class="s-score risk">Medium–high</span></div>
+          <div class="s-src">risk-sentinel · sample data + common knowledge</div>
+          <ul>
+            <li>Regulatory & policy risk <b>High</b>: App Store commissions, EU DMA, antitrust, AI compliance</li>
+            <li>Supply-chain concentration & geopolitics <b>High</b>: China manufacturing, TSMC, tariffs</li>
+            <li>Competition <b>Medium</b>: Huawei/Samsung; AI ecosystem started late</li>
+            <li>Macro & valuation <b>Medium</b>: PE nearly doubled in 2 years → Davis double-kill risk</li>
+            <li>Sentiment neutral-to-bullish; suggested position cap 10–15%, staged buying on pullbacks, no chasing</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.4 Deliverables -->
+    <div id="deliverables" class="sec-block">
+      <div class="sec-head">
+        <div class="k">2.4 Deliverables</div>
+        <h2>Open the actual files in this repository</h2>
+        <p>Every document below exists in the repo and was produced by this pipeline. Relative links keep them working on GitHub Pages.</p>
+      </div>
+      <div class="del-grid">
+        <div class="del">
+          <div class="t">Investment Research Report</div>
+          <div class="p">deliverables/investment-research-report.md</div>
+          <div class="d">Executive summary, combined scorecard, target range, three scenarios, combined risk warnings, disclaimer.</div>
+          <a class="btn" href="../deliverables/investment-research-report.md" target="_blank" rel="noopener">Open report →</a>
+        </div>
+        <div class="del">
+          <div class="t">JiuWen Multi-Agent Development Handbook</div>
+          <div class="p">deliverables/jiuwen-multiagent-dev-manual.md</div>
+          <div class="d">The six-step design method, capability mapping table, 5-minute quick start, full workflow diagram.</div>
+          <a class="btn" href="../deliverables/jiuwen-multiagent-dev-manual.md" target="_blank" rel="noopener">Open handbook →</a>
+        </div>
+        <div class="del">
+          <div class="t">Student Lab Worksheet</div>
+          <div class="p">deliverables/student-lab-worksheet.md</div>
+          <div class="d">A 45-minute hands-on lab to reproduce this 6-agent pipeline, with record table, challenges and rubric.</div>
+          <a class="btn" href="../deliverables/student-lab-worksheet.md" target="_blank" rel="noopener">Open worksheet →</a>
+        </div>
+        <div class="del">
+          <div class="t">Combined Forecast</div>
+          <div class="p">outputs/forecast.md</div>
+          <div class="d">PEG valuation test, PE×EPS scenario weighting, probability scorecard and key assumptions — fully transparent.</div>
+          <a class="btn" href="../outputs/forecast.md" target="_blank" rel="noopener">Open forecast →</a>
+        </div>
+        <div class="del">
+          <div class="t">Three Analyses</div>
+          <div class="p">analysis/fundamental.md · technical.md · risk.md</div>
+          <div class="d">The upstream source reports: financial score, trend rating, risk assessment and every cited metric.</div>
+          <a class="btn" href="../analysis/fundamental.md" target="_blank" rel="noopener">Open analyses →</a>
+        </div>
+        <div class="del">
+          <div class="t">Sample Data & Generator</div>
+          <div class="p">data/financials.csv · stock_history.csv · scripts/</div>
+          <div class="d">The teaching datasets and the Python script that regenerates them offline — fully reproducible.</div>
+          <a class="btn" href="../data/financials.csv" target="_blank" rel="noopener">Open data →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="disc"><b>Disclaimer:</b> This page is a teaching demonstration built on the JiuwenSwarm platform. All data, analyses, scores, target prices and scenarios are locally generated sample outputs — teaching demonstration only, <b>NOT investment advice</b>. Do not make real trading decisions based on this content.</div>
+    <div class="meta">Built by a 6-agent JiuwenSwarm team · task-3e864b925b · US Equity Research Multi-Agent Teaching Demo · open repository with MIT license</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
