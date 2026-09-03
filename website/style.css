@@ -196,3 +196,32 @@ footer .meta{font-size:13.5px;color:var(--muted)}
 }
 /* ---------- Print ---------- */
 @media print{nav{display:none}body{background:#fff;color:#111}.hero,.note-banner{background:#fff}}
+/* ---------- Highlights: executive summary ---------- */
+.exec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-bottom:8px}
+.exec-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+.exec-card.main{border-color:rgba(242,193,78,.5)}
+.exec-card .label{font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.exec-card .big-line{font-size:clamp(24px,2.6vw,34px);font-weight:800;color:var(--gold);margin-bottom:10px;line-height:1.25}
+.exec-card p{color:var(--txt2);font-size:15.5px}
+.num-row{display:flex;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.num-row:last-child{border-bottom:none}
+.num-row span{font-size:22px;font-weight:800;color:var(--blue);min-width:92px}
+.num-row{color:var(--txt2);font-size:14.5px}
+.src-note{margin-top:14px;font-size:15px;color:var(--txt2)}
+.src-note a{font-weight:700;color:var(--gold)}
+/* ---------- Highlights: risk register ---------- */
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.risk{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--blue);border-radius:12px;padding:18px 22px;box-shadow:var(--shadow)}
+.risk.high{border-left-color:var(--red)}
+.risk.med{border-left-color:var(--gold)}
+.risk.low{border-left-color:var(--green)}
+.risk .lv{display:inline-block;font-size:12.5px;font-weight:800;padding:3px 12px;border-radius:999px;margin-bottom:8px}
+.risk.high .lv{color:var(--red);background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.4)}
+.risk.med .lv{color:var(--gold);background:rgba(242,193,78,.12);border:1px solid rgba(242,193,78,.4)}
+.risk.low .lv{color:var(--green);background:rgba(61,220,132,.12);border:1px solid rgba(61,220,132,.4)}
+.risk .rt{font-size:17px;font-weight:800;margin-bottom:4px}
+.risk .rd{font-size:14.5px;color:var(--txt2)}
+.sum-link{margin-top:12px;font-size:14px;font-weight:700}
+.sum-link a{color:var(--gold)}
+/* ---------- Highlights: score bar in scorecard ---------- */
+.bar i.gold{background:var(--gold)}
