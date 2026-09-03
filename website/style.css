@@ -225,3 +225,9 @@ footer .meta{font-size:13.5px;color:var(--muted)}
 .sum-link a{color:var(--gold)}
 /* ---------- Highlights: score bar in scorecard ---------- */
 .bar i.gold{background:var(--gold)}
+/* ---------- Source tags (data provenance labels) ---------- */
+.src-tag{font-size:13.5px;color:var(--muted);margin:2px 0 10px;letter-spacing:.02em}
+.src-tag code{font-family:var(--mono);font-size:12.5px;color:var(--txt2);background:rgba(255,255,255,.06);padding:1px 7px;border-radius:5px;border:1px solid var(--line)}
+.src-tag .sec{color:var(--muted)}
+.sum .src-tag{margin:2px 0 0;font-size:12.5px}
+.sum .src-tag code{font-size:11.5px}
