@@ -1,110 +1,110 @@
-# AAPL Fundamental Analysis Report (Teaching Sample Data)
-
-**Analyst**: Fundamental Analyst (fundamental-analyst)
-**Data Source**: `.team/demo-data/financials.csv` (FY2022-FY2025, 4 fiscal years, 14-field sample data), `.team/demo-data/stock_history.csv` (53-week weekly data)
-**Sample Notes**: All figures are taken directly from the sample data file definitions (amounts in USD millions; ratios as percentages; ROE = net income / end-of-period equity; debt ratio = total liabilities / total assets; current ratio = current assets / current liabilities; PE = fiscal year-end price / diluted EPS for the fiscal year).
+# AAPL Fundamental Analysis Report (Real Data)
+**Analyst**: fundamental-analyst
+**Data Sources**:
+- Financials: SEC EDGAR (Apple Inc. Form 10-K, FY2022–FY2025; filing dates 2022-10-28 / 2023-11-03 / 2024-11-01 / 2025-10-31; XBRL companyfacts; retrieved 2026-09-04) — `.team/demo-data/financials_real.csv`
+- Market data: Yahoo Finance chart API (weekly OHLCV, 1y range; retrieved 2026-09-04) — `.team/demo-data/stock_history_real.csv`
+- Units: amounts in USD millions; ratios in percent; PE/PB based on fiscal-year-end close price; latest close: **328.21 USD (2026-09-03)**
 
 ---
 
 ## 1. Revenue Growth Trend
 
-| Fiscal Year | Revenue (USD mn) | YoY Growth | Fiscal Year-End Price (USD) |
+| FY | Revenue (USD mn) | YoY | FY-end Close (USD) |
 |---|---|---|---|
-| FY2022 | 394,328 | — | 142.0 |
-| FY2023 | 383,285 | -2.80% | 171.0 |
-| FY2024 | 391,035 | +2.02% | 233.0 |
-| FY2025 | 410,450 | +4.97% | 262.0 |
+| FY2022 | 394,328 | — | 150.43 |
+| FY2023 | 383,285 | -2.80% | 171.21 |
+| FY2024 | 391,035 | +2.02% | 227.79 |
+| FY2025 | 416,161 | +6.43% | 255.46 |
 
-- **Trend assessment**: After revenue declined 2.80% in FY2023, it recovered for two consecutive years in FY2024 (+2.02%) and FY2025 (+4.97%), hitting a new historical peak and returning to positive growth.
-- The 3-year CAGR (FY2022→FY2025) is only **+1.34%** — a low absolute growth center, consistent with low single-digit steady growth rather than high growth.
-- On the price side: fiscal year-end price rose from USD 142.0 to USD 262.0 (FY2022→FY2025, cumulative +84.5%). **Price gains far outpaced revenue/profit gains** — the rally was driven more by valuation expansion than earnings performance.
+- Revenue bottomed in FY2023 (-2.80%) and recovered in FY2024 (+2.02%), then **accelerated to +6.43% in FY2025 to a record 416,161 mn**.
+- 3-year revenue CAGR (FY2022→FY2025): **+1.81%** — still low single-digit; this is a mature compounder, not a hyper-growth name.
+- Stock: FY-end close rose from 150.43 to 255.46 (+69.8% over 3 years), far outpacing revenue/profit growth — the re-rating came largely from **valuation expansion**, not fundamentals alone.
+- Latest weekly close 328.21 (2026-09-03) is **+36.9% above the 2025-09-01 close of 239.69** (first bar of the real series), vs FY2025 EPS growth of ~22% — price ran well ahead of earnings.
 
-## 2. Earnings Quality (Gross Margin / Net Margin / ROE)
+## 2. Profitability (Gross Margin / Net Margin / ROE)
 
-| Fiscal Year | Gross Margin | Net Margin | ROE |
-|---|---|---|---|
-| FY2022 | 43.31% | 25.31% | 196.9% |
-| FY2023 | 44.13% | 25.31% | 156.1% |
-| FY2024 | 46.21% | 24.62% | 162.6% |
-| FY2025 | 46.66% | 24.44% | 151.8% |
+| FY | Gross Margin | Net Margin | ROE | Net Income (mn) |
+|---|---|---|---|---|
+| FY2022 | 43.31% | 25.31% | 197.0% | 99,803 |
+| FY2023 | 44.13% | 25.31% | 156.1% | 96,995 |
+| FY2024 | 46.21% | 23.97% | 164.6% | 93,736 |
+| FY2025 | 46.91% | 26.92% | 151.9% | 112,010 |
 
-- **Gross margin rose year over year**: from 43.31% to 46.66%, an improvement of about 3.35 percentage points over four years, reflecting product mix optimization / a higher share of high-margin services.
-- **Net margin stable at high levels**: stable in the 24.4%-25.3% range across FY2022-FY2025, with a consistently high earnings conversion rate.
-- **Extremely high ROE**: 151.8%-196.9% under the sample definition (reflecting a small end-of-period equity base + high-leverage operations). FY2025 net income of USD 100,180 million was the highest of the four fiscal years.
+- **Gross margin improved for four straight years** to a record 46.91% (from 43.31%), signaling a favorable product mix (services, Pro hardware).
+- **Net margin rose to a record 26.92% in FY2025** (from 25.31%/23.97%), and net income hit a record 112,010 mn.
+- **ROE remains exceptionally high** at 151.9% (FY2025), though it has moderated from 197.0% (FY2022) as the equity base normalized. ROE this high is partly a function of elevated leverage (see below).
 
-**Conclusion**: Earnings quality is excellent — structurally rising gross margin, ceiling-level stable net margin, and extremely high shareholder returns; however, ROE relies heavily on high leverage (debt ratio above 80%), which is a deduction in the quality score.
+## 3. Financial Health (Leverage / Liquidity)
 
-## 3. Financial Health (Debt Ratio / Liquidity)
-
-| Fiscal Year | Debt-to-Assets Ratio | Current Ratio |
+| FY | Debt Ratio (Liab/Assets) | Current Ratio |
 |---|---|---|
 | FY2022 | 85.6% | 0.88 |
 | FY2023 | 82.4% | 0.99 |
-| FY2024 | 82.0% | 1.05 |
-| FY2025 | 81.7% | 1.06 |
+| FY2024 | 84.4% | 0.87 |
+| FY2025 | 79.5% | 0.89 |
 
-- **Debt ratio declined gradually** (85.6% → 81.7%), a favorable trend, but the **absolute level remains high (>80%)**, reflecting a heavily levered structure with limited financial flexibility.
-- **Current ratio improved to the threshold**: recovered from 0.88 (FY2022) to 1.06 (FY2025), just crossing the 1.0 safety line — short-term solvency moved from "insufficient" to "basically adequate," but with a thin buffer.
+- **Leverage improved to 79.5% in FY2025**, the lowest of the four years (from 85.6%), a genuine deleveraging trend — but the absolute level remains high (>79%), and ROE above 150% is structurally dependent on this leverage.
+- **Liquidity stays tight**: current ratio FY2025 = 0.89 (below 1.0, and below FY2023's 0.99). Short-term assets do not cover short-term liabilities; buffer is thin.
 
 ## 4. Cash Flow Quality
 
-| Fiscal Year | Operating Cash Flow (USD mn) | Net Cash Ratio (OCF / Net Income) |
+| FY | Operating Cash Flow (mn) | OCF / Net Income |
 |---|---|---|
 | FY2022 | 122,151 | 1.22 |
 | FY2023 | 110,543 | 1.14 |
-| FY2024 | 118,254 | 1.21 |
-| FY2025 | 115,019 | 1.15 |
+| FY2024 | 118,254 | 1.26 |
+| FY2025 | 111,482 | 1.00 |
 
-- Operating cash flow exceeded USD 100,000 million in all four years, and the **net cash ratio exceeded 1 for 4 consecutive years (1.14-1.22)** — high "quality" of earnings, with real cash inflows backing reported net income. Cash flow is the most solid dimension in the sample data.
+- OCF exceeded 110 bn USD in every year; OCF/Net Income was **>1.0 in all four years (1.00–1.26)**, confirming high earnings quality (profits backed by real cash).
+- Note: FY2025 OCF/NI fell to 1.00 — still ≥1, but the cushion narrowed as working-capital dynamics shifted.
 
 ## 5. Valuation Assessment
 
-| Fiscal Year | FY-End Price | FY-End PE | FY-End PB |
+| FY | FY-end Close | PE | PB |
 |---|---|---|---|
-| FY2022 | 142.0 | 23.2x | 42.1x |
-| FY2023 | 171.0 | 26.6x | 42.4x |
-| FY2024 | 233.0 | 36.9x | 60.8x |
-| FY2025 | 262.0 | 40.0x | 58.0x |
+| FY2022 | 150.43 | 24.6x | 47.2x |
+| FY2023 | 171.21 | 27.9x | 42.8x |
+| FY2024 | 227.79 | 37.5x | 60.5x |
+| FY2025 | 255.46 | 34.2x | 51.2x |
 
-- Latest sample close (2026-09-14): **USD 276.11**, implying a PE of about **42.1x** on FY2025 EPS of 6.55 — **above the upper end** of the four-fiscal-year range (23.2-40.0x).
-- Since FY2024, PE rose from 36.9x to 40.0x, with PB stable at a very high 58-61x — the valuation expansion (FY2023→FY2025 price +53%) far exceeded EPS growth (6.44→6.55, +1.7%), indicating that the price gains over the past two years were driven mainly by **valuation multiple expansion**.
+- **Latest close 328.21 (2026-09-03) / FY2025 diluted EPS 7.46 → implied PE ≈ 44.0x**, well above the four-year band (24.6x–37.5x) and far above the 4-year mean of **31.05x**.
+- FY-end PE was already rich at 34.2x (FY2025); the current 44.0x implies a further re-rating of ~29% vs. FY2025 year-end.
 
-### Fair Value Range Implied by Current Valuation (Qualitative + Quantitative)
+### Reasonable Value Range (Qualitative + Quantitative)
 
-- **Valuation anchor**: historical PE mid-point (simple average of four fiscal years) approx. **31.7x**; sample FY2026E EPS assumed around **USD 6.75-7.00** based on the revenue trend (+5% or so; an analyst assumption extrapolated from 6.55, not a sample-provided figure).
-- **Sensitivity range** (FY2026E EPS mid-point 6.90):
-  - Bearish (PE 30x): approx. **USD 207**
-  - Base (PE 35x): approx. **USD 242**
-  - Bullish (PE 40x): approx. **USD 276**
-- **Qualitative judgment**: The current price of USD 276.11 sits exactly at the "bullish 40x" level, at the upper edge of the historical valuation band; at the base 35x the fair-value mid-point is roughly **USD 240**, implying a **13-15% premium** of the current price over the fair-value mid-point. The market has priced in the optimistic scenario of "continued earnings growth + sustained high valuation," leaving **insufficient margin of safety**.
+- **Valuation anchors**: historical PE mean 31x, top of band 37.5x (FY2024). FY2026E EPS scenarios (analyst assumptions on top of real FY2025 EPS 7.46): g=3% → 7.68; g=6% → 7.91; g=10% → 8.21.
+- **PE × EPS range**:
+  - Bearish (PE 28x × 7.68): ≈ **215 USD**
+  - Base (PE 32x × 7.91): ≈ **253 USD**
+  - Bullish (PE 36x × 8.21): ≈ **295 USD**
+  - Peak scenario (PE 40x × 8.21): ≈ **328 USD** (i.e., the current price itself requires ~40x on 10% EPS growth — the market is pricing the most optimistic case)
+- **Qualitative view**: a fair-value band of roughly **215–295 USD (base-case center ≈ 250)** looks defensible for a high-quality compounder with record margins but single-digit revenue growth. At 328.21 (44.0x), the stock sits **above the top of a reasonable band by ~11–53%** — valuation is stretched, and margin of safety is thin.
+
+## 6. Company Quality Score (100 pts)
+
+| Item | Max | Score | Basis (real data) |
+|---|---|---|---|
+| Revenue growth trend | 20 | 14 | FY2025 +6.43% acceleration; 3-yr CAGR only 1.81% |
+| Profitability | 25 | 23 | Record GM 46.91%, NM 26.92%, ROE 151.9%+ |
+| Financial health | 20 | 10 | DR 79.5% high; current ratio 0.89 <1 |
+| Cash flow quality | 20 | 16 | OCF/NI 1.00–1.26 all years; FY2025 cushion =1.00 |
+| Valuation | 15 | 3 | Implied PE 44x at all-time high; no margin of safety |
+| **Total** | **100** | **66** | **Rating: Good quality, expensive valuation** |
+
+## 7. Bull Case (3+)
+
+1. **Growth re-accelerating**: FY2025 revenue hit a record 416,161 mn (+6.43%), the fastest pace in 3 years; margins rising into the acceleration.
+2. **Record profitability**: gross margin 46.91%, net margin 26.92%, and net income 112,010 mn — all four-year highs; pricing power intact.
+3. **High earnings quality**: OCF above 110 bn USD in every year, OCF/NI ≥1.00 throughout (1.00–1.26), profits are real cash.
+4. **Deleveraging trend**: debt ratio improved from 85.6% to 79.5% over four years, reducing structural risk.
+
+## 8. Bear Case / Risks (3)
+
+1. **Valuation risk (primary)**: implied PE ≈44x vs. historical mean 31x and band top 37.5x; EPS growth is single-digit — price has run ahead of fundamentals; any disappointment in growth or risk appetite could trigger a 15–35% de-rating back toward 215–280.
+2. **Low growth base**: 3-year revenue CAGR only 1.81%; sustained high multiple requires new product cycles/services scaling that are not yet evidenced in the reported data.
+3. **Tight liquidity + high leverage**: current ratio 0.89 (<1) with debt ratio 79.5% — limited financial buffer under rising rates or cash-flow volatility.
 
 ---
 
-## 6. Company Quality Score (out of 100)
-
-| Component | Max Score | Score | Basis (sample data) |
-|---|---|---|---|
-| Revenue growth trend | 20 | 12 | Low single-digit growth, CAGR only 1.34%, but FY2025 recovered +4.97% |
-| Profitability | 25 | 23 | Gross margin rose to 46.66% over four years, net margin stable at 24%+, ROE 151.8%+ |
-| Financial health | 20 | 11 | Debt ratio 81.7% on the high side, current ratio 1.06 barely adequate |
-| Cash flow quality | 20 | 18 | Net cash ratio >1 for 4 consecutive years (1.14-1.22) |
-| Valuation level | 15 | 7 | Implied PE 42x at historical upper edge, no margin of safety |
-| **Total** | **100** | **72** | **Rating: Good (solid quality, expensive valuation)** |
-
-## 7. Bullish Thesis (3+ points)
-
-1. **Revenue back in growth**: FY2025 revenue of USD 410,450 million set a four-year high, up +4.97% YoY, with two consecutive increases after the FY2023 trough.
-2. **Earnings quality keeps improving**: Gross margin rose for four straight years to 46.66% (+3.35pct structural improvement), net margin stable above 24.4%, ROE maintaining ultra-high capital returns above 150%.
-3. **Extremely high cash-flow quality**: Operating cash flow exceeded USD 100,000 million for four consecutive years, with a full-period net cash ratio >1.14 — earnings backed by real cash, almost no "paper profits."
-4. **Improving financial structure at the margin**: Debt-to-assets ratio declined year by year from 85.6% to 81.7%, current ratio recovered from 0.88 to 1.06 above the safety line, with directional repair of the solvency buffer.
-
-## 8. Risk Warnings (3 items)
-
-1. **Valuation overhang risk (primary)**: Implied PE of 42x and PB of 58x are at historical highs, while EPS growth is only single digits — earnings and valuation are mismatched. If growth disappoints or risk appetite cools, there is large room for de-rating (a base-case reversion to 35x implies roughly 13% downside).
-2. **Low revenue growth center**: The 3-year CAGR is only 1.34%; if the next product cycle (new categories not covered in the sample) fails to ramp up, the high valuation lacks fundamental support.
-3. **High leverage + thin liquidity buffer**: Debt ratio of 81.7% remains elevated and the current ratio of 1.06 is a thin buffer; financial flexibility is constrained in a rising-rate or volatile cash-flow environment.
-
----
-
-*This report is based on locally generated teaching sample data (including analyst extrapolation assumptions), not real-time quotes or real financial data; all conclusions are for demonstrating the multi-agent research workflow only.*<br>
-**Teaching demonstration only; not investment advice.**
+*This report is based on real data sourced from SEC EDGAR 10-K filings (FY2022–FY2025) and Yahoo Finance weekly prices, retrieved 2026-09-04. Forward EPS scenarios are analyst assumptions; all historical figures are quoted directly from the source CSV. For teaching demo only.*<br>
+**For educational demonstration only — not investment advice.**

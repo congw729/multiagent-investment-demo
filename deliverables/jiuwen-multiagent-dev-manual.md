@@ -206,16 +206,16 @@ Dependency table (the `blocked_by` field when calling `create_task`):
 
 ### 5.1b This Demo's Actual Deliverable List (reproduce against the real files)
 
-After this project actually ran, the handoff files generated under `.team/` (learners can compare directly):
+After this project actually ran on real market data, the handoff files generated under `.team/` (learners can compare directly):
 
 | Stage | Actual File | Producer | Consumer |
 |---|---|---|---|
-| Data | `demo-data/financials.csv` (FY2022-FY2025 four fiscal years, 14 fields) | data-researcher | three analysts |
-| Data | `demo-data/stock_history.csv` (53-week weekly OHLCV) | data-researcher | three analysts |
-| Analysis | `analysis/fundamental.md` (fundamental 72/100) | fundamental-analyst | forecaster |
-| Analysis | `analysis/technical.md` (trend bullish, key price levels) | technical-analyst | forecaster |
-| Analysis | `analysis/risk.md` (risk medium-high, sentiment neutral-to-bullish) | risk-sentinel | forecaster |
-| Forecast | `outputs/forecast.md` (target 215-310, mid-point 262, three scenarios 300/270/205) | forecaster | report-synthesizer |
+| Data | `demo-data/financials_real.csv` (SEC EDGAR 10-K, FY2022-FY2025, 14 fields) | data-researcher | three analysts |
+| Data | `demo-data/stock_history_real.csv` (54-week weekly OHLCV, Yahoo Finance) | data-researcher | three analysts |
+| Analysis | `analysis/fundamental.md` (fundamental 66/100, real data) | fundamental-analyst | qa-tester → forecaster |
+| Analysis | `analysis/technical.md` (trend BULLISH, key price levels) | technical-analyst | qa-tester → forecaster |
+| Analysis | `analysis/risk.md` (risk MEDIUM-HIGH, sentiment cautiously optimistic) | risk-sentinel | qa-tester → forecaster |
+| Forecast | `outputs/forecast.md` (target 215-365, mid-point 310, three scenarios 350/318/240) | forecaster | report-synthesizer |
 | Delivery | `deliverables/investment-research-report.md` | report-synthesizer | user / whole team |
 | Delivery | `deliverables/jiuwen-multiagent-dev-manual.md` | report-synthesizer | user / whole team |
 
@@ -223,8 +223,8 @@ After this project actually ran, the handoff files generated under `.team/` (lea
 
 File handoff is the "contract" of multi-agent collaboration. This demo's conventions:
 
-- **Semantic file names**: this demo's actual file names are `financials.csv` (financials), `stock_history.csv` (weekly prices), `fundamental.md` (fundamental analysis)...
-- **Definitions in the file header**: `fundamental.md` states the data source, as-of date, and indicators used — downstream doesn't need to guess.
+- **Semantic file names**: this demo's actual file names are `financials_real.csv` (real financials from SEC EDGAR), `stock_history_real.csv` (real weekly prices from Yahoo Finance), `fundamental.md` (fundamental analysis)...
+- **Definitions in the file header**: `fundamental.md` states the data source (SEC EDGAR 10-K filing dates), as-of date, and indicators used — downstream doesn't need to guess.
 - **One task, one deliverable**: downstream depends only on fixed paths; a missing file means upstream didn't do its job (this pinpoints DAG breaks).
 
 > Tip: the most common failure point in multi-agent projects is "implicitly agreed handoff formats". **Whether file or message, put the format into the task description or the file header**.
@@ -267,7 +267,7 @@ This demo uses a **two-layer quality model**:
 | **First gate** | qa-tester (Independent QA Tester) | Verifies each analysis deliverable against the **source data** (`.team/demo-data/`) and the **task acceptance criteria**: numbers match the source, disclaimer present, structure complete, no fabrication. Outputs pass/fail + evidence list. | **Independent of the implementers** — catches errors impartially |
 | **Final arbiter** | team-leader | Reviews the QA verdict plus the overall pipeline, resolves disputes, and makes the **final accept/reject decision** for delivery | Owns the overall project |
 
-> **Why two layers?** The QA tester is independent of the three analysts, so it can objectively check whether a number in `fundamental.md` really comes from `financials.csv` (no fabrication, no mismatch). The Leader is the final authority who decides whether the whole pipeline is ready to deliver to the user. One layer without the other is weaker: implementer self-checks are biased, and a Leader without an independent check may accept errors too easily.
+> **Why two layers?** The QA tester is independent of the three analysts, so it can objectively check whether a number in `fundamental.md` really comes from `financials_real.csv` / `stock_history_real.csv` (no fabrication, no mismatch). The Leader is the final authority who decides whether the whole pipeline is ready to deliver to the user. One layer without the other is weaker: implementer self-checks are biased, and a Leader without an independent check may accept errors too easily.
 
 ### 7.1 The Acceptance Tools (Tester + Leader perspective)
 
@@ -282,7 +282,7 @@ This demo uses a **two-layer quality model**:
 ### 7.2 This Demo's Acceptance Examples
 
 - Data task: `view_task(get)` to check task-data → read the CSV → verify field definitions → `pass`.
-- Analysis tasks (QA gate): the **qa-tester** reads the three analyses under `analysis/` and **cross-checks every cited number against `demo-data/financials.csv` / `stock_history.csv`** → numbers match, disclaimer present, structure complete → `pass`. Any mismatch, missing disclaimer, or fabricated figure → `fail` with an evidence list.
+- Analysis tasks (QA gate): the **qa-tester** reads the three analyses under `analysis/` and **cross-checks every cited number against `demo-data/financials_real.csv` / `stock_history_real.csv`** → numbers match, disclaimer present, structure complete → `pass`. Any mismatch, missing disclaimer, or fabricated figure → `fail` with an evidence list.
 - Forecast and report: read the two final deliverables under `deliverables/` → "disclaimer present" and "structure complete" → Leader rules `pass` → deliver.
 
 > Acceptance red line: **missing deliverable, wrong definitions, no disclaimer, or fabricated/mismatched numbers = reject**.

@@ -1,188 +1,170 @@
-# AAPL Technical Analysis Report (Teaching Sample)
+# AAPL Technical Analysis Report (Real Market Data)
 
-> **Scope Statement**: This report is based on `.team/demo-data/stock_history.csv` (AAPL teaching demo sample weekly price data, 2025-09-15 ~ 2026-09-14, 53 weeks). The data are **constructed teaching sample data, not live market data, and not investment advice**. Indicator calculations are reproducible with the script `calc_technical.py`; calculation assumptions are noted at the end.
+> **Disclaimer**: This document is generated for **educational / teaching demonstration purposes only**. It is based on real market data fetched from Yahoo Finance (chart API, weekly interval) for a classroom demo of multi-agent investment research. **It does NOT constitute investment advice.** Always conduct your own due diligence before making any investment decision.
 
 ---
 
-## 1. Data Overview
+## 0. Data Source & Provenance
 
-| Item | Value |
+| Item | Detail |
 |---|---|
-| Sample period | 2025-09-15 ~ 2026-09-14 (53 weeks, sampled every Monday) |
-| First week close | USD 228.00 |
-| Latest close (2026-09-14) | **USD 276.11** |
-| Full-period change | **+21.10%** |
-| Full-period high / low | 282.22 (week of 2026-09-14) / 218.39 (week of 2025-11-10) |
-
-The sample is constructed from 5 trend segments: "up → up → pullback → stabilize → up again", consistent with the data generation script definition.
+| Instrument | AAPL (Apple Inc.) |
+| Data source | Yahoo Finance chart API (`interval=1wk, range=1y`) |
+| Fetch date | 2026-09-04 |
+| Sample window | 2025-09-01 ~ 2026-09-03 (54 weekly bars) |
+| Latest close | **328.21 USD** (2026-09-03) |
+| Units | OHLC in USD; volume in shares |
+| Computation | Reproducible via script `calc_technical_real.py` (Wilder RSI, standard EMA-based MACD) |
 
 ---
 
-## 2. Trend Assessment
+## 1. Trend Assessment
 
-### 1. Short-term trend (last 4-8 weeks): consolidating then re-attacking upward, neutral-to-bullish
+### 1.1 Medium-Term Trend (26-week to full window): **Strong Uptrend**
 
-| Window | Starting Close | Latest Close | Change |
+| Window | Start Close | End Close | Change |
 |---|---|---|---|
-| Last 4 weeks | 275.37 | 276.11 | +0.27% |
-| Last 8 weeks | 256.35 | 276.11 | **+7.71%** |
-| Last 13 weeks | 255.16 | 276.11 | +8.21% |
-| Last 26 weeks | 254.54 | 276.11 | +8.47% |
+| Full period (54w) | 239.69 | 328.21 | **+36.93%** |
+| Last 26w | 250.12 | 328.21 | **+31.22%** |
+| Last 13w | 291.13 | 328.21 | +12.74% |
 
-- Over the last 4 weeks, price has consolidated in the 271-282 range (8/17 close 275.37 → 9/14 close 276.11), i.e., **high-level consolidation**;
-- However, on the 8-13 week view, price has steadily climbed from around 255 to above 276, with a rising short-term center of gravity. Last week (9/7 close 280.26) briefly broke above 280 before pulling back slightly to close at 276, showing **clear upward intent**.
+- The stock has advanced from ~240 to ~328 over the past year, forming a clear **ascending channel** with higher lows (Jun pullback low 273.75 → Aug low 300–301 → recent low 312.8).
+- Medium-term trend is **bullish and intact**.
 
-### 2. Mid-term trend (last 26 weeks to full period): bullish trend intact
+### 1.2 Short-Term Trend (4–8 weeks): **Rebound after correction, neutral-to-bullish**
 
-- Full period +21.10%, 26 weeks +8.47%, mid-term uptrend channel remains intact;
-- Lows kept rising from Feb 2026 (approx. USD 251) and mid-March (approx. USD 254), with highs also rising in tandem, consistent with an **uptrend**;
-- Since May, price has been trading above MA20, with pullbacks not breaking the mid-term average — healthy trend structure.
+| Window | Start Close | End Close | Change |
+|---|---|---|---|
+| Last 8w | 333.74 | 328.21 | **-1.66%** |
+| Last 4w | 305.93 | 328.21 | **+7.28%** |
 
-**Conclusion: short-term neutral-to-bullish (consolidation building), mid-term bullish (uptrend channel).**
+- July printed the cycle high (344.57 on 2026-07-27) followed by a sharp one-week pullback (-7.2%, close 308.91) on heavy volume (365M shares).
+- August consolidated in the 301–320 range, and the last 4 weeks show a **strong rebound (+7.28%)**, with the latest week (2026-09-03) closing at 328.21 near the round level of 330.
 
----
-
-## 3. Moving Average System (MA20 / MA60)
-
-### Calculation Notes
-- **MA20** = simple average of the most recent 20 weekly closes;
-- **MA60**: since the sample has only 53 weeks (fewer than 60), the **full-sample 53-week average (MA53) is used as a proxy for MA60**, and this assumption is explicitly flagged.
-
-### Moving Average Values and Arrangement
-
-| MA | Value (USD) | vs. Last Week |
-|---|---|---|
-| MA10 (weekly) | 268.91 | — |
-| MA20 (weekly) | **262.33** | 260.80 → 262.33 (↑1.53) |
-| MA30 (weekly) | 257.92 | — |
-| MA53 (≈MA60) | **246.73** | 246.17 → 246.73 (↑0.56) |
-
-### Arrangement Assessment
-
-- **Bullish alignment confirmed**: latest close 276.11 > MA20 262.33 > MA53(≈MA60) 246.73;
-- Both MA20 and MA53 are rising with positive slopes — effective mid-term cost support;
-- Price has stayed above MA20 since July, only briefly testing it during the week of 7/6 (251.75) before quickly recovering — **MA20 acts as dynamic support**.
-
-**Conclusion: bullish moving-average alignment; MA20 (approx. 262) and MA53-proxy (approx. 247) are the most important trend supports.**
+**Conclusion: medium-term uptrend intact; short-term rebound in progress with overhead resistance at 330–345.**
 
 ---
 
-## 4. Momentum Indicators (RSI14 / MACD)
+## 2. Moving Average System (MA20 / MA53)
 
-### RSI14 (Wilder smoothing, simplified for teaching)
+### Computation Notes
+- **MA20** = simple mean of the last 20 weekly closes.
+- **MA53** = simple mean of the last 53 weekly closes (used in place of MA60 because the sample has only 54 bars; approximation explicitly noted).
 
-| Indicator | Value |
+### MA Values & Slope
+
+| MA | Value (USD) | Prev | Direction |
+|---|---|---|---|
+| MA10 | 319.25 | — | — |
+| MA20 | **308.80** | 305.94 | ↑ (+2.86) |
+| MA30 | 292.23 | — | — |
+| MA53 | **279.49** | 277.82 | ↑ (+1.67) |
+
+### Alignment
+- **Bullish alignment confirmed**: close 328.21 > MA20 308.80 > MA53 279.49.
+- Both MA20 and MA53 are rising; price has traded above MA20 since the June pullback recovered in early July.
+- MA20 (≈309) is the key dynamic support; MA53 (≈279) is the medium-term trend anchor.
+
+**Conclusion: bullish MA stack; pullbacks toward MA20 (≈309) would be the first technical support zone.**
+
+---
+
+## 3. Momentum Indicators (RSI14 / MACD)
+
+### RSI14 (Wilder smoothing)
+
+| Metric | Value |
 |---|---|
-| RSI14 latest | **68.66** |
-| RSI14 previous | 75.51 |
+| RSI14 latest | **62.92** |
+| RSI14 previous week | 61.88 |
 
-- Currently in the **strong zone (60-70), not overbought (overbought is >70)**;
-- Eased from the prior high of 75.5 to 68.66, meaning short-term overheating has been digested — **momentum remains strong after the repair**;
-- If price continues higher, watch for short-term pullback risk as RSI approaches 70.
+- RSI is in the **strong zone (60–70) but NOT overbought (<70)**.
+- Momentum has been recovering since the August consolidation; room remains before the overbought threshold.
 
 ### MACD (12, 26, 9)
 
-| Indicator | Value |
+| Metric | Value |
 |---|---|
-| DIF | +8.123 (above zero line) |
-| DEA | +6.682 |
-| MACD histogram | +2.882 (prior 3.417) |
+| DIF | +12.985 (above zero, rising) |
+| DEA | +12.708 |
+| MACD histogram | **+0.554** (prev -0.038; prev2 -0.685) |
 
-- Both DIF and DEA are above the zero line, and **DIF > DEA (bullish alignment / golden cross persisting)**;
-- The red histogram has narrowed slightly (3.417 → 2.882): momentum easing marginally at the edges but not turning green — **mid-term bullish momentum still dominant, short-term momentum cooling slightly**.
+- DIF > DEA (**bullish**) and both are above the zero line.
+- The histogram has **just flipped positive** (-0.685 → -0.038 → +0.554), signaling a **fresh bullish momentum crossover** after a brief consolidation.
+- Momentum bias: **bullish**, with an early-stage acceleration signal.
 
-**Conclusion: dual-bullish momentum (RSI strong, MACD golden cross above zero line persisting); short-term momentum cooling slightly but trend not broken.**
+**Conclusion: momentum is bullish; the histogram's fresh positive crossover supports continued upside, provided price clears 330–334.**
 
 ---
 
-## 5. Volume-Price Relationship
+## 4. Volume-Price Relationship
 
-| Item | Value |
+| Metric | Value |
 |---|---|
-| Full-period average weekly volume | 97.3M shares |
-| Last-10-week average volume | 99.1M (+0.5% vs. prior 10 weeks' 98.6M) |
-| Avg volume up-weeks / down-weeks | 98.4M / 94.4M |
-| Latest week volume (9/14) | 134.3M (significantly expanded, near full-period peak of 146M) |
+| Full-window avg volume | 232.7M shares |
+| Last 10w avg volume | 209.9M (vs 271.1M prior 10w, **-22.6%**) |
+| Latest week volume | 36.4M (partial week, fetch date 09-04) |
+| Up-week avg volume (n=30) | 226.9M |
+| Down-week avg volume (n=23) | 242.9M |
 
-- **Up-week average volume > down-week average volume**: rising price action accompanied by volume confirmation — healthy volume-price relationship;
-- Volume expanded during the weeks of 8/3 (+1.9%, 146.1M) and 9/14 (spiked to 282 then closed at 276, 134.3M); the August expansion accompanied a breakout while the September expansion came with stalled gains — worth noting;
-- Overall volume is steady with a slight increase (+0.5%), **no obvious divergence of shrinking-volume stall or high-volume sell-off**.
+- **Watch item**: volume is contracting (-22.6%) as price rallies — the rebound is running on lighter volume, so upside needs volume confirmation above 334.
+- Down weeks carry slightly higher average volume than up weeks (242.9M vs 226.9M); notable high-volume down weeks occurred on 2025-09-08, 2025-12-15, **2026-06-22 (518.8M, big red week)**, and **2026-07-27 (364.9M, -7.2%)** — these mark distribution zones that acted as resistance.
+- No extreme blow-off volume at the current close; the last full week (2026-08-31) closed +1.6% on 128M shares.
 
-**Conclusion: volume-price cooperation is good, rallies supported by volume; the 9/14 high-volume close with ~1.5% pullback is a high-level divergence signal — track whether it continues.**
+**Conclusion: price-volume relationship is broadly healthy, but the rally is modestly under-confirmed by volume; a volume-confirmed break above 334 would strengthen the bullish case.**
 
 ---
 
-## 6. Key Support / Resistance Levels
+## 5. Key Support & Resistance Levels
 
-### Key Price Levels (USD)
+### Resistance
+| Level | Basis |
+|---|---|
+| **330.8 – 334** | 2026-09-03 high (330.81); July high cluster (334.37–334.99) |
+| **344.6** | Cycle high 344.57 (2026-07-27) — primary upside target/cap |
 
-| Type | Level | Basis |
+### Support
+| Level | Basis |
+|---|---|
+| **312.8 – 320** | Aug consolidation floor (Aug 10 low 305.93 → recent low 312.8); round 320 + Aug 24 close 319.70 |
+| **305 – 309** | MA20 (308.80) + Aug 10 low (305.93) + Aug 3 low (301.32) — key dynamic support |
+| **300** | Round number + 2026-07-27 intraday low (300.00) |
+| **287 – 292** | Jun 8 low (287.38) / MA30 (292.23) — medium-term support if deeper pullback |
+
+---
+
+## 6. Trend Rating
+
+### Rating: **BULLISH** (medium-term uptrend intact; short-term neutral-to-bullish rebound)
+
+| Dimension | Assessment | Evidence |
 |---|---|---|
-| Resistance 1 | **282-283** | Full-period high 282.22 (high of week 9/14); round-number 280 nearby |
-| Resistance 2 | 280.3 | Week of 9/7 high 280.29, first short-term hurdle |
-| Support 1 | **273-274** | Dense zone of last-4-week lows 271.3-274.3 + 8/17-8/31 close pullback zone |
-| Support 2 | **262-266** | MA20 (262.3) + 8/10 low 261.5 + 8/3 breakout platform, double support |
-| Support 3 | **255-256** | MA30 (257.9) + mid-June lows 252.7-255.2 mid-term neckline |
+| Medium-term trend | ✅ Bullish | +36.93% over 54w; higher lows structure |
+| MA system | ✅ Bullish | close > MA20 > MA53, both rising |
+| Momentum | ✅ Bullish | RSI 62.9 strong, not overbought; MACD fresh bullish crossover |
+| Volume-price | ⚠️ Mild caution | Rally on lighter volume; down-week volume slightly higher |
+| Short-term | ✅ Neutral-to-bullish | +7.28% rebound off 301–306 support zone |
+
+Overall the chart favors upside, but the path is gated by the **330–334 resistance shelf** and the **344.6 cycle high**. A volume-confirmed break above 334 would open the run toward 344+; failure to hold 320–324 could see a retest of 305–309 (MA20).
 
 ---
 
-## 7. Trend Rating
+## 7. Key Levels Summary (for cross-agent handoff)
 
-### Rating: **Bullish (trend up; short-term neutral-to-bullish)**
-
-| Dimension | Conclusion | Basis |
-|---|---|---|
-| Mid-term trend | ✅ Bullish | Full period +21%, uptrend channel, rising lows |
-| MA alignment | ✅ Bullish | Bullish alignment (close > MA20 > MA60), MA20/MA60 rising |
-| Momentum | ✅ Bullish-leaning | RSI strong, not overbought; MACD golden cross above zero line persisting |
-| Volume-price | ✅ Positive | Rallies on volume, healthy volume-price relationship |
-| Short-term | ⚠️ Neutral-to-bullish | Last 4 weeks consolidating, RSI pulled back from highs, MACD red histogram narrowing |
-
-The overall score leans bullish; key uncertainties are the **breakout capability near the short-term high (282) and MACD momentum convergence**.
+- **Upside targets / resistance**: 330.8 → 334.0–335.0 → 344.6 (ATH)
+- **Downside supports**: 320 → 312.8 → 305–309 (MA20) → 300 → 287–292 (MA30/Jun low)
+- **Primary pivot**: **334** — above it, bullish acceleration; below **320**, short-term weakness toward MA20.
 
 ---
 
-## 8. Buy/Sell Timing Suggestions (Teaching Context, Not Investment Advice)
+## 8. Risk Notes
 
-> The following are strategy illustrations in a technical-analysis teaching context, to help understand the analytical framework — **not investment advice**.
-
-### Buy Scenarios
-
-1. **Buy on support pullback (conservative)**: when price pulls back to **262-266 (MA20 zone)**, stabilizes, and volume shrinks, it can serve as a reference zone for staged entry; stop-loss reference below 258 (below MA30).
-2. **Buy on confirmed breakout (aggressive)**: if price **effectively breaks and holds 282.5** on volume (weekly volume >110M), it can be seen as a trend-acceleration signal — enter on confirmation.
-
-### Sell / Take-Profit Scenarios
-
-1. **Reduce at resistance**: when the advance toward **282-283** shows long upper shadows or stalled gains (e.g., a repeat of the 9/14 spike-and-reversal), consider partial profit-taking.
-2. **Stop-loss on trend break**: if close falls below **MA20 (262)** and RSI falls below 55, the short-term trend weakens — reduce positions; a break below 255 (MA30) damages the mid-term uptrend channel — stop and wait.
-
-### Risk Monitoring Checklist
-
-- Whether RSI14 enters overbought (>70) with divergence;
-- Whether the MACD red histogram keeps narrowing and turns green (momentum turning bearish);
-- Whether the 282 resistance breaks on volume;
-- Whether volume shows a high-volume decline (distribution signal at highs).
+1. **Teaching sample disclaimer**: real market data used only for a classroom demo; **not investment advice**; no guarantee of accuracy or timeliness of the data.
+2. **Indicator approximations**: MA53 substitutes for MA60 due to 54-bar sample; RSI uses Wilder smoothing with a simple-average seed; MACD uses standard EMA coefficients.
+3. **Short-term risk**: rally volume is contracting; a rejection at 330–334 could trigger a pullback to 320 or 305–309.
+4. **Correction risk**: the 2026-06-22 and 2026-07-27 high-volume down weeks highlight elevated volatility; a break below 300 would signal a deeper medium-term correction.
+5. **Scope limit**: technical analysis only — must be combined with fundamental and risk/sentiment analyses for a full view.
 
 ---
 
-## 9. Risk Warnings
-
-1. **Teaching sample nature**: this data is constructed (5 trend segments + random noise), with deliberately engineered technical patterns; conclusions only demonstrate methodology, **not investment advice, and do not indicate real market behavior**.
-2. **MA approximation**: MA60 is proxied by the full-sample average due to insufficient data length (53 weeks); the mid-term MA reference has limited meaning.
-3. **Short-term pullback risk**: RSI is still in the strong zone and 9/14 spiked then fell; MACD red histogram is narrowing — short-term high-level consolidation is needed.
-4. **Technical-only limitation**: this report is based solely on price-volume data and does not consider fundamentals, market sentiment, or macro factors; combine with the *Fundamental Analysis* and *Risk & Sentiment Analysis* reports.
-5. **Discrete data frequency**: weekly view smooths intraday fluctuations; short-term support/resistance levels are for teaching reference only.
-
----
-
-## Appendix: Calculation Methods and Assumptions (Reproducible)
-
-| Indicator | Calculation Method | Assumption / Approximation |
-|---|---|---|
-| MA20 / MA30 | Simple average of last N weekly closes | — |
-| MA60 proxy | Full-sample 53-week average (MA53) | Sample shorter than 60 weeks; explicit proxy and flag |
-| RSI14 | Wilder smoothing: simple-average initialization, then `(n-1)/n` recursion | Teaching simplification; no multi-period/divergence validation |
-| MACD | EMA12 − EMA26 = DIF; DEA = EMA9(DIF); histogram = 2×(DIF−DEA) | EMA uses standard smoothing coefficients; initialized with first-week close |
-| Support/Resistance | Recent swing high/low + MA dynamic support + round numbers | Manual annotation, not automated pivot calculation |
-
-*Generated: 2026-08-20 | Analyst: technical-analyst | Data source: .team/demo-data/stock_history.csv (teaching sample)*
+*Generated: 2026-09-04 | Analyst: technical-analyst | Data: .team/demo-data/stock_history_real.csv (Yahoo Finance weekly, fetched 2026-09-04) | Educational demo only — not investment advice.*

@@ -2,7 +2,7 @@
 
 > A complete teaching project built on the **JiuwenSwarm Multi-Agent Platform**: seven agents collaborate — six workers perform fundamental analysis, technical analysis, and risk/sentiment analysis for a listed company, an independent QA tester verifies the analyses against source data, then the team synthesizes a future price forecast range, producing the *Investment Research Report* and the *JiuWen Multi-Agent Development Handbook*.
 
-> ⚠️ **Disclaimer**: All data in this project are **locally generated teaching sample data** (not real-time, not real market data). All analysis conclusions and forecast ranges are algorithmic outputs of the multi-agent teaching workflow, **for teaching demonstration only and NOT investment advice**. Any trading based on this project is at your own risk.
+> ⚠️ **Disclaimer**: This project is a teaching demonstration built on the JiuwenSwarm platform. It uses **real market data** (SEC EDGAR 10-K filings + Yahoo Finance weekly prices) strictly for teaching; all analysis conclusions and forecast ranges are algorithmic outputs of the multi-agent teaching workflow, **for teaching demonstration only and NOT investment advice**. Any trading based on this project is at your own risk.
 
 ---
 
@@ -12,7 +12,7 @@ This project demonstrates how to design and run a multi-agent collaboration proj
 
 > **Course positioning**: this demo maps to the **Risk Management** theme of the *IEDA4000H (Optimization in Financial Engineering)* course — the Risk & Sentiment Analyst (risk-sentinel) outputs a risk checklist with impact ratings and position-sizing suggestions, and the forecast explicitly gives up/down probabilities and a confidence level, demonstrating the teaching point that **risk outputs must include indicators, assumptions, limitations, and evidence**.
 
-1. **Data Researcher** (data-researcher): Generates and validates local sample datasets (financial CSV + historical price CSV)
+1. **Data Researcher** (data-researcher): Generates and validates market datasets (SEC EDGAR 10-K financial CSV + Yahoo Finance historical price CSV)
 2. **Fundamental Analyst** (fundamental-analyst): Interprets financial reports, outputs a fundamental score and valuation judgment
 3. **Technical Analyst** (technical-analyst): Performs trend and momentum analysis on historical prices, outputs a trend rating and key price levels
 4. **Risk & Sentiment Analyst** (risk-sentinel): Assesses risk from non-financial dimensions such as news sentiment, policy, and industry competition
@@ -22,15 +22,15 @@ This project demonstrates how to design and run a multi-agent collaboration proj
 
 > The project goal is not real investment advice, but to **demonstrate platform capabilities**: `build_team`, `spawn_teammate`, task DAG, autonomous task claiming, `send_message` collaboration, `.team/` file handoffs, and Leader acceptance/delivery. The entire workflow is offline-reproducible with sample data.
 
-### Core Conclusion of This Demo (Teaching Sample Output)
+### Core Conclusion of This Demo (Real-Data Edition)
 
 | Dimension | Conclusion |
 |---|---|
-| Fundamental | 72/100 good (solid quality, expensive valuation) |
+| Fundamental | 66/100 good (solid quality, expensive valuation) |
 | Technical | Bullish (mid-term uptrend channel, short-term neutral-to-bullish) |
 | Risk & Sentiment | Medium-to-high (regulation + supply chain + high valuation) |
-| Combined Forecast | Target range **USD 215-310**, core range 245-290, weighted mid-point approx. **USD 262** (approx. -5% vs. current price) |
-| Three Scenarios | Bullish ~300 / Base ~270 / Bearish ~205 |
+| Combined Forecast | Target range **USD 215-365**, core range 275-345, weighted mid-point approx. **USD 310** (approx. -5.5% vs. latest close 328.21) |
+| Three Scenarios | Bullish ~350 / Base ~318 / Bearish ~240 |
 
 ---
 
@@ -88,16 +88,25 @@ task-data (data ready, first stage)
 - Git (for version management)
 - JiuwenSwarm platform (to reproduce the multi-agent collaboration workflow)
 
-### 3.2 Reproduce Data Generation
+### 3.2 Data Sources and Generation
+
+The full pipeline runs on **real market data**:
+
+- **Financials**: SEC EDGAR (XBRL companyfacts) — Apple Inc. Form 10-K FY2022-FY2025 (filing dates 2022-10-28 / 2023-11-03 / 2024-11-01 / 2025-10-31), retrieved 2026-09-04
+- **Prices**: Yahoo Finance chart API — weekly OHLCV, 1y range (54 weekly bars, 2025-09-01 ~ 2026-09-03), latest close **328.21 USD**
+
+The repository also ships a local sample-data generator for offline reproduction:
 
 ```bash
-# Generate teaching sample data (financial + historical price CSV)
+# Generate offline teaching sample data (financial + historical price CSV)
 python scripts/generate_sample_data.py
 ```
 
 Output is written to the `data/` directory:
 - `data/financials.csv`: AAPL financial summary for the last 4 fiscal years (FY2022-FY2025)
 - `data/stock_history.csv`: weekly OHLCV for the past year (53 weeks)
+
+The real-data CSVs used by the current pipeline are `demo-data/financials_real.csv` and `demo-data/stock_history_real.csv`.
 
 ### 3.3 View Analysis Deliverables
 
@@ -128,9 +137,9 @@ repo/
 ├── README.md                        # Project overview, architecture, quick start, disclaimer
 ├── LICENSE                          # MIT open-source license
 ├── .gitignore                       # Excludes temporary files, .DS_Store, etc.
-├── data/                            # Sample data
-│   ├── financials.csv               # Financial summary (FY2022-FY2025, 14 fields)
-│   └── stock_history.csv            # Weekly OHLCV (53 weeks)
+├── data/                            # Offline sample data (real data lives in .team/demo-data/)
+│   ├── financials.csv               # Sample financial summary (FY2022-FY2025, 14 fields)
+│   └── stock_history.csv            # Sample weekly OHLCV (53 weeks)
 ├── analysis/                        # Three analysis tracks
 │   ├── fundamental.md               # Fundamental analysis
 │   ├── technical.md                 # Technical analysis

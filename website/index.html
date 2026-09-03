@@ -14,20 +14,20 @@
   <div class="wrap">
     <div class="badges">
       <span class="badge ticker">AAPL &middot; Apple</span>
-      <span class="badge">Teaching sample data</span>
+      <span class="badge">Real data: SEC EDGAR + Yahoo Finance</span>
       <span class="badge">JiuwenSwarm Multi-Agent Demo</span>
       <span class="badge">IEDA4000H &middot; Risk Management case</span>
     </div>
     <h1>US Equity Research<br>Multi-Agent Teaching Demo</h1>
     <p class="sub">Seven specialized agents, one pipeline: <b>data &rarr; three parallel analyses &rarr; independent QA gate &rarr; combined forecast &rarr; final report</b>. Built and run entirely on the JiuwenSwarm platform.</p>
-    <p class="headline">&ldquo;Good company, expensive price&rdquo; &mdash; Target USD 215&ndash;310 &middot; Mid-point &asymp; USD 262 (&minus;5% vs. current 276.11)</p>
+    <p class="headline">&ldquo;Great company, rich price&rdquo; &mdash; Target USD 215&ndash;365 &middot; Mid-point &asymp; USD 310 (&minus;5.5% vs. close 328.21)</p>
     <div class="kpis">
       <div class="kpi"><div class="n">1+7</div><div class="l">Leader + agents</div></div>
       <div class="kpi"><div class="n">7</div><div class="l">Tasks in DAG</div></div>
       <div class="kpi"><div class="n">3</div><div class="l">Parallel tracks</div></div>
-      <div class="kpi"><div class="n">65%</div><div class="l">Confidence</div></div>
+      <div class="kpi"><div class="n">60%</div><div class="l">Confidence</div></div>
     </div>
-    <div class="note-banner">&#9888;&#65039; Teaching demonstration only &mdash; all data are locally generated samples, not investment advice.</div>
+    <div class="note-banner">&#9888;&#65039; Teaching demonstration only &mdash; real market data for classroom use, not investment advice. Fetched 2026-09-04.</div>
   </div>
 </header>
 
@@ -79,7 +79,7 @@
         <article class="member">
           <div class="top"><div class="ava" style="background:#4da3ff">F</div><div><div class="role">Fundamental Analyst</div><div class="mid">fundamental-analyst · Parallel track</div></div></div>
           <p>Reads financial statements: revenue growth, margins, ROE, cash flow, valuation. Outputs a quality score (0–100) and valuation judgment.</p>
-          <div class="out"><b>Produces:</b> analysis/fundamental.md · 72/100 Good</div>
+          <div class="out"><b>Produces:</b> analysis/fundamental.md · 66/100 Good</div>
         </article>
         <article class="member">
           <div class="top"><div class="ava" style="background:#22d3ee">T</div><div><div class="role">Technical Analyst</div><div class="mid">technical-analyst · Parallel track</div></div></div>
@@ -124,7 +124,7 @@
           </div>
           <div class="dag-arrow"><span>unlocks</span><span class="chev">→</span></div>
           <div class="dag-parallel">
-            <div class="dag-node stage1"><div class="t">task-fundamental</div><div class="d">72/100 score</div></div>
+            <div class="dag-node stage1"><div class="t">task-fundamental</div><div class="d">66/100 score</div></div>
             <div class="dag-node stage1"><div class="t">task-technical</div><div class="d">Bullish trend</div></div>
             <div class="dag-node stage1"><div class="t">task-risk</div><div class="d">Medium–high</div></div>
           </div>
@@ -136,7 +136,7 @@
           <div class="dag-arrow"><span>converge</span><span class="chev">→</span></div>
           <div class="dag-node stage2">
             <div class="t">task-forecast</div>
-            <div class="d">215–310 target<br>mid ≈262 · 40/60 · 65%</div>
+            <div class="d">215–365 target<br>mid ≈310 · 45/55 · 60%</div>
           </div>
           <div class="dag-arrow"><span>final</span><span class="chev">→</span></div>
           <div class="dag-node stage3">
@@ -218,7 +218,7 @@
           <div class="ph">Phase 4 · Parallel analysis</div>
           <span class="tag tag-cmd">3 tracks in parallel</span>
           <h3>Three analysts read the CSVs, write their reports</h3>
-          <p>fundamental.md (72/100), technical.md (Bullish), risk.md (Medium–high) — all converge into the shared <code>.team/analysis/</code>.</p>
+          <p>fundamental.md (66/100), technical.md (Bullish), risk.md (Medium–high) — all converge into the shared <code>.team/analysis/</code>.</p>
         </div>
         <div class="tl-item">
           <div class="ph">Phase 5 · Independent QA</div>
@@ -231,7 +231,7 @@
           <div class="ph">Phase 6 · Synthesis</div>
           <span class="tag tag-cmd">task-forecast</span>
           <h3>Forecaster builds the combined forecast</h3>
-          <p>PEG valuation test + PE×EPS three-scenario weighting → target 215–310, mid ≈262, up/down 40/60, confidence 65%.</p>
+          <p>PEG valuation test + PE×EPS three-scenario weighting → target 215–365, mid ≈310, up/down 45/55, confidence 60%.</p>
         </div>
         <div class="tl-item">
           <div class="ph">Phase 7 · Integration</div>
@@ -290,25 +290,25 @@
       <div class="sec-head">
         <div class="k">2.0 Executive summary</div>
         <h2>One line: &ldquo;good company, expensive price&rdquo;</h2>
-        <div class="src-tag">Source: <code>deliverables/investment-research-report.md</code> &sect;1 Executive Summary</div>
+        <div class="src-tag">Source: <code>deliverables/investment-research-report.md</code> &sect;1 &middot; SEC EDGAR 10-K (FY2022&ndash;FY2025, filing 2022-10-28 &hellip; 2025-10-31) + Yahoo Finance weekly, fetched 2026-09-04</div>
         <p>Extracted from <code>deliverables/investment-research-report.md</code> &sect;1 &mdash; classroom-friendly highlights; the full report stays one click away.</p>
       </div>
       <div class="exec-grid">
         <div class="exec-card main">
           <div class="label">Combined conclusion</div>
           <div class="big-line">&ldquo;Good company, expensive price&rdquo;</div>
-          <p>Mid-term trend and quality remain intact, but short-term valuation is under pressure &mdash; high-level consolidation to digest, no chasing.</p>
+          <p>Quality is excellent (66/100) and the medium-term uptrend is intact, but at &asymp;44&times; PE the valuation is stretched &mdash; expect high-level consolidation with a mildly negative skew; do not chase strength.</p>
         </div>
         <div class="exec-card">
           <div class="label">One-line summary</div>
-          <p>If price holds above 282.5 on volume, space opens toward <b>290&ndash;310</b>; if 262 (MA20) is lost, price reverts toward <b>240&ndash;215</b>. Risk/reward &asymp; 1:1.4, downside-leaning &mdash; wait-and-see or staged buying on pullbacks.</p>
+          <p>A volume-confirmed break above <b>334</b> opens the run toward <b>344.6+</b> (bull); a weekly close below <b>320</b> opens a retest of 305&ndash;309 (MA20) and beyond (bear). Risk/reward &asymp; 1:1.7, negatively skewed &mdash; wait-and-see or phased buying on pullbacks.</p>
         </div>
         <div class="exec-card">
           <div class="label">Key numbers</div>
-          <div class="num-row"><span>72/100</span> Fundamental quality score</div>
-          <div class="num-row"><span>USD 262</span> Weighted mid-point (&minus;5.1% vs. current)</div>
-          <div class="num-row"><span>40 / 60</span> Up / down probability</div>
-          <div class="num-row"><span>65%</span> Forecast confidence</div>
+          <div class="num-row"><span>66/100</span> Fundamental quality score</div>
+          <div class="num-row"><span>USD 310</span> Weighted mid-point (&minus;5.5% vs. close)</div>
+          <div class="num-row"><span>45 / 55</span> Up / down probability</div>
+          <div class="num-row"><span>60%</span> Forecast confidence</div>
         </div>
       </div>
       <p class="src-note"><a href="../deliverables/investment-research-report.md" target="_blank" rel="noopener">View full report &rarr;</a></p>
@@ -319,57 +319,57 @@
       <div class="sec-head">
         <div class="k">2.1 Combined scorecard</div>
         <h2>Three tracks, one cautious verdict</h2>
-        <div class="src-tag">Source: <code>deliverables/investment-research-report.md</code> &sect;2 Scorecard</div>
+        <div class="src-tag">Source: <code>deliverables/investment-research-report.md</code> &sect;2 &middot; SEC EDGAR 10-K + Yahoo Finance, fetched 2026-09-04</div>
       </div>
       <div class="cards4">
         <div class="scard gold">
           <div class="dim">Fundamental</div>
-          <div class="big">72<span style="font-size:22px">/100</span></div>
-          <div class="rating">Good · solid quality</div>
-          <p>FY2025 revenue $410,450M (+4.97%), gross margin 46.66%, net cash ratio 1.15 — but implied PE 42× at historical high, no margin of safety.</p>
+          <div class="big">66<span style="font-size:22px">/100</span></div>
+          <div class="rating">Good quality, expensive price</div>
+          <p>FY2025 revenue $416,161M (+6.43%), gross margin 46.91%, net margin 26.92% &mdash; but implied PE &asymp;44&times; vs 4-yr mean 31&times;, no margin of safety.</p>
         </div>
         <div class="scard green">
           <div class="dim">Technical</div>
           <div class="big">Bullish</div>
           <div class="rating">Short-term neutral-to-bullish</div>
-          <p>Close 276.11 in bullish alignment (MA20 262.3, MA53 246.7); RSI 68.7 strong, MACD golden cross; resistance 282–283.</p>
+          <p>Close 328.21 in bullish alignment (MA20 308.8, MA53 279.5); RSI 62.9 strong, MACD fresh bullish cross; resistance 330.8&ndash;334 &rarr; 344.6.</p>
         </div>
         <div class="scard red">
           <div class="dim">Risk & Sentiment</div>
           <div class="big">Med–high</div>
           <div class="rating">Sentiment neutral-to-bullish</div>
-          <p>High regulatory & supply-chain risk; PE nearly doubled in two years — guard against high-level high-volume stall.</p>
+          <p>Regulatory HIGH + supply chain HIGH + macro/valuation raised to HIGH (&asymp;44&times; PE) &mdash; cautious optimism, do not chase strength.</p>
         </div>
         <div class="scard blue">
           <div class="dim">Combined</div>
           <div class="big">Cautious</div>
-          <div class="rating">Mid ≈262 · −5% vs. price</div>
-          <p>Weighted mid-point USD 262 vs. current 276.11; up/down 40/60; confidence 65% — “good company, expensive price.”</p>
+          <div class="rating">Mid &asymp;310 &middot; &minus;5.5% vs. close</div>
+          <p>Weighted mid-point USD 310 vs. close 328.21; up/down 45/55; confidence 60% &mdash; &ldquo;great company, rich price.&rdquo;</p>
         </div>
       </div>
 
       <p class="src-note"><a href="../deliverables/investment-research-report.md" target="_blank" rel="noopener">View full report &middot; Download MD &rarr;</a></p>
       <div class="range-card">
         <div class="range-head">
-          <div class="item">Wide range: <b>USD 215–310</b> <span style="color:#8b97b8">(≈90% coverage)</span></div>
-          <div class="item">Core range: <b>USD 245–290</b> <span style="color:#8b97b8">(≈65% landing)</span></div>
-          <div class="item">Weighted mid-point: <b>USD 262</b> <span style="color:#8b97b8">(−5.1% vs. current)</span></div>
+          <div class="item">Wide range: <b>USD 215–365</b> <span style="color:#8b97b8">(&asymp;90% coverage)</span></div>
+          <div class="item">Core range: <b>USD 275–345</b> <span style="color:#8b97b8">(&asymp;60&ndash;70% landing)</span></div>
+          <div class="item">Weighted mid-point: <b>USD 310</b> <span style="color:#8b97b8">(&minus;5.5% vs. close)</span></div>
         </div>
         <div class="rangebar">
-          <div class="zone bear" style="left:0%;width:25%"></div>
-          <div class="zone base" style="left:50%;width:25%"></div>
-          <div class="zone bull" style="left:79.2%;width:16.6%"></div>
+          <div class="zone bear" style="left:0%;width:22.5%"></div>
+          <div class="zone base" style="left:30%;width:30%"></div>
+          <div class="zone bull" style="left:65%;width:18.3%"></div>
           <div class="range-marks">
-            <span class="mk-line" style="left:55.8%"></span>
-            <span class="mk-mid" style="left:55.8%;top:24px">mid 262</span>
-            <span class="mk-line now" style="left:67.6%"></span>
-            <span class="mk-now" style="left:67.6%;top:44px">now 276.11</span>
+            <span class="mk-line" style="left:47.5%"></span>
+            <span class="mk-mid" style="left:47.5%;top:24px">mid 310</span>
+            <span class="mk-line now" style="left:56.6%"></span>
+            <span class="mk-now" style="left:56.6%;top:44px">now 328.21</span>
           </div>
         </div>
         <div class="range-labels">
-          <span>195</span><span>215</span><span>245</span><span>262</span><span>276</span><span>290</span><span>310</span>
+          <span>215</span><span>260</span><span>275</span><span>310</span><span>328</span><span>335</span><span>365</span>
         </div>
-        <p style="font-size:14.5px;color:#8b97b8;margin-top:12px">Zone colors: red = bearish 195–225 · blue = base 255–285 · green = bullish 290–310. Risk/reward ≈ 1:1.4 (upside +16% vs. downside −22%).</p>
+        <p style="font-size:14.5px;color:#8b97b8;margin-top:12px">Zone colors: red = bearish 215&ndash;260 &middot; blue = base 275&ndash;335 &middot; green = bullish 340&ndash;365. Risk/reward &asymp; 1:1.7 (upside +17.7% vs. downside &minus;30.6%).</p>
       </div>
     </div>
 
@@ -378,41 +378,41 @@
       <div class="sec-head">
         <div class="k">2.2 Three-scenario projection</div>
         <h2>Next 3–6 months: three paths</h2>
-        <div class="src-tag">Source: <code>outputs/forecast.md</code> &sect;4 Scenarios</div>
+        <div class="src-tag">Source: <code>outputs/forecast.md</code> &sect;3&ndash;5 &middot; real-data forecast, 2026-09-04</div>
         <p>Probability-weighted via PE×EPS assumptions; every number reproducible from the forecast file.</p>
       </div>
       <div class="scen-grid">
         <div class="scen bull">
           <div class="s-head"><span class="s-name">Bullish</span><span class="prob">Probability 25%</span></div>
-          <div class="target">≈USD 300</div>
-          <div class="t-note">Range 290–310 · +9% to +12%</div>
+          <div class="target">≈USD 350</div>
+          <div class="t-note">Range 340–365 · +4% to +11%</div>
           <h4>Triggers</h4>
           <ul>
-            <li>Volume-holding breakout above 282.5 (weekly volume >110M shares)</li>
-            <li>AI / services / new categories beat expectations (EPS 7.0+)</li>
-            <li>Favorable regulation; Fed turns dovish</li>
+            <li>Volume-confirmed close above 334 (weekly volume &gt;250M shares), then break 344.6 ATH</li>
+            <li>FY2026 guidance &ge;10% EPS; AI / services narrative delivers</li>
+            <li>Benign regulation; dovish macro</li>
           </ul>
         </div>
         <div class="scen base">
           <div class="s-head"><span class="s-name">Base</span><span class="prob">Probability 50%</span></div>
-          <div class="target">≈USD 270</div>
-          <div class="t-note">Range 255–285 · −0% to +3%</div>
+          <div class="target">≈USD 318</div>
+          <div class="t-note">Range 300–335 · −3% to +2%</div>
           <h4>Triggers</h4>
           <ul>
-            <li>High-level consolidation below 282 to digest valuation</li>
-            <li>Earnings delivered at +4–5%; no major black swan</li>
-            <li>Wide trading between MA20 (262) and resistance (282)</li>
+            <li>High-level consolidation 305–335 digesting valuation; stalls at 330–334</li>
+            <li>EPS delivered ~+6%; no systemic shock; regulation incremental</li>
+            <li>Pullbacks hold 320, occasionally test 305–309 (MA20)</li>
           </ul>
         </div>
         <div class="scen bear">
           <div class="s-head"><span class="s-name">Bearish</span><span class="prob">Probability 25%</span></div>
-          <div class="target">≈USD 205</div>
-          <div class="t-note">Range 195–225 · −25%</div>
+          <div class="target">≈USD 240</div>
+          <div class="t-note">Range 215–260 · −21% to −27%</div>
           <h4>Triggers</h4>
           <ul>
-            <li>Weekly close breaks MA20 (262), then MA30 (255–258)</li>
-            <li>Adverse regulatory ruling (EU DMA / antitrust) or supply-chain disruption</li>
-            <li>EPS growth <3% (revised down to 6.4)</li>
+            <li>Weekly close below 320, losing 305–309 (MA20), then &lt;300 &rarr; 287–292</li>
+            <li>Adverse regulatory ruling or supply disruption; sharp rate repricing</li>
+            <li>EPS growth &lt;3% (revised to 7.68); losing MA53 (&asymp;279) confirms trend damage</li>
           </ul>
         </div>
       </div>
@@ -429,41 +429,41 @@
       </div>
       <div class="sum-grid">
         <div class="sum">
-          <div class="s-head"><span class="s-name">Fundamental</span><span class="s-score fund">72/100 Good</span></div>
-          <div class="s-src">fundamental-analyst · financials.csv (FY2022–FY2025)</div>
-          <div class="src-tag">Source: <code>analysis/fundamental.md</code></div>
+          <div class="s-head"><span class="s-name">Fundamental</span><span class="s-score fund">66/100 Good</span></div>
+          <div class="s-src">fundamental-analyst · SEC EDGAR 10-K FY2022–FY2025</div>
+          <div class="src-tag">Source: <code>analysis/fundamental.md</code> &middot; SEC EDGAR 10-K FY2022&ndash;FY2025 (filing 2022-10-28 / 2023-11-03 / 2024-11-01 / 2025-10-31)</div>
           <ul>
-            <li>FY2025 revenue USD 410,450M, a 4-year high, +4.97% YoY — but 3-yr CAGR only +1.34%</li>
-            <li>Gross margin rose 4 straight years to 46.66%; net margin stable 24.4–25.3%; ROE 151.8–196.9%</li>
-            <li>Debt ratio 85.6%→81.7% but still >80%; current ratio 0.88→1.06, thin buffer</li>
-            <li>OCF >USD 100B for 4 years; net cash ratio 1.14–1.22 — the strongest dimension</li>
-            <li>Implied PE ≈42× / PB 58× at historical high; fair mid ≈USD 240 (35×), price ≈13–15% premium → no margin of safety</li>
+            <li>FY2025 revenue USD 416,161M, a record +6.43% YoY — but 3-yr CAGR only +1.81%</li>
+            <li>Record profitability: gross margin 46.91%, net margin 26.92%, net income 112,010M; ROE 151.9%</li>
+            <li>Debt ratio improved to 79.5% (lowest of 4 yrs) but still high; current ratio 0.89 &lt;1, thin buffer</li>
+            <li>OCF &gt;USD 110B every year; OCF/NI 1.00–1.26 — high earnings quality</li>
+            <li>Implied PE &asymp;44× (close 328.21 / EPS 7.46) vs 4-yr mean 31×; fair band 215–295 (center &asymp;250) — no margin of safety</li>
           </ul>
           <p class="sum-link"><a href="../analysis/fundamental.md" target="_blank" rel="noopener">Full fundamental analysis &rarr;</a></p>
         </div>
         <div class="sum">
           <div class="s-head"><span class="s-name">Technical</span><span class="s-score tech">Bullish</span></div>
-          <div class="s-src">technical-analyst · stock_history.csv (53 weeks)</div>
-          <div class="src-tag">Source: <code>analysis/technical.md</code></div>
+          <div class="s-src">technical-analyst · Yahoo Finance weekly (54 bars)</div>
+          <div class="src-tag">Source: <code>analysis/technical.md</code> &middot; Yahoo Finance weekly OHLCV (1y), fetched 2026-09-04</div>
           <ul>
-            <li>Full period +21.10% (228.00 → 276.11); mid-term uptrend channel intact</li>
-            <li>Bullish MA alignment: close 276.11 > MA20 262.33 > MA53(≈MA60) 246.73, all rising</li>
-            <li>RSI14 68.66 strong, not overbought (eased from 75.5); MACD golden cross above zero, DIF +8.12 > DEA +6.68</li>
-            <li>Resistance 282–283; supports 273–274 / 262–266 (MA20) / 255–256 (MA30 + neckline)</li>
-            <li>Healthy volume-price; 9/14 spike-and-reversal on 134.3M shares = high-level divergence watch</li>
+            <li>Full period +36.93% (239.69 &rarr; 328.21); medium-term ascending channel intact</li>
+            <li>Bullish MA stack: close 328.21 &gt; MA20 308.80 &gt; MA53(&asymp;MA60) 279.49, both rising</li>
+            <li>RSI14 62.92 strong, not overbought; MACD fresh bullish cross, histogram flipped +0.554</li>
+            <li>Resistance 330.8–334 &rarr; 344.6 (ATH); supports 312.8–320 / 305–309 (MA20) / 300 / 287–292</li>
+            <li>Volume caution: rally on lighter volume (-22.6%); break above 334 needs volume confirmation</li>
           </ul>
           <p class="sum-link"><a href="../analysis/technical.md" target="_blank" rel="noopener">Full technical analysis &rarr;</a></p>
         </div>
         <div class="sum">
           <div class="s-head"><span class="s-name">Risk & Sentiment</span><span class="s-score risk">Medium–high</span></div>
-          <div class="s-src">risk-sentinel · sample data + common knowledge</div>
-          <div class="src-tag">Source: <code>analysis/risk.md</code></div>
+          <div class="s-src">risk-sentinel · SEC EDGAR + Yahoo Finance + common knowledge</div>
+          <div class="src-tag">Source: <code>analysis/risk.md</code> &middot; SEC EDGAR 10-K + Yahoo Finance + public common knowledge, 2026-09-04</div>
           <ul>
-            <li>Regulatory & policy risk <b>High</b>: App Store commissions, EU DMA, antitrust, AI compliance</li>
-            <li>Supply-chain concentration & geopolitics <b>High</b>: China manufacturing, TSMC, tariffs</li>
-            <li>Competition <b>Medium</b>: Huawei/Samsung; AI ecosystem started late</li>
-            <li>Macro & valuation <b>Medium</b>: PE nearly doubled in 2 years → Davis double-kill risk</li>
-            <li>Sentiment neutral-to-bullish; suggested position cap 10–15%, staged buying on pullbacks, no chasing</li>
+            <li>Regulatory & policy risk <b>HIGH</b>: App Store commissions, EU DMA, antitrust, AI compliance</li>
+            <li>Supply-chain concentration & geopolitics <b>HIGH</b>: China manufacturing, TSMC, tariffs</li>
+            <li>Competition <b>MEDIUM</b>: Huawei/Samsung; AI ecosystem started late</li>
+            <li>Macro & valuation <b>HIGH</b> (raised from Medium): &asymp;44&times; PE &rarr; &ldquo;Davis double-kill&rdquo; de-rating risk</li>
+            <li>Sentiment cautiously optimistic; position cap 10–15%, phased buying on pullbacks, no chasing</li>
           </ul>
           <p class="sum-link"><a href="../analysis/risk.md" target="_blank" rel="noopener">Full risk analysis &rarr;</a></p>
         </div>
@@ -475,14 +475,14 @@
       <div class="sec-head">
         <div class="k">2.4 Risk register</div>
         <h2>Five non-financial risks, by severity</h2>
-        <div class="src-tag">Source: <code>analysis/risk.md</code> &sect;2 Risk factors</div>
+        <div class="src-tag">Source: <code>analysis/risk.md</code> &sect;2 &middot; real-data risk assessment, 2026-09-04</div>
         <p>Extracted from <code>analysis/risk.md</code> &mdash; the risk output must state indicators, assumptions, limitations and evidence.</p>
       </div>
       <div class="risk-grid">
         <div class="risk high"><span class="lv">HIGH</span><div class="rt">Regulatory &amp; policy</div><div class="rd">App Store commissions, EU DMA, antitrust, AI compliance &mdash; highest-weight non-financial risk.</div></div>
         <div class="risk high"><span class="lv">HIGH</span><div class="rt">Supply chain &amp; geopolitics</div><div class="rd">China contract manufacturing, TSMC dependency, tariff escalation.</div></div>
         <div class="risk med"><span class="lv">MEDIUM</span><div class="rt">Competition</div><div class="rd">Huawei / Samsung; AI ecosystem started late vs. OpenAI, Google, Microsoft.</div></div>
-        <div class="risk med"><span class="lv">MEDIUM</span><div class="rt">Macro &amp; valuation</div><div class="rd">PE nearly doubled in two years &rarr; &ldquo;Davis double-kill&rdquo; de-rating risk.</div></div>
+        <div class="risk high"><span class="lv">HIGH</span><div class="rt">Macro &amp; valuation</div><div class="rd">Raised from Medium &mdash; implied PE &asymp;44&times; at all-time high; &ldquo;double-kill&rdquo; de-rating risk is material.</div></div>
         <div class="risk low"><span class="lv">MED&ndash;LOW</span><div class="rt">Demand concentration</div><div class="rd">iPhone dependence, but services + wearables + AI pipeline form a buffer.</div></div>
       </div>
       <p class="src-note"><a href="../analysis/risk.md" target="_blank" rel="noopener">View full risk analysis &middot; Download MD &rarr;</a></p>
@@ -542,7 +542,7 @@
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="wrap">
-    <div class="disc"><b>Disclaimer:</b> This page is a teaching demonstration built on the JiuwenSwarm platform. All data, analyses, scores, target prices and scenarios are locally generated sample outputs — teaching demonstration only, <b>NOT investment advice</b>. Do not make real trading decisions based on this content.</div>
+    <div class="disc"><b>Disclaimer:</b> This page is a teaching demonstration built on the JiuwenSwarm platform. All data are real market data (SEC EDGAR 10-K FY2022&ndash;FY2025 + Yahoo Finance weekly) used for classroom teaching only; analyses, scores and forward scenarios are teaching outputs &mdash; <b>NOT investment advice</b>. Do not make real trading decisions based on this content.</div>
     <div class="meta">Built by a 7-agent JiuwenSwarm team · task-3e864b925b · US Equity Research Multi-Agent Teaching Demo · open repository with MIT license</div>
   </div>
 </footer>

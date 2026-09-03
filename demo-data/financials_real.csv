@@ -1,0 +1,17 @@
+﻿# ================================================================
+# AAPL 苹果 真实财报数据（非实时行情，教学演示，不构成投资建议）
+# Data Source & Provenance:
+#   - 来源机构: SEC EDGAR (公司财报官方数据库 XBRL companyfacts)
+#   - 具体文件: Apple Inc. 10-K FY2022-FY2025
+#     filing dates: 2022-10-28 / 2023-11-03 / 2024-11-01 / 2025-10-31
+#   - 抓取日期: 2026-09-04
+# 口径: XBRL 年度值(10-K); 原始单位美元, 已转换百万美元(÷1e6);
+#   gross_margin=GrossProfit/Revenue; roe=NetIncome/Equity;
+#   debt_ratio=Liabilities/Assets; current_ratio=CurrentAssets/CurrentLiabilities;
+#   pe=财年末收盘价(Yahoo)/摊薄EPS; pb=财年末收盘价/每股净资产(Equity/Shares)
+# ================================================================
+fiscal_year,fiscal_year_end,revenue_million_usd,net_income_million_usd,gross_margin_pct,net_margin_pct,roe_pct,debt_ratio_pct,current_ratio,operating_cash_flow_million_usd,eps_usd,fiscal_year_end_price_usd,pe_ratio,pb_ratio
+FY2022,2022-09-24,394328,99803,43.31,25.31,197.0,85.6,0.88,122151,6.11,150.43,24.6,47.2
+FY2023,2023-09-30,383285,96995,44.13,25.31,156.1,82.4,0.99,110543,6.13,171.21,27.9,42.8
+FY2024,2024-09-28,391035,93736,46.21,23.97,164.6,84.4,0.87,118254,6.08,227.79,37.5,60.5
+FY2025,2025-09-27,416161,112010,46.91,26.92,151.9,79.5,0.89,111482,7.46,255.46,34.2,51.2
