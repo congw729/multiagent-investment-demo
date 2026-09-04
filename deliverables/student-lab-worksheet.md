@@ -3,7 +3,7 @@
 > Companion to the repository: **US Equity Research Multi-Agent Teaching Demo** (`repo/`)
 > Time needed: **45 minutes** | Level: Beginner-friendly | Mode: Individual or pair work
 >
-> ⚠️ **Disclaimer**: This worksheet is part of a teaching demo built on the JiuwenSwarm platform. All data, analyses, and forecasts used in this lab are **locally generated teaching samples** — **for teaching demonstration only, NOT investment advice**.
+> ⚠️ **Disclaimer**: This worksheet is part of a teaching demo built on the JiuwenSwarm platform. All data referenced in this lab are **real market data** (SEC EDGAR 10-K/10-Q filings + Yahoo Finance weekly prices, retrieved 2026-09-04), used for **teaching demonstration only — NOT investment advice**.
 
 ---
 
@@ -366,4 +366,4 @@ Sensitivity is a core risk-management discipline: a single forecast number witho
 
 ---
 
-*This worksheet is part of a teaching demo. All referenced data, analyses, and forecasts are locally generated sample data — **teaching demonstration only, NOT investment advice.***
+*This worksheet is part of a teaching demo. All referenced data, analyses, and forecasts are based on real market data (SEC EDGAR 10-K/10-Q filings + Yahoo Finance weekly prices, retrieved 2026-09-04) — **teaching demonstration only, NOT investment advice.***

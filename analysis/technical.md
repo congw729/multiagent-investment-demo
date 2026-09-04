@@ -89,6 +89,8 @@
 | DEA | +12.708 |
 | MACD histogram | **+0.554** (prev -0.038; prev2 -0.685) |
 
+- **Note on MACD histogram**: value +0.554 uses EMA seed = first close (as implemented in `calc_technical_real.py`); using the alternative seed convention (EMA seed = SMA of first window) yields approx. +0.277. Both conventions are reproducible and directionally identical (fresh bullish crossover); the script default is retained for consistency.
+
 - DIF > DEA (**bullish**) and both are above the zero line.
 - The histogram has **just flipped positive** (-0.685 → -0.038 → +0.554), signaling a **fresh bullish momentum crossover** after a brief consolidation.
 - Momentum bias: **bullish**, with an early-stage acceleration signal.
