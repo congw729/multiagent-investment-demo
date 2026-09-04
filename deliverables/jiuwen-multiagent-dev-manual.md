@@ -212,6 +212,7 @@ After this project actually ran on real market data, the handoff files generated
 |---|---|---|---|
 | Data | `demo-data/financials_real.csv` (SEC EDGAR 10-K, FY2022-FY2025, 14 fields) | data-researcher | three analysts |
 | Data | `demo-data/stock_history_real.csv` (54-week weekly OHLCV, Yahoo Finance) | data-researcher | three analysts |
+| Data | `demo-data/quarterly_real.csv` (SEC EDGAR 10-Q, FY2025 Q1-Q3 + FY2026 Q1-Q3, 7 rows) | data-researcher | fundamental-analyst, forecaster |
 | Analysis | `analysis/fundamental.md` (fundamental 66/100, real data) | fundamental-analyst | qa-tester → forecaster |
 | Analysis | `analysis/technical.md` (trend BULLISH, key price levels) | technical-analyst | qa-tester → forecaster |
 | Analysis | `analysis/risk.md` (risk MEDIUM-HIGH, sentiment cautiously optimistic) | risk-sentinel | qa-tester → forecaster |
@@ -223,7 +224,7 @@ After this project actually ran on real market data, the handoff files generated
 
 File handoff is the "contract" of multi-agent collaboration. This demo's conventions:
 
-- **Semantic file names**: this demo's actual file names are `financials_real.csv` (real financials from SEC EDGAR), `stock_history_real.csv` (real weekly prices from Yahoo Finance), `fundamental.md` (fundamental analysis)...
+- **Semantic file names**: this demo's actual file names are `financials_real.csv` (real financials from SEC EDGAR), `stock_history_real.csv` (real weekly prices from Yahoo Finance), `quarterly_real.csv` (real quarterly results from SEC EDGAR 10-Q), `fundamental.md` (fundamental analysis)...
 - **Definitions in the file header**: `fundamental.md` states the data source (SEC EDGAR 10-K filing dates), as-of date, and indicators used — downstream doesn't need to guess.
 - **One task, one deliverable**: downstream depends only on fixed paths; a missing file means upstream didn't do its job (this pinpoints DAG breaks).
 

@@ -27,6 +27,7 @@
 - **Multi-dimension conclusions**: Fundamental **66/100** good quality but expensive valuation (implied PE ≈44x); technical **BULLISH** (mid-term uptrend intact, latest close USD 328.21, +36.93% over 54 weeks); risk & sentiment **MEDIUM-HIGH** (regulatory + supply chain HIGH, cautiously optimistic) → combined verdict is "a great company at a rich price in an intact uptrend", expect high-level consolidation with a mildly negative skew.
 - **Target price range for the next 3-6 months**: wide range **USD 215-365**, core range **275-345**, mid-point **≈310 (approx. -5.5% vs. current price)**; three scenarios: bullish ~350 / base ~318 / bearish ~240.
 - **One-line summary**: quality and trend remain intact, but valuation is stretched — if price holds a volume-confirmed break above 334 and then 344.6 (ATH), space opens toward 350-365; if weekly close loses 320 and then 305-309 (MA20), price reverts toward 287-292 and beyond; current risk/reward ≈ 1:1.7 downside-leaning — recommend wait-and-see or staged buying on pullbacks, no chasing.
+- **Latest reported financials (dual caliber)**: FY2025 annuals (10-K) remain the structural anchor for profitability/leverage/valuation; **FY2026 Q1-Q3 (10-Q)** provide the latest quarterly trend (see §3.5) — Q1 revenue 143,756 mn (holiday-season peak), Q2 111,184 mn, Q3 109,417 mn; TTM revenue ≈ 466,823 mn (+12.2% vs FY2025), TTM EPS ≈ 8.71 — supporting the forecast's central-to-bullish EPS assumptions.
 
 ---
 
@@ -53,6 +54,45 @@ Data source: `.team/demo-data/financials_real.csv` (SEC EDGAR XBRL companyfacts,
 - Cash flow quality: operating cash flow above USD 110 billion in every year; OCF/Net Income ≥1.00 in all four years (1.00-1.26) — high earnings quality, profits backed by real cash
 - Valuation (PE / PB): latest close 328.21 / FY2025 diluted EPS 7.46 → implied PE ≈ **44.0x**, well above the four-year band (24.6x-37.5x) and 4-year mean (31.05x); reasonable value band approx. **215-295 USD (base-case center ≈250)**; at 328.21 the stock sits above the top of a reasonable band by ~11-53% — stretched, thin margin of safety
 - Key highlights: growth re-accelerating (FY2025 record revenue), record profitability, high earnings quality, deleveraging trend | Key risk points: valuation overhang (PE 44x vs mean 31x), low growth base, tight liquidity + high leverage
+
+---
+
+## 3.5 FY2026 Quarterly Trend (10-Q, Real Data)
+
+Data source: `.team/demo-data/quarterly_real.csv` (SEC EDGAR XBRL companyfacts, Apple 10-Q FY2025 Q1-Q3 + FY2026 Q1-Q3; FY2025 Q4 computed as FY2025 annual minus Q1-Q3; retrieved 2026-09-04)
+
+### 3.5.1 Quarterly Revenue / Net Income / Gross Margin / EPS
+
+| Quarter | Period End | Revenue (USD mn) | Net Income (USD mn) | Gross Margin | Diluted EPS (USD) | Filing Date |
+|---|---|---|---|---|---|---|
+| FY2025 Q1 | 2024-12-28 | 124,300 | 36,330 | 46.88% | 2.40 | 2025-01-31 |
+| FY2025 Q2 | 2025-03-29 | 95,359 | 24,780 | 47.05% | 1.65 | 2025-05-02 |
+| FY2025 Q3 | 2025-06-28 | 94,036 | 23,434 | 46.49% | 1.57 | 2025-08-01 |
+| FY2025 Q4 | 2025-09-27 | 102,466 | 27,466 | 47.18% | n/a* | 2025-10-31 |
+| **FY2026 Q1** | 2025-12-27 | **143,756** | **42,097** | **48.16%** | **2.84** | 2026-01-30 |
+| **FY2026 Q2** | 2026-03-28 | **111,184** | **29,578** | **49.27%** | **2.01** | 2026-05-01 |
+| **FY2026 Q3** | 2026-06-27 | **109,417** | **29,789** | **50.06%** | **2.02** | 2026-07-31 |
+
+\* FY2025 Q4 EPS is not separately disclosed (computed from 10-K annual minus Q1-Q3; revenue/net income are single-quarter values).
+
+### 3.5.2 TTM Rolling Values (FY2025 Q4 + FY2026 Q1-Q3)
+
+| TTM Metric | Value | vs. FY2025 Annual (10-K) |
+|---|---|---|
+| Revenue | **466,823 mn** | **+12.2%** (FY2025: 416,161 mn) |
+| Net income | **128,930 mn** | **+15.1%** (FY2025: 112,010 mn) |
+| Net margin (TTM) | **≈ 27.6%** | +0.7pct (FY2025: 26.92%) |
+| Diluted EPS (TTM, approx.) | **≈ 8.71** | +16.8% (FY2025: 7.46) |
+
+> TTM EPS is approximated as FY2025 annual EPS 7.46 − FY2025 Q1-Q3 EPS (5.62) + FY2026 Q1-Q3 EPS (6.87) = 8.71, because FY2025 Q4 EPS is not separately disclosed.
+
+### 3.5.3 Read: Seasonality, Momentum, and Cross-Check with the FY2026E Forecast
+
+- **Q1 holiday-season peak**: FY2026 Q1 (period end 2025-12-27) revenue of **143,756 mn is the highest quarter in the dataset**, reflecting the holiday shopping season — a typical seasonal peak — before revenue steps down to 111,184 (Q2) and 109,417 (Q3), consistent with Apple's seasonal shape.
+- **Re-acceleration vs. year-ago**: FY2026 Q1-Q3 cumulative revenue **+16.15% YoY** (364,357 vs 313,695), net income **+20.01%** (101,464 vs 84,544), EPS **+22.24%** (6.87 vs 5.62) — a clear acceleration above the FY2025 annual pace (+6.43% revenue).
+- **Margin momentum**: gross margin rose 48.16% → 49.27% → 50.06% across FY2026 Q1-Q3, a record run above the FY2025 annual 46.91% — the Services mix tailwind is intact.
+- **TTM vs. FY2025 annuals**: TTM revenue +12.2% and net income +15.1% above FY2025 full-year confirm the re-acceleration is broad-based, not a one-quarter fluke.
+- **Cross-check with forecast assumptions**: the forecaster's FY2026E EPS scenarios (bear 7.68 / base 7.91 / bull 8.21) can now be tested against reported quarterly run-rates. FY2026 Q1-Q3 diluted EPS alone sums to **6.87**, and the TTM EPS approximation is **≈8.71**. Implied FY2026 Q4 EPS for each scenario: bear ≈ 0.81, base ≈ 1.04, bull ≈ 1.34 (vs. FY2025 Q4 implied ≈1.84). The quarterly trend therefore **supports the central-to-bullish assumptions** on fundamentals; the bear scenario would require a sharp Q4 shortfall or guidance reset — a true tail risk. This strengthens the "great company" side of the "great company, rich price" verdict; the binding constraint remains valuation (PE ≈44x).
 
 ---
 
@@ -119,7 +159,8 @@ The forecaster used **two transparent simplified models + LLM synthesis**:
 
 | Data | Source | Detail |
 |---|---|---|
-| Financial statements | **SEC EDGAR** (XBRL companyfacts) | Apple Inc. Form 10-K FY2022-FY2025; filing dates **2022-10-28 / 2023-11-03 / 2024-11-01 / 2025-10-31**; retrieved 2026-09-04; amounts in USD millions |
+| Financial statements (annual) | **SEC EDGAR** (XBRL companyfacts) | Apple Inc. Form 10-K FY2022-FY2025; filing dates **2022-10-28 / 2023-11-03 / 2024-11-01 / 2025-10-31**; retrieved 2026-09-04; amounts in USD millions |
+| Financial statements (quarterly) | **SEC EDGAR** (XBRL companyfacts) | Apple Inc. Form 10-Q FY2026 Q1-Q3 (plus FY2025 Q1-Q3 and FY2025 Q4 computed); filing dates **2026-01-30 / 2026-05-01 / 2026-07-31**; retrieved 2026-09-04; amounts in USD millions |
 | Market prices | **Yahoo Finance** (chart API) | Weekly OHLCV, 1y range, 54 weekly bars (2025-09-01 ~ 2026-09-03); retrieved 2026-09-04; latest close **328.21 USD** |
 
 > Forward EPS scenarios (7.68 / 7.91 / 8.21) and scenario P/E multiples (28x-42x) are **transparent analyst assumptions** on top of real reported data, illustrating the forecasting methodology only.
@@ -133,6 +174,7 @@ This report is automatically generated by the "US Equity Research Multi-Agent Te
 | File | Path (.team/) | Producer |
 |---|---|---|
 | Financial real data | demo-data/financials_real.csv | data-researcher |
+| Quarterly real data | demo-data/quarterly_real.csv | data-researcher |
 | Price real data | demo-data/stock_history_real.csv | data-researcher |
 | Fundamental analysis (real data) | analysis/fundamental.md | fundamental-analyst |
 | Technical analysis (real data) | analysis/technical.md | technical-analyst |

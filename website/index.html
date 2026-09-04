@@ -14,7 +14,7 @@
   <div class="wrap">
     <div class="badges">
       <span class="badge ticker">AAPL &middot; Apple</span>
-      <span class="badge">Real data: SEC EDGAR + Yahoo Finance</span>
+      <span class="badge">Real data: 10-K FY2022&ndash;25 + 10-Q FY2026 Q1&ndash;Q3 + Yahoo</span>
       <span class="badge">JiuwenSwarm Multi-Agent Demo</span>
       <span class="badge">IEDA4000H &middot; Risk Management case</span>
     </div>
@@ -373,6 +373,41 @@
       </div>
     </div>
 
+    <!-- 2.1b Latest Quarter / TTM (rendered from quarterly_real.csv) -->
+    <div id="latest-quarter" class="sec-block">
+      <div class="sec-head">
+        <div class="k">2.1b Latest Quarter / TTM</div>
+        <h2>FY2026 Q1&ndash;Q3: revenue accelerating</h2>
+        <div class="src-tag">Source: <code>quarterly_real.csv</code> &middot; SEC EDGAR 10-Q FY2026 Q1&ndash;Q3 (filing 2026-01-30 / 2026-05-01 / 2026-07-31), fetched 2026-09-04</div>
+        <p>Additive quarterly context &mdash; it does <b>not</b> change the annual-anchored scorecard (66/100) or forecast (mid &asymp;310).</p>
+      </div>
+      <div class="exec-grid">
+        <div class="exec-card">
+          <div class="label">FY2026 Q1</div>
+          <div class="big-line">USD 143,756M</div>
+          <p>+15.7% YoY vs FY2025 Q1 (124,300M) &mdash; holiday-quarter seasonal peak.</p>
+        </div>
+        <div class="exec-card">
+          <div class="label">FY2026 Q2</div>
+          <div class="big-line">USD 111,184M</div>
+          <p>+16.6% YoY vs FY2025 Q2 (95,359M) &mdash; above the seasonal trough trend.</p>
+        </div>
+        <div class="exec-card">
+          <div class="label">FY2026 Q3</div>
+          <div class="big-line">USD 109,417M</div>
+          <p>+16.4% YoY vs FY2025 Q3 (94,036M) &mdash; momentum sustained.</p>
+        </div>
+      </div>
+      <div class="range-card">
+        <div class="range-head">
+          <div class="item">TTM revenue: <b>USD 466,823M</b> <span style="color:#8b97b8">(FY2025 Q4 + FY2026 Q1&ndash;Q3)</span></div>
+          <div class="item">Gross margin: <b>48.16% &rarr; 50.06%</b> <span style="color:#8b97b8">(FY2026 Q1&rarr;Q3, record high)</span></div>
+          <div class="item">Seasonality: <b>Q1 holiday peak</b> <span style="color:#8b97b8">(Q1 &gg; Q2 / Q3)</span></div>
+        </div>
+        <p style="font-size:14.5px;color:#8b97b8;margin-top:12px">Quarterly figures are seasonal and noisier than annual data &mdash; read YoY, not QoQ run-rate. Source: SEC EDGAR 10-Q (XBRL companyfacts).</p>
+      </div>
+    </div>
+
     <!-- 2.2 Scenarios -->
     <div id="scenarios" class="sec-block">
       <div class="sec-head">
@@ -533,6 +568,12 @@
           <div class="d">The teaching datasets and the Python script that regenerates them offline — fully reproducible.</div>
           <a class="btn" href="../data/financials.csv" target="_blank" rel="noopener">Open data →</a>
         </div>
+        <div class="del">
+          <div class="t">Quarterly Financials (10-Q)</div>
+          <div class="p">data/quarterly_real.csv</div>
+          <div class="d">FY2025 Q1&ndash;Q4 + FY2026 Q1&ndash;Q3 quarterly revenue, net income, gross margin and EPS from SEC EDGAR 10-Q filings.</div>
+          <a class="btn" href="../data/quarterly_real.csv" target="_blank" rel="noopener">Open quarterly data →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -542,7 +583,7 @@
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="wrap">
-    <div class="disc"><b>Disclaimer:</b> This page is a teaching demonstration built on the JiuwenSwarm platform. All data are real market data (SEC EDGAR 10-K FY2022&ndash;FY2025 + Yahoo Finance weekly) used for classroom teaching only; analyses, scores and forward scenarios are teaching outputs &mdash; <b>NOT investment advice</b>. Do not make real trading decisions based on this content.</div>
+    <div class="disc"><b>Disclaimer:</b> This page is a teaching demonstration built on the JiuwenSwarm platform. All data are real market data (SEC EDGAR 10-K FY2022&ndash;FY2025 + 10-Q FY2026 Q1&ndash;Q3 + Yahoo Finance weekly) used for classroom teaching only; analyses, scores and forward scenarios are teaching outputs &mdash; <b>NOT investment advice</b>. Do not make real trading decisions based on this content.</div>
     <div class="meta">Built by a 7-agent JiuwenSwarm team · task-3e864b925b · US Equity Research Multi-Agent Teaching Demo · open repository with MIT license</div>
   </div>
 </footer>

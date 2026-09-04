@@ -92,7 +92,8 @@ task-data (data ready, first stage)
 
 The full pipeline runs on **real market data**:
 
-- **Financials**: SEC EDGAR (XBRL companyfacts) — Apple Inc. Form 10-K FY2022-FY2025 (filing dates 2022-10-28 / 2023-11-03 / 2024-11-01 / 2025-10-31), retrieved 2026-09-04
+- **Financials (annual)**: SEC EDGAR (XBRL companyfacts) — Apple Inc. Form 10-K FY2022-FY2025 (filing dates 2022-10-28 / 2023-11-03 / 2024-11-01 / 2025-10-31), retrieved 2026-09-04
+- **Financials (quarterly)**: SEC EDGAR (XBRL companyfacts) — Apple Inc. Form 10-Q FY2025 Q1-Q3 + FY2026 Q1-Q3 (filing dates 2026-01-30 / 2026-05-01 / 2026-07-31), retrieved 2026-09-04
 - **Prices**: Yahoo Finance chart API — weekly OHLCV, 1y range (54 weekly bars, 2025-09-01 ~ 2026-09-03), latest close **328.21 USD**
 
 The repository also ships a local sample-data generator for offline reproduction:
@@ -106,7 +107,7 @@ Output is written to the `data/` directory:
 - `data/financials.csv`: AAPL financial summary for the last 4 fiscal years (FY2022-FY2025)
 - `data/stock_history.csv`: weekly OHLCV for the past year (53 weeks)
 
-The real-data CSVs used by the current pipeline are `demo-data/financials_real.csv` and `demo-data/stock_history_real.csv`.
+The real-data CSVs used by the current pipeline are `demo-data/financials_real.csv`, `demo-data/quarterly_real.csv` and `demo-data/stock_history_real.csv`.
 
 ### 3.3 View Analysis Deliverables
 
@@ -140,6 +141,7 @@ repo/
 ├── data/                            # Offline sample data (real data lives in .team/demo-data/)
 │   ├── financials.csv               # Sample financial summary (FY2022-FY2025, 14 fields)
 │   └── stock_history.csv            # Sample weekly OHLCV (53 weeks)
+│   # real pipeline data: financials_real.csv (10-K) + quarterly_real.csv (10-Q) + stock_history_real.csv (Yahoo)
 ├── analysis/                        # Three analysis tracks
 │   ├── fundamental.md               # Fundamental analysis
 │   ├── technical.md                 # Technical analysis

@@ -1,0 +1,26 @@
+﻿# ================================================================
+# AAPL 苹果 真实季度财报数据（教学演示，不构成投资建议）
+# Data Source & Provenance:
+#   - 来源机构: SEC EDGAR (公司财报官方数据库 XBRL companyfacts)
+#   - 具体文件: Apple Inc. 10-Q FY2025 Q1-Q3 / FY2026 Q1-Q3; 10-K FY2025
+#     FY2025Q1 (end=2024-12-28) filing date=2025-01-31
+#     FY2025Q2 (end=2025-03-29) filing date=2025-05-02
+#     FY2025Q3 (end=2025-06-28) filing date=2025-08-01
+#     FY2025Q4 (end=2025-09-27) filing date=2025-10-31
+#     FY2026Q1 (end=2025-12-27) filing date=2026-01-30
+#     FY2026Q2 (end=2026-03-28) filing date=2026-05-01
+#     FY2026Q3 (end=2026-06-27) filing date=2026-07-31
+#   - 抓取日期: 2026-09-04
+# 口径: XBRL 单季值(按 end+fy+fp 归属, duration<=100天; Q1单季=YTD);
+#   FY2025Q4 无独立单季记录, 由 FY2025 全年(10-K) 减 Q1-Q3 实算;
+#   原始单位美元, 已转换百万美元(÷1e6); gross_margin=GrossProfit/Revenue 实算;
+#   eps 为摊薄每股收益(USD/shares); filing_date 取原始披露日期(最早 filed)
+# ================================================================
+fiscal_quarter,quarter_end,revenue_million_usd,net_income_million_usd,gross_margin_pct,eps_usd,filing_date,note
+FY2025Q1,2024-12-28,124300,36330,46.88,2.4,2025-01-31,
+FY2025Q2,2025-03-29,95359,24780,47.05,1.65,2025-05-02,
+FY2025Q3,2025-06-28,94036,23434,46.49,1.57,2025-08-01,
+FY2025Q4,2025-09-27,102466,27466,47.18,,2025-10-31,computed: FY2025 annual - Q1-Q3; EPS n/a (not separately disclosed)
+FY2026Q1,2025-12-27,143756,42097,48.16,2.84,2026-01-30,
+FY2026Q2,2026-03-28,111184,29578,49.27,2.01,2026-05-01,
+FY2026Q3,2026-06-27,109417,29789,50.06,2.02,2026-07-31,

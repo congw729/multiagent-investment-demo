@@ -129,6 +129,7 @@ python3 scripts/generate_sample_data.py
 
 - `.team/demo-data/financials.csv` — 4 rows (FY2022-FY2025), 14 columns, with English comment header
 - `.team/demo-data/stock_history.csv` — 53 rows of weekly OHLCV from 2025-09-15
+- (Optional, real-data edition) `.team/demo-data/quarterly_real.csv` — FY2025 Q1-Q3 + FY2026 Q1-Q3 quarterly results (10-Q), used for the FY2026 quarterly trend section
 - `task-data` marked `completed`
 
 **Common issues**
@@ -303,7 +304,7 @@ Forecasts are only as good as their assumptions. This challenge makes the "risk 
 
 **What to do**
 
-1. Open `outputs/forecast.md` (real-data edition) and go to **§3 "Model 2: PE × EPS Scenario Weighting"** — the *Scenario Design* table (bullish / base / bearish rows with EPS, PE, and target levels) and the *Probability Weighting* formula (weighted mid-point = 350×0.25 + 318×0.50 + 240×0.25 ≈ **310 USD**).
+1. Open `outputs/forecast.md` (real-data edition) and go to **§3 "Model 2: PE × EPS Scenario Weighting"** — the *Scenario Design* table (bullish / base / bearish rows with EPS, PE, and target levels) and the *Probability Weighting* formula (weighted mid-point = 350×0.25 + 318×0.50 + 240×0.25 ≈ **310 USD**). *Optional (real-data edition): cross-check the FY2026E EPS assumptions against the quarterly run-rate in `demo-data/quarterly_real.csv` (FY2026 Q1-Q3 diluted EPS sum = 6.87).*
 2. Pick **one** assumption to change, and change nothing else:
    - **Option A — raise Base-scenario EPS growth**: FY2026E EPS from **7.91 (+6%)** to **≈8.21 (+10%)**; keep the Base PE band (36-40x, ~40x mid was used to get 318). Recompute the Base target = EPS × PE, then the new weighted mid-point.
    - **Option B — lower Bearish-scenario EPS**: EPS from **7.68** to **7.50** (keep the ~31x PE used to get 240). The Bearish target falls from 240 to ≈233 (7.50 × 31). Recompute the weighted mid-point.
